@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+  <!-- font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/nav-footer.css" />
+  <link rel="stylesheet" href="/css/registros.css">
+
+
+  <title>Registrar</title>
+</head>
+
+<body>
+  <!-- Inicio del header -->
+  <header id="inicio">
+    <!-- navbar -->
+    <nav id="nav">
+      <div class="nav-center">
+        <!-- nav header -->
+        <div class="nav-header">
+          <img src="/img/logo.png" class="logo" alt="logo" />
+          <button class="nav-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <!-- links -->
+        <div class="links-container">
+          <ul class="links">
+            <li><a href="/index.html" class="">Inicio</a></li>
+            <li><a href="#tiendas" class="">Tiendas</a></li>
+            <li><a href="/index.html#noticias" class="">Noticias</a></li>
+            <li><a href="/index.html#categorias" class="">Categorías</a></li>
+            <li><a href="/index.html#novedades" class="">Novedades</a></li>
+            <li>
+              <a href="/index.html#quienes-somos" class="">Quiénes Somos</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn-sb btn-white">
+        <a href="login.html" class="login">Ingresar/Registrarse <i class="fas fa-user"></i></a>
+      </div>
+    </nav>
+  </header>
+  <!-- Fin del header -->
+
+  <main class="container-pagina">
+    <section class="bg-white">
+      <div class="tab-option">
+        <ul class="nav nav-pills nav-justified" id="myTab" role="tablist">
+          <!-- Tab 1 -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active letter-tab" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1"
+              type="button" role="tab" aria-controls="tab1" aria-selected="true">
+              CLIENTE
+            </button>
+          </li>
+          <!-- Tab 2 -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link letter-tab" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button"
+              role="tab" aria-controls="tab2" aria-selected="false">
+              ARTESANO
+            </button>
+          </li>
+          <!-- Tab 3 -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link letter-tab" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button"
+              role="tab" aria-controls="tab3" aria-selected="false">
+              DELIVERY
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-content mt-3">
+        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+          <article class="rounded bg-white perfil-cliente">
+            <div class="row">
+              <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                  <!-- Imagen del perfil del cliente con tamaño fijo -->
+                  <img id="imagenPerfilCliente" class="rounded-circle mt-5" width="150px" height="150px"
+                    style="object-fit: cover;"
+                    src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+
+                  <span class="p-2 m-2 bg-success badge">CLIENTE</span>
+                </div>
+              </div>
+              <div class="col-md-9 border-right">
+                <div class="p-3 py-5">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Registrarse</h4>
+                  </div>
+
+                  <form action="/formRegistrarCliente" method="post" id="formRegistrarCliente">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="nombreCliente" class="labels">Nombres</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          <input type="text" class="form-control" id="nombreCliente" name="nombreCliente"
+                            placeholder="Ingresa tus nombres" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="imagenCliente" class="labels">Cargar Imagen de Perfil</label>
+                        <div class="input-group">
+                          <input type="file" class="form-control" id="imagenCliente" name="imagenCliente"
+                            accept="image/*">
+                          <span class="input-group-text"><i class="fa fa-upload"></i></span>
+                        </div>
+                        <img id="previewImagenCliente" src="" alt="Vista previa"
+                          style="display: none; max-width: 100%; margin-top: 10px;">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="apellidosCliente" class="labels">Apellidos</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-user-tag"></i></span>
+                          <input type="text" class="form-control" id="apellidosCliente" name="apellidosCliente"
+                            placeholder="Ingresa tus apellidos" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="ciCliente" class="labels">CI</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+                          <input type="text" class="form-control" id="ciCliente" name="ciCliente"
+                            placeholder="Ingresa tu CI" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="emailCliente" class="labels">Email</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                          <input type="email" class="form-control" id="emailCliente" name="emailCliente"
+                            placeholder="Ingresa tu email" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="numeroContactoCliente" class="labels">Número de Contacto</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                          <input type="text" class="form-control" id="numeroContactoCliente"
+                            name="numeroContactoCliente" placeholder="Ingresa tu número de contacto" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="sexoCliente" class="labels">Sexo</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-venus-mars"></i></span>
+                          <select class="form-select" id="sexoCliente" name="sexoCliente">
+                            <option value="" disabled selected>Selecciona tu sexo</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="direccionCliente" class="labels">Dirección</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span>
+                          <input type="text" class="form-control" id="direccionCliente" name="direccionCliente"
+                            placeholder="Ingresa tu dirección" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="contrasenaCliente" class="labels">Contraseña</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                          <input type="password" class="form-control" id="contrasenaCliente" name="contrasenaCliente"
+                            placeholder="Contraseña (Máx. 8 caracteres)"
+                            title="La contraseña debe empezar con una letra mayúscula y tener hasta 8 caracteres (letras y números)"
+                            required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="confirmarContrasenaCliente" class="labels">Confirmar Contraseña</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                          <input type="password" class="form-control" id="confirmarContrasenaCliente"
+                            name="confirmarContrasenaCliente" placeholder="Confirma tu contraseña" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                      <button type="submit" class="btn btn-success" id="btnRegistrarCliente" name="btnRegistrarCliente">
+                        Registrarse
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+
+        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+          <article class="rounded bg-white perfil">
+            <div class="row">
+              <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                  <!-- Imagen del perfil con tamaño fijo -->
+                  <img id="imagenPerfilArtesano" class="rounded-circle mt-5" width="150px" height="150px"
+                    style="object-fit: cover;"
+                    src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+
+                  <span class="p-2 m-2 bg-success badge">ARTESANO</span>
+                </div>
+              </div>
+              <div class="col-md-9 border-right">
+                <div class="p-3 py-5">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Registrarse</h4>
+                  </div>
+
+                  <form action="" method="post" id="formRegistrarArtesano">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="nombreArtesano" class="labels">Nombres</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          <input type="text" class="form-control" id="nombreArtesano" name="nombreArtesano"
+                            placeholder="Ingresa tus nombres" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="imagenArtesano" class="labels">Cargar Imagen</label>
+                        <div class="input-group">
+                          <input type="file" class="form-control" id="imagenArtesano" name="imagenArtesano"
+                            accept="image/*">
+                          <span class="input-group-text"><i class="fa fa-upload"></i></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="apellidosArtesano" class="labels">Apellidos</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-user-tag"></i></span>
+                          <input type="text" class="form-control" id="apellidosArtesano" name="apellidosArtesano"
+                            placeholder="Ingresa tus apellidos" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="ciArtesano" class="labels">CI</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+                          <input type="text" class="form-control" id="ciArtesano" name="ciArtesano"
+                            placeholder="Ingresa tu CI" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="emailArtesano" class="labels">Email</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                          <input type="email" class="form-control" id="emailArtesano" name="emailArtesano"
+                            placeholder="Ingresa tu email" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="numeroContactoArtesano" class="labels">Número de Contacto</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                          <input type="text" class="form-control" id="numeroContactoArtesano"
+                            name="numeroContactoArtesano" placeholder="Ingresa tu número de contacto" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="sexoArtesano" class="labels">Sexo</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-venus-mars"></i></span>
+                          <select class="form-select" id="sexoArtesano" name="sexoArtesano">
+                            <option value="" disabled selected>Selecciona tu sexo</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="especialidadArtesano" class="labels">Especialidad</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-star"></i></span>
+                          <input type="text" class="form-control" id="especialidadArtesano" name="especialidadArtesano"
+                            placeholder="Ingresa tu especialidad" value="">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <label for="ubicacionComercioArtesano" class="labels mt-3 mb-2">Ubicación de la Comunidad</label>
+
+                      <!-- Departamento -->
+                      <div class="col-md-4">
+                        <label for="departamentoArtesano" class="labels">Departamento</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-map-pin"></i></span>
+                          <input type="text" class="form-control" id="departamentoArtesano" name="departamentoArtesano"
+                            placeholder="Ingresa tu departamento" required>
+                        </div>
+                      </div>
+
+                      <!-- Provincia -->
+                      <div class="col-md-4">
+                        <label for="provinciaArtesano" class="labels">Provincia</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-globe"></i></span>
+                          <input type="text" class="form-control" id="provinciaArtesano" name="provinciaArtesano"
+                            placeholder="Ingresa tu provincia" required>
+                        </div>
+                      </div>
+
+                      <!-- Municipio -->
+                      <div class="col-md-4">
+                        <label for="municipioArtesano" class="labels">Municipio</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-city"></i></span>
+                          <input type="text" class="form-control" id="municipioArtesano" name="municipioArtesano"
+                            placeholder="Ingresa tu municipio" required>
+                        </div>
+                      </div>
+
+                      <!-- Comunidad -->
+                      <div class="col-md-4">
+                        <label for="comunidadArtesano" class="labels">Comunidad</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-home"></i></span>
+                          <input type="text" class="form-control" id="comunidadArtesano" name="comunidadArtesano"
+                            placeholder="Ingresa el nombre" required>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <label for="marcarMapaArtesano" class="labels">Marcar en el Mapa</label>
+                        <button class="btn btn-outline-secondary btnMaps d-block" type="button" data-toggle="modal"
+                          data-target="#mapModal" onclick="abrirGoogleMaps()">
+                          <i class="mx-2 fas fa-map-marker-alt"></i> Abrir Google Maps
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="contrasenaArtesano" class="labels">Contraseña</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                          <input type="password" class="form-control" id="contrasenaArtesano" name="contrasenaArtesano"
+                            placeholder="Contraseña (Máx. 8 caracteres)" pattern="[A-Z][a-zA-Z0-9]{0,7}"
+                            title="La contraseña debe empezar con una letra mayúscula y tener hasta 8 caracteres (letras y números)"
+                            required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="confirmarContrasenaArtesano" class="labels">Confirmar Contraseña</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                          <input type="password" class="form-control" id="confirmarContrasenaArtesano"
+                            name="confirmarContrasenaArtesano" placeholder="Confirma tu contraseña" required>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="mt-4 text-center">
+                    <button type="submit" class="btn btn-success" id="btnRegistrarArtesano" name="btnRegistrarArtesano">
+                      Registrar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+          <article class="rounded bg-white perfil">
+            <div class="row">
+              <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                  <!-- Imagen del perfil con tamaño fijo -->
+                  <img id="imagenPerfilDelivery" class="rounded-circle mt-5" width="150px" height="150px"
+                    style="object-fit: cover;"
+                    src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                  <span class="p-2 m-2 bg-success badge">DELIVERY</span>
+                </div>
+              </div>
+              <div class="col-md-9 border-right">
+                <div class="p-3 py-5">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Registrarse</h4>
+                  </div>
+                  <form action="" method="post" id="formRegistrarDelivery">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="nombresDelivery" class="labels">Nombres</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          <input type="text" class="form-control" id="nombresDelivery" name="nombresDelivery"
+                            placeholder="Ingresa tus nombres" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="imageUploadDelivery" class="labels">Cargar Imagen</label>
+                        <div class="input-group">
+                          <input type="file" class="form-control" id="imagenDelivery" name="imagenDelivery"
+                            accept="image/*">
+                          <span class="input-group-text"><i class="fa fa-upload"></i></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="apellidosDelivery" class="labels">Apellidos</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-user-tag"></i></span>
+                          <input type="text" class="form-control" id="apellidosDelivery" name="apellidosDelivery"
+                            placeholder="Ingresa tus apellidos" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="ciDelivery" class="labels">CI</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+                          <input type="text" class="form-control" id="ciDelivery" name="ciDelivery"
+                            placeholder="Ingresa tu CI" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="emailDelivery" class="labels">Email</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                          <input type="email" class="form-control" id="emailDelivery" name="emailDelivery"
+                            placeholder="Ingresa tu email" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="numeroContactoDelivery" class="labels">Número de Contacto</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                          <input type="text" class="form-control" id="numeroContactoDelivery"
+                            name="numeroContactoDelivery" placeholder="Ingresa tu número de contacto" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="sexoDelivery" class="labels">Sexo</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-venus-mars"></i></span>
+                          <select class="form-select" id="sexoDelivery" name="sexoDelivery">
+                            <option value="" disabled selected>Selecciona tu sexo</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="direccionDelivery" class="labels">Dirección</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span>
+                          <input type="text" class="form-control" id="direccionDelivery" name="direccionDelivery"
+                            placeholder="Ingresa tu dirección" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="tipoVehiculoDelivery" class="labels">Tipo de Vehículo</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-car"></i></span>
+                          <input type="text" class="form-control" id="tipoVehiculoDelivery" name="tipoVehiculoDelivery"
+                            placeholder="Ingresa el tipo de vehículo" value="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="matriculaVehiculoDelivery" class="labels">Matrícula del Vehículo</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-tag"></i></span>
+                          <input type="text" class="form-control" id="matriculaVehiculoDelivery"
+                            name="matriculaVehiculoDelivery" placeholder="Ingresa la matrícula del vehículo" value="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="contrasenaDelivery" class="labels">Contraseña</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                          <input type="password" class="form-control" id="contrasenaDelivery" name="contrasenaDelivery"
+                            placeholder="Contraseña (Máx. 8 caracteres)" pattern="[A-Z][a-zA-Z0-9]{0,7}"
+                            title="La contraseña debe empezar con una letra mayúscula y tener hasta 8 caracteres (letras y números)"
+                            required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="confirmarContrasenaDelivery" class="labels">Confirmar Contraseña</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                          <input type="password" class="form-control" id="confirmarContrasenaDelivery"
+                            name="confirmarContrasenaDelivery" placeholder="Confirma tu contraseña" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                      <button type="submit" class="btn btn-success" id="btnRegistrarDelivery"
+                        name="btnRegistrarDelivery">
+                        Registrarse
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+
+
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Inicio del footer -->
+  <footer class="section">
+    <p>
+      copyright &copy; Productos Artesanales Bolivia
+      <span id="date"></span>. Todos los derechos reservados
+    </p>
+  </footer>
+  <!-- Fin del footer -->
+
+  <!-- btn flecha -->
+  <a class="scroll-link top-link" href="#inicio">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <!-- Script de Bootstrap solo si necesitas algún componente JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="/js/index.js"></script>
+  <script src="/js/imagen-perfil.js"></script>
+  <script src="/js/validar-contrasena.js"></script>
+  <script>
+    function abrirGoogleMaps() {
+      // Abrir Google Maps en una nueva pestaña
+      window.open('https://www.google.com/maps', '_blank');
+    }
+  </script>
+</body>
+
+</html>

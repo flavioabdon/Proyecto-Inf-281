@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+  <!-- styles -->
+  <link rel="stylesheet" href="css/index.css">
+  <title>Página de Inicio</title>
+</head>
+
+<body>
+  <!-- Inicio de la sección de encabezado -->
+  <header id="inicio">
+    <!-- navbar -->
+    <nav id="nav">
+      <div class="nav-center">
+        <!-- nav header -->
+        <div class="nav-header">
+          <img src="./img/logo.png" class="logo" alt="logo" />
+          <button class="nav-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <!-- links -->
+        <div class="links-container">
+          <ul class="links">
+            <li><a href="#inicio" class="scroll-link">Inicio</a></li>
+            <li><a href="#tiendas" class="scroll-link">Tiendas</a></li>
+            <li><a href="#noticias" class="scroll-link">Noticias</a></li>
+            <li><a href="#categorias" class="scroll-link">Categorías</a></li>
+            <li><a href="#novedades" class="scroll-link">Novedades</a></li>
+            <li><a href="#quienes-somos" class="scroll-link">Quiénes Somos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn btn-white">
+        <a href="ingreso_registro" class="login">Ingresar/Registrarse <i class="fas fa-user"></i></a>
+      </div>
+    </nav>
+
+    <!-- banner -->
+    <div class="banner">
+      <div class="container">
+        <h1>Lleva a Bolivia donde estés</h1>
+        <p>#Tienda en línea</p>
+        <a href="#productos" class="scroll-link btn btn-white">Ver Productos</a>
+      </div>
+    </div>
+  </header>
+  <!-- Fin de la sección de encabezado -->
+
+  <!-- Inicio del contenido principal -->
+  <main>
+    <!-- noticias -->
+    <section id="noticias" class="section">
+      <div class="title">
+        <h2>NOTI<span>CIAS</span></h2>
+      </div>
+
+      <article class="news container">
+        <div class="img-container">
+          <img src="person-1.jpeg" id="person-img" alt="Imagen de Persona" />
+        </div>
+        <h4 id="author">Sara Pérez</h4>
+        <p id="job">Artesana</p>
+        <p id="info">
+          ¡Te invitamos a la gran Feria de Artesanías de la Comunidad de Jupapina en La Paz, Bolivia! Ven y disfruta de
+          una experiencia cultural única este sábado, 14 de septiembre, desde las 10:00 a.m. hasta las 6:00 p.m., en la
+          Plaza Central de Jupapina. Encontrarás una variedad de productos artesanales auténticos, desde tejidos
+          tradicionales hasta cerámicas únicas, todos hechos con amor y dedicación por los artesanos locales. No te
+          pierdas esta oportunidad de llevarte un pedacito de la cultura boliviana a tu hogar y apoyar a nuestros
+          talentosos artesanos. ¡Te esperamos!
+        </p>
+        <!-- prev next buttons-->
+        <div class="button-container">
+          <button class="prev-btn">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="next-btn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </article>
+
+      
+    </section>
+   
+    <!-- categorias -->
+    <section id="categorias" class="section">
+      <div class="title">
+        <h2>Categ<span>orías</span></h2>
+      </div>
+
+      <div class="categories-container container">
+        <div class="categories">
+          <!-- Categoría 1 -->
+          <article class="category">
+            <h3 class="c-title">Hogar y Decoración</h3>
+            <i class="fas fa-home c-icon"></i>
+            <p class="c-info">Explora una selección de cerámica, cestería, madera tallada y productos de metal diseñados
+              para embellecer tu hogar. Encuentra platos, tazas, jarrones, canastas, esculturas y más para darle un
+              toque artesanal a tu espacio.
+            </p>
+            <a href="" class="btn-g">Ver más</a>
+          </article>
+
+          <!-- Categoría 2 -->
+          <article class="category">
+            <h3 class="c-title">Moda y Accesorios</h3>
+            <i class="fas fa-tshirt c-icon"></i>
+            <p class="c-info">Dale un estilo único a tu atuendo con nuestra colección de textiles, joyería, y
+              marroquinería. Descubre mantas, bufandas, ponchos, collares, pulseras, bolsos y cinturones hechos a mano
+              con materiales de alta calidad.
+            </p>
+            <a href="" class="btn-g">Ver más</a>
+          </article>
+
+          <!-- Categoría 3 -->
+          <article class="category">
+            <h3 class="c-title">Arte y Escultura</h3>
+            <i class="fas fa-paint-brush c-icon"></i>
+            <p class="c-info">Sumérgete en el mundo del arte con nuestras pinturas, esculturas de madera y piezas de
+              metal. Desde cuadros y grabados hasta esculturas decorativas, estas obras de arte visual elevarán
+              cualquier ambiente.
+            </p>
+            <a href="" class="btn-g">Ver más</a>
+          </article>
+
+          <!-- Categoría 4 -->
+          <article class="category">
+            <h3 class="c-title">Artículos Especiales</h3>
+            <i class="fas fa-box-open c-icon"></i>
+            <p class="c-info">Encuentra piezas verdaderamente únicas en nuestra sección de artículos especiales. Desde
+              cerámica de arte y joyería metálica hasta artículos de cuero de diseño, aquí se destacan los productos
+              exclusivos y personalizados.
+            </p>
+            <a href="" class="btn-g">Ver más</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- novedades -->
+    <section id="novedades" class="section">
+      <div class="title">
+        <h2>Nove<span>dades</span></h2>
+      </div>
+      <!-- Container for buttons and products -->
+      <div class="products-wrapper">
+        <!-- Buttons -->
+        <button class="prev-btn-p"><i class="fas fa-chevron-left"></i></button>
+        <!-- products -->
+        <div class="products-container container">
+          <!-- Productos aquí -->
+        </div>
+        <button class="next-btn-p"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </section>
+
+    <!-- Quienes Somos -->
+    <section id="quienes-somos" class="section">
+      <div class="title">
+        <h2>Quiénes <span>Somos</span></h2>
+      </div>
+      <div class="about-center container">
+        <article class="about-img">
+          <img src="img/quienes-somos.jpeg" alt="Quiénes Somos" />
+        </article>
+
+        <article class="about">
+          <!-- btn container -->
+          <div class="btn-container">
+            <button class="tab-btn active" data-id="historia">Historia</button>
+            <button class="tab-btn" data-id="mision">Misión</button>
+            <button class="tab-btn" data-id="vision">Visión</button>
+          </div>
+
+          <div class="about-content">
+            <!-- item historia -->
+            <div class="content active" id="historia">
+              <h4>HISTORIA</h4>
+              <p class="qs-parrafo">
+                Somos un e-commerce dedicado a la preservación y promoción de la tradición artesanal de Bolivia,
+                ofreciendo una variedad de productos únicos hechos a mano por artesanos locales, como tejidos andinos,
+                cerámicas, joyería y tallados en madera. Cada pieza refleja la rica historia y cultura de Bolivia,
+                llevando consigo la esencia de sus comunidades. Al elegir nuestros productos, no solo llevas a casa un
+                fragmento auténtico de Bolivia, sino que también apoyas directamente a los artesanos y sus economías
+                locales, ayudando a mantener vivas sus habilidades y tradiciones.
+              </p>
+            </div>
+            <!-- fin de item de historia -->
+
+            <!-- item de misión -->
+            <div class="content" id="mision">
+              <h4>MISIÓN</h4>
+              <p class="qs-parrafo">
+                Nuestra misión es preservar y promover la herencia cultural de Bolivia a través de la venta de productos
+                artesanales auténticos, elaborados por talentosos artesanos locales. Nos comprometemos a ofrecer una
+                plataforma que conecte a estos artesanos con un mercado global, valorando y reconociendo su arte y
+                esfuerzo. A través de nuestras acciones, buscamos empoderar a las comunidades artesanas, mejorar sus
+                condiciones de vida y asegurar que sus tradiciones y conocimientos sigan vivos y apreciados por las
+                generaciones presentes y futuras.
+              </p>
+            </div>
+            <!-- fin de item de misión -->
+
+            <!-- item de visión -->
+            <div class="content" id="vision">
+              <h4>VISIÓN</h4>
+              <p class="qs-parrafo">
+                Nuestra visión es convertirnos en la principal plataforma de comercio electrónico de productos
+                artesanales bolivianos, reconocida a nivel mundial por la autenticidad y calidad de nuestros productos.
+                Aspiramos a ser un puente cultural que acerque a personas de todo el mundo a las ricas tradiciones de
+                Bolivia, fomentando un mayor aprecio por la artesanía y la sostenibilidad. Soñamos con un futuro donde
+                los artesanos bolivianos sean valorados y apoyados, permitiéndoles prosperar mientras continúan
+                compartiendo su talento y patrimonio cultural con el mundo.
+              </p>
+            </div>
+            <!-- fin de item de visión-->
+          </div>
+        </article>
+      </div>
+    </section>
+    <!-- Fin de la sección de "Quiénes Somos" -->
+
+  </main>
+  <!-- Fin del contenido principal -->
+
+  <!-- Inicio del footer -->
+  <footer class="section">
+    <p>
+      copyright &copy; Productos Artesanales Bolivia <span id="date"></span>. Todos los derechos reservados
+    </p>
+  </footer>
+  <!-- Fin del footer -->
+
+  <!-- btn flecha -->
+  <a class="scroll-link top-link" href="#inicio">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <!-- javascript -->
+  <script src="js/index.js"></script>
+  <script src="js/noticias.js"></script>
+  <script src="js/novedades.js"></script>
+  <script src="js/quienes-somos.js"></script>
+</body>
+
+</html>

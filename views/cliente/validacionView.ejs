@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación</title>
+</head>
+<body>
+    <h1>Verificar cuenta</h1>
+    <form action="/verificarCodigo" method="post">
+        <label for="emailVerificacion" id="txtemailVerificacion"></label><br>
+        <input type="hidden" id="emailVerificacion" name="emailVerificacion">
+        <br>
+
+        <label for="codigoVerificacion">Codigo Verificacion:</label><br>
+        <input type="text" id="codigoVerificacion" name="codigoVerificacion" required><br>
+        <button type="submit">Verificar</button>
+    </form>
+    <a href="/">Volver al inicio</a>
+</body>
+</html>
+
+<script>
+    //loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("emailVerificacion").value = '<%= to %>';
+        document.getElementById("txtemailVerificacion").innerHTML = "Codigo enviado al correo:"+'<%= to %>';
+    });
+</script>

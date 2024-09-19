@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es"> <!-- Cambié 'en' a 'es' ya que el contenido está en español -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Ingresar/Registrarse</title>
+</head>
+
+<body>
+    <!-- Inicio del header -->
+    <header id="inicio">
+        <!-- navbar -->
+        <nav id="nav">
+            <div class="nav-center">
+                <!-- nav header -->
+                <div class="nav-header">
+                    <img src="/img/logo.png" class="logo" alt="logo" />
+                    <button class="nav-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+                <!-- links -->
+                <div class="links-container">
+                    <ul class="links">
+                        <li><a href="/index.html" class="">Inicio</a></li>
+                        <li><a href="#tiendas" class="">Tiendas</a></li>
+                        <li><a href="/index.html#noticias" class="">Noticias</a></li>
+                        <li><a href="/index.html#categorias" class="">Categorías</a></li>
+                        <li><a href="/index.html#novedades" class="">Novedades</a></li>
+                        <li><a href="/index.html#quienes-somos" class="">Quiénes Somos</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="btn btn-white">
+                <a href="login.html" class="login">Ingresar/Registrarse <i class="fas fa-user"></i></a>
+            </div>
+        </nav>
+    </header>
+    <!-- Fin del header -->
+
+    <!-- Inicio del contenido principal -->
+    <main>
+        <!-- Inicio de la sección de login -->
+        <section id="login" class="section">
+            <!-- <div class="title">
+                <h2>INGR<span>ESAR</span>-<REGISTRARSE>REGIST<span>RARSE</span></h2>
+            </div> -->
+
+            <div class="login-container container">
+                <!-- Iniciar sesión -->
+                <article class="login-registrarse" id="articleLoginRegistrarse">
+                    <h3 class="l-title">Ingresar</h3>
+                    <i class="fas fa-key l-icon"></i>
+
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" placeholder="Ingresa tu correo" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="label">Contraseña</label>
+                            <div class="input-icon">
+                                <i id="togglePassword" class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" class="password-field" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Recuérdame</label>
+                        </div>
+
+                        <a href=""  class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+                        <button type="submit" class="btn-l">Acceder</button>
+                    </form>
+                </article>
+                <!-- Fin de iniciar sesión -->
+
+                <!-- Registro -->
+                <article class="login-registrarse">
+                    <h3 class="l-title">Registrarse</h3>
+                    <i class="fas fa-user-plus l-icon"></i>
+
+                    <p class="l-info">
+                        ¡<strong>Regístrate</strong> para acceder a nuestros beneficios exclusivos! Al crear una cuenta, podrás elegir entre tres tipos de usuarios:
+                    </p>
+
+                    <p class="l-info">
+                        <strong>Cliente:</strong> Explora todos los productos, realiza compras y disfruta de ofertas especiales.
+                    </p>
+
+                    <p class="l-info">
+                        <strong>Artesano:</strong> Registra y gestiona tus productos para la venta, alcanzando a un amplio público interesado en tus creaciones.
+                    </p>
+
+                    <p class="l-info">
+                        <strong>Delivery:</strong> Encárgate de la entrega de productos, coordinando con clientes y artesanos para asegurar un servicio eficiente.
+                    </p>
+
+                    <p class="l-info">
+                        ¡Forma parte de nuestra comunidad y descubre lo mejor de la <strong>artesanía local</strong>!
+                    </p>
+
+                    <button type="submit" class="btn-l" id="btnRegistrarse">Registrarse</button>
+                </article>
+                <!-- Fin de registro -->
+            </div>
+        </section>
+        <!-- Fin de la sección de login -->
+    </main>
+    <!-- Fin del contenido principal -->
+
+    <!-- Inicio del footer -->
+    <footer class="section">
+        <p>
+            copyright &copy; Productos Artesanales Bolivia
+            <span id="date"></span>. Todos los derechos reservados
+        </p>
+    </footer>
+    <!-- Fin del footer -->
+
+    <!-- btn flecha -->
+    <a class="scroll-link top-link" href="#inicio">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- scripts -->
+    <script src="/js/index.js"></script>
+    <script src="/js/registrarse.js"></script>
+    <script src="/js/prueba.js"></script>
+</body>
+</html>
