@@ -1,8 +1,7 @@
 --------------------------------------------------------------------------
 -- Creado: Flavio Condori    Fecha: 18/9/2024                           --
 -- Actividad:                                                           --
--- Script creación de las tablas:Mensajes, usuario, comunidad,artesano  --
--- cliente, delivery                                                    --
+-- Funcion que inserta un nuevo usuario                                                   --
 ------------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION public.fn_insertar_usuario_cliente(data JSONB)
@@ -55,7 +54,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Sentecias de apoyo SQL
-SELECT public.insertar_usuario_cliente('{
+SELECT public.fn_insertar_usuario_cliente('{
     "direccion_Envio": "Calle Ejemplo 123",
     "longitud": -68.1193,
     "latitud": -16.5000,
