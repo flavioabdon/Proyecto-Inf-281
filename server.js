@@ -10,9 +10,7 @@ app.set('view engine', 'ejs');
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use(express.static('public'));
-
 
 // Usar las rutas definidas
 app.use('/', mailRoutes);
@@ -20,5 +18,7 @@ app.use('/', mailRoutes);
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
+  const serverUrl = `http://localhost:${PORT}`;
   console.log(`Servidor en funcionamiento en el puerto ${PORT}`);
+  console.log(`Accede al servidor en: ${serverUrl}`);
 });
