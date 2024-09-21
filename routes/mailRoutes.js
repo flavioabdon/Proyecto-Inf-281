@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const clienteC = require ('../controllers/clienteController'); //
 
-// Ruta para mostrar el formulario
+// Ruta para mostrar el index
 router.get('/', (req, res) => {
   //res.render('form');
   res.render('index');
 });
 
-// Ruta para mostrar formulario inscripcion
-router.get('/ingreso_registro', (req, res) => {
+// Ruta para mostrar formulario iniciar-sesion & registrarCliente
+router.get('/login-registrar', (req, res) => {
     //res.render('form');
     res.render('cliente/registrarView');
   });

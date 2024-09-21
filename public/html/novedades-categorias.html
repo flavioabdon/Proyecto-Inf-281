@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/novedades-categorias.css">
+    <title>Novedades & Categorias</title>
+</head>
+
+<body>
+    <!-- Inicio de la sección de encabezado -->
+    <header id="inicio">
+        <!-- navbar -->
+        <nav id="nav">
+            <div class="nav-center">
+                <!-- nav header -->
+                <div class="nav-header">
+                    <img src="/img/logo.png" class="logo" alt="logo" />
+                    <button class="nav-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+                <!-- links -->
+                <div class="links-container">
+                    <ul class="links">
+                        <li><a href="/" class="">Inicio</a></li>
+                        <!-- <li><a href="/index.html" class="">Quiénes Somos</a></li>
+                         -->
+                        <li>
+                            <a href="#novedades" class="scroll-link activeLink">Novedades</a>
+                            <div class="dropdown">
+                                <a href="#novedades" class="scroll-link">Recientes</a>
+                                <a href="#categorias" class="scroll-link">Categorias</a>
+                            </div>
+                        </li>
+                        <!-- <li><a href="#categorias" class="scroll-link">Categorías</a></li> -->
+                        <li><a href="#productos" class="scroll-link">Productos</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="btn btn-white btn-sb">
+                <a href="/login-registrar" class="login">Ingresar/Registrarse <i class="fas fa-user"></i></a>
+                <div class="dropdown-login">
+                    <a href="#Mi-Perfil" class="">Mi Perfil</a>
+                    <a href="#Cerrar Sesion" class="">CERRAR SESIÓN</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- banner -->
+        <div class="banner">
+            <div class="container">
+                <h1 class="animate__animated animate__fadeInLeft">NUESTRAS NOVEDADES & CATEGORIAS
+                </h1>
+                <p>#Tienda en línea</p>
+                <!-- <a href="#productos" class="scroll-link btn btn-white">Ver Productos</a> -->
+            </div>
+        </div>
+    </header>
+    <!-- Fin de la sección de encabezado -->
+
+    <!-- Inicio del contenido principal -->
+    <main>
+
+        <!-- novedades -->
+        <section id="novedades" class="section">
+            <div class="title">
+                <h2>Recie<span>ntes</span></h2>
+            </div>
+
+            <div class="content-btn-p">
+                <a href="#productos" class="btn-g btn-producto">Ver más Productos</a>
+            </div>
+
+            <!-- Container for buttons and products -->
+            <div class="products-wrapper">
+                <!-- Buttons -->
+                <button class="prev-btn-p"><i class="fas fa-chevron-left"></i></button>
+                <!-- products -->
+                <div class="products-container container">
+                    <!-- Productos aquí -->
+                </div>
+
+                <button class="next-btn-p"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            
+        </section>
+
+        <section id="categorias" class="section">
+            <div class="title">
+                <h2>Categ<span>orías</span></h2>
+            </div>
+
+            <div class="categories-container container">
+                <div class="categories">
+                    <!-- Categoría 1 -->
+                    <article class="category">
+                        <h3 class="c-title">Hogar y Decoración</h3>
+                        <i class="fas fa-home c-icon"></i>
+                        <p class="c-info">Explora una selección de cerámica, cestería, madera tallada y productos de
+                            metal diseñados
+                            para embellecer tu hogar. Encuentra platos, tazas, jarrones, canastas, esculturas y más para
+                            darle un
+                            toque artesanal a tu espacio.
+                        </p>
+                        <a href="" class="btn-g">Ver más</a>
+                    </article>
+
+
+
+                    <!-- Categoría 2 -->
+                    <article class="category">
+                        <h3 class="c-title">Moda y Accesorios</h3>
+                        <i class="fas fa-tshirt c-icon"></i>
+                        <p class="c-info">Dale un estilo único a tu atuendo con nuestra colección de textiles, joyería,
+                            y
+                            marroquinería. Descubre mantas, bufandas, ponchos, collares, pulseras, bolsos y cinturones
+                            hechos a mano
+                            con materiales de alta calidad.
+                        </p>
+                        <a href="" class="btn-g">Ver más</a>
+                    </article>
+
+                    <!-- Categoría 3 -->
+                    <article class="category">
+                        <h3 class="c-title">Arte y Escultura</h3>
+                        <i class="fas fa-paint-brush c-icon"></i>
+                        <p class="c-info">Sumérgete en el mundo del arte con nuestras pinturas, esculturas de madera y
+                            piezas de
+                            metal. Desde cuadros y grabados hasta esculturas decorativas, estas obras de arte visual
+                            elevarán
+                            cualquier ambiente.
+                        </p>
+                        <a href="" class="btn-g">Ver más</a>
+                    </article>
+
+                    <!-- Categoría 4 -->
+                    <article class="category">
+                        <h3 class="c-title">Artículos Especiales</h3>
+                        <i class="fas fa-box-open c-icon"></i>
+                        <p class="c-info">Encuentra piezas verdaderamente únicas en nuestra sección de artículos
+                            especiales. Desde
+                            cerámica de arte y joyería metálica hasta artículos de cuero de diseño, aquí se destacan los
+                            productos
+                            exclusivos y personalizados.
+                        </p>
+                        <a href="" class="btn-g">Ver más</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+    <!-- Fin del contenido principal -->
+
+    <!-- Inicio del footer -->
+    <footer class="section">
+        <p>
+            copyright &copy; Productos Artesanales Bolivia <span id="date"></span>. Todos los derechos reservados
+        </p>
+    </footer>
+    <!-- Fin del footer -->
+
+    <!-- btn flecha -->
+    <a class="scroll-link top-link" href="#inicio">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- javascript -->
+    <script src="/js/index.js"></script>
+    <script src="/js/novedades.js"></script>
+
+</body>
+
+</html>

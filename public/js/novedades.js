@@ -7,12 +7,14 @@ const products = [
   { id: 'recNWGyP7kjFhSqw3', title: 'Juego de sofá artesanal', company: 'Hecho a Mano', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlVSJ9RV3fMngLqIMY0uF7wRkz4Q46uyInqVsmnoRZ7w3UpdSbbKtrQD8B35MiqycnV6o&usqp=CAU', price: 299.99 }
 ];
 
+
 const productsContainer = document.querySelector('.products-container');
 const prevBtnP = document.querySelector('.prev-btn-p');
 const nextBtnP = document.querySelector('.next-btn-p');
 
 let currentIndex = 0;
 let productsToShow = getProductsToShow();
+let autoSlide;
 
 // Función para obtener el número de productos a mostrar según el ancho de la ventana
 function getProductsToShow() {
@@ -21,6 +23,7 @@ function getProductsToShow() {
   if (width >= 800 && width <= 1178) return 2;
   if (width <= 800) return 1;
 }
+
 // Función para renderizar los productos
 function renderProducts() {
   productsContainer.innerHTML = products
@@ -39,17 +42,32 @@ function renderProducts() {
 
 // Función para actualizar la visualización de productos
 function updateProductDisplay() {
-  productsToShow = getProductsToShow(); // Actualiza la cantidad de productos a mostrar
+  productsToShow = getProductsToShow();
   renderProducts();
+}
+
+// Función para avanzar automáticamente
+function startAutoSlide() {
+  autoSlide = setInterval(() => {
+    currentIndex = (currentIndex + productsToShow) % products.length;
+    updateProductDisplay();
+  }, 5000); // Cambia cada 5 segundos
+}
+
+// Función para detener el deslizamiento automático
+function stopAutoSlide() {
+  clearInterval(autoSlide);
 }
 
 // Event listeners para los botones
 prevBtnP.addEventListener('click', () => {
+  stopAutoSlide();
   currentIndex = (currentIndex - productsToShow + products.length) % products.length;
   updateProductDisplay();
 });
 
 nextBtnP.addEventListener('click', () => {
+  stopAutoSlide();
   currentIndex = (currentIndex + productsToShow) % products.length;
   updateProductDisplay();
 });
@@ -59,3 +77,4 @@ window.addEventListener('resize', updateProductDisplay);
 
 // Renderización inicial
 updateProductDisplay();
+startAutoSlide(); // Comienza el deslizamiento automático

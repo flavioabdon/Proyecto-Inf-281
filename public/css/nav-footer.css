@@ -82,15 +82,17 @@ p {
   color: var(--clr-letter-3);
 }
 
-
-
 img {
   display: block;
 }
 
 ul {
   list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
 }
+
+
 
 a {
   text-decoration: none;
@@ -143,7 +145,7 @@ nav {
 /*formato de links al presionar toggle*/
 .links a {
   background: var(--clr-white);
-  color: var(--clr-3);
+  color: var(--clr-1);
   font-size: 0.95rem;
   text-transform: capitalize;
   letter-spacing: var(--spacing);
@@ -169,6 +171,7 @@ nav {
   font-size: 0.875rem;
   border: 2px solid;
   cursor: pointer;
+  z-index: 100;
 }
 
 .btn-white {
@@ -255,14 +258,57 @@ nav {
   color: var(--clr-2);
 }
 
+/* recuadro al hacer hover */
+.btn-sb {
+  position: relative;
+}
+
+/* Estilo del recuadro desplegable */
+.dropdown-login {
+  display: none;
+  position: absolute;
+  top: 95%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: var(--light-shadow);
+  z-index: 1000;
+  min-width: 150px;
+  padding: 0.5rem 0;
+  margin-top: 0.2rem;
+}
+
+/* Mostrar el recuadro desplegable al hacer hover sobre el enlace */
+.btn-sb:hover .dropdown-login {
+  display: block;
+}
+
+/* Estilo de las opciones dentro del recuadro */
+.dropdown-login a {
+  display: block;
+  padding: 0.2rem 0.8rem;
+  margin: 0.1rem 0.2rem;
+  color: var(--clr-3);
+  text-decoration: none;
+  transition: background-color 0.3s;
+  font-size: 0.8rem;
+}
+
+/* Efecto hover en las opciones del recuadro */
+.dropdown-login a:hover {
+  color: #007bff;
+}
+/*fin de recuadro*/
+
 /*-------fin de formato nav--------*/
 
 
 .container-pagina {
   width: 90vw;
   margin: 0 auto;
-  max-width: 1170px;
+  max-width: 1200px;
   padding: 3rem 0;
+  height: auto;
 }
 
 
@@ -318,7 +364,7 @@ footer p {
   /*contenedor del logo y links*/
   .nav-center {
     width: 90vw;
-    max-width: 1170px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -337,6 +383,7 @@ footer p {
   /*asigna un tamaño*/
   .links-container {
     height: auto !important;
+
   }
 
   /*formato de links*/
@@ -347,7 +394,7 @@ footer p {
   .links a {
     background: transparent;
     color: var(--clr-1);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     text-transform: capitalize;
     letter-spacing: var(--spacing);
     display: block;
@@ -360,6 +407,9 @@ footer p {
   .links a:hover {
     color: var(--clr-2);
   }
+
+
+
 
   /* fin del formato navegador */
 

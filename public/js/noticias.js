@@ -39,16 +39,17 @@ const info = document.getElementById('info');
 const prevBtn = document.querySelector('.prev-btn');
 const nextBtn = document.querySelector('.next-btn');
 
-
 // set starting item
 let currentItem = 0;
+let autoChangeInterval;
 
 //load initial item
 window.addEventListener("DOMContentLoaded", function () {
   showPerson(currentItem);
-})
+  startAutoChange();
+});
 
-//show person [0.,1,2,3..]?
+//show person based on item index
 function showPerson(person) {
   const item = reviews[person];
   img.src = item.img;
@@ -64,17 +65,30 @@ nextBtn.addEventListener("click", function () {
     currentItem = 0;
   }
   showPerson(currentItem);
+  stopAutoChange();
 });
 
 prevBtn.addEventListener("click", function () {
-  currentItem--
+  currentItem--;
   if (currentItem < 0) {
     currentItem = reviews.length - 1;
   }
   showPerson(currentItem);
+  stopAutoChange();
 });
 
+// Automatic change every 10 seconds
+function startAutoChange() {
+  autoChangeInterval = setInterval(function () {
+    currentItem++;
+    if (currentItem > reviews.length - 1) {
+      currentItem = 0;
+    }
+    showPerson(currentItem);
+  }, 4000); 
+}
 
-
-//window -> ventana del navegador
-//DOMContentLoaded -> se dispara cuando se ha cargado completamente el contenido HTML de la página.
+// Stop automatic change
+function stopAutoChange() {
+  clearInterval(autoChangeInterval); // Detiene el cambio automático
+}

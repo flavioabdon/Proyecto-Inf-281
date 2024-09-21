@@ -19,6 +19,8 @@ Variables
   --clr-3: hsl(210, 22%, 49%);
   --clr-4: hsl(212, 33%, 89%);
   --clr-5: hsl(205, 100%, 96%);
+  --clr--lighter: hsl(209, 61%, 40%);
+  --clr-light-blue: hsl(209, 61%, 50%);
   --clr-white: #fff;
   --btn-hover: hsla(182, 63%, 44%, 1);
   --spacing: 0.25rem;
@@ -143,6 +145,10 @@ nav {
   transition: var(--transition);
 }
 
+.dropdown {
+  display: none;
+}
+
 /*clase utilizada por js*/
 .show-links {
   height: 200px;
@@ -159,6 +165,10 @@ nav {
   transition: var(--transition);
   font-weight: bold;
   padding: 0.6rem 0;
+}
+
+.links a .active {
+  background-color: rebeccapurple;
 }
 
 .links a:hover {
@@ -231,9 +241,54 @@ nav {
   color: var(--clr-1);
 }
 
+
 .fixed-nav .links a:hover {
   color: var(--clr-2);
 }
+
+
+/* recuadro al hacer hover */
+.btn-sb {
+  position: relative;
+}
+
+/* Estilo del recuadro desplegable */
+.dropdown-login {
+  display: none;
+  position: absolute;
+  top: 95%;
+  left: -2px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: var(--light-shadow);
+  z-index: 1000;
+  min-width: 150px;
+  padding: 0.5rem 0;
+  margin-top: 0.2rem;
+}
+
+/* Mostrar el recuadro desplegable al hacer hover sobre el enlace */
+.btn-sb:hover .dropdown-login {
+  display: block;
+}
+
+/* Estilo de las opciones dentro del recuadro */
+.dropdown-login a {
+  display: block;
+  padding: 0.2rem 0.8rem;
+  margin: 0.1rem 0.2rem;
+  color: var(--clr-3);
+  text-decoration: none;
+  transition: background-color 0.3s;
+  font-size: 0.8rem;
+}
+
+/* Efecto hover en las opciones del recuadro */
+.dropdown-login a:hover {
+  color: #007bff;
+}
+
+/*fin de recuadro*/
 
 /*-------fin de formato nav--------*/
 
@@ -241,7 +296,7 @@ nav {
 header {
   min-height: 100vh;
   background: linear-gradient(rgba(63, 208, 212, 0.5), rgba(0, 0, 0, 0.7)),
-    url(/img/banner.webp) center/cover no-repeat;
+    url(/img/banner1.jpg) center/cover no-repeat;
 }
 
 .banner {
@@ -298,13 +353,11 @@ header {
 .container {
   width: 90vw;
   margin: 0 auto;
-  max-width: 1170px;
-  padding-bottom: 3rem !important;
+  max-width: 1200px;
+  padding-bottom: 3rem;
 }
 
-.relleno{
-  margin-top: 3rem;
-}
+
 
 /* titulos de secciones*/
 .title h2 {
@@ -324,6 +377,7 @@ header {
 #categorias,
 #novedades {
   height: auto;
+
 }
 
 /*cambia el color de una seccion*/
@@ -338,12 +392,15 @@ header {
 /* -----noticias----- */
 
 
+
+
 .news {
   padding: 1.5rem 2rem;
   border-radius: var(--radius);
   box-shadow: var(--light-shadow);
   transition: var(--transition);
   text-align: center;
+  background-color: var(--clr-body);
 }
 
 .img-container {
@@ -356,6 +413,7 @@ header {
 }
 
 #person-img {
+  margin-top: 1rem;
   width: 100%;
   display: block;
   height: 100%;
@@ -395,6 +453,7 @@ header {
 /* letter */
 #author {
   margin-bottom: 0.25rem;
+  font-size: 1.05rem;
 }
 
 #job {
@@ -406,16 +465,20 @@ header {
 }
 
 #info {
+  letter-spacing: 0.05rem;
   text-align: justify;
   margin-bottom: 0.75rem;
-  color: var(--clr-3);
+  color: var(--clr-1);
+  font-weight: 200;
+  font-size: 1rem;
 }
 
 /*btn*/
 .prev-btn,
 .next-btn {
+  padding-top: 0.3rem;
   color: var(--clr-2);
-  font-size: 1.25rem;
+  font-size: 2rem;
   background: transparent;
   border-color: transparent;
   margin: 0 0.5rem;
@@ -429,11 +492,13 @@ header {
 }
 
 
+
 /* categorias */
 .categories {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+
 }
 
 .category {
@@ -442,6 +507,9 @@ header {
   padding: 20px;
   text-align: center;
   height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--light-shadow);
+  transition: var(--transition);
 }
 
 .category:hover {
@@ -456,17 +524,19 @@ header {
 }
 
 .category .c-info {
-  color: var(--clr-3);
+  color: var(--clr-1);
   text-align: justify;
-  padding: 1.5rem 0;
+  padding: 2.5rem;
   padding-bottom: 0.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
 
 }
 
 .c-icon {
   font-size: 3.5rem;
   color: var(--clr-3);
-  margin-top: 2rem;
+  margin-top: 3rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -599,11 +669,15 @@ header {
   transition: var(--transition);
 }
 
+
+
+
 /* fin de productos */
 
 
 
 /* quienes-somos */
+
 
 /*img*/
 .about-img img {
@@ -676,12 +750,14 @@ header {
 }
 
 .content h4 {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   padding-left: 1rem;
+  color: var(--clr-2);
 }
 
 .content .qs-parrafo {
-  color: var(--clr-3);
+  letter-spacing: 0.05rem;
+  color: var(--clr-1);
   padding: 0 1rem;
   font-size: 0.9rem;
   text-align: justify;
@@ -864,7 +940,7 @@ footer p {
   /*contenedor del logo y links*/
   .nav-center {
     width: 90vw;
-    max-width: 1170px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -890,10 +966,15 @@ footer p {
     display: flex;
   }
 
+  .links li {
+    position: relative;
+
+  }
+
   .links a {
     background: transparent;
-    color: var(--clr-white);
-    font-size: 1.1rem;
+    color: var(--clr-1);
+    font-size: 1.2rem;
     text-transform: capitalize;
     letter-spacing: var(--spacing);
     display: block;
@@ -903,15 +984,63 @@ footer p {
     padding: 0;
   }
 
+
   .links a:hover {
     color: var(--clr-white);
+  }
+
+
+
+  /* Estilo del recuadro desplegable */
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 90%;
+    left: 15%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: var(--light-shadow);
+    z-index: 1000;
+    min-width: 150px;
+    padding: 0.5rem 0;
+    margin-top: 0.2rem;
+  }
+
+  /* Mostrar el recuadro desplegable al hacer hover sobre el enlace */
+  .links li:hover .dropdown {
+    display: block;
+  }
+
+  /* Estilo de las opciones dentro del recuadro */
+  .dropdown a {
+    display: block;
+    padding: 0.2rem 0;
+    margin: 0.1rem 0.2rem;
+    color: var(--clr-3);
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-size: 0.8rem;
+  }
+
+  /* Efecto hover en las opciones del recuadro */
+  .dropdown a:hover {
+    color: #007bff;
+  }
+
+
+  .links .activeLink {
+    text-decoration: underline;
+    text-decoration-color: var(--clr-1);
+    z-index: 100;
+    text-underline-offset: 0.4rem;
+    padding-top: 0.2rem;
   }
 
   /* fin del formato navegador */
 
   /* quienes-somos */
   .content .qs-parrafo {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   /* fin quienes-somos */
@@ -919,6 +1048,25 @@ footer p {
 
 
 @media screen and (min-width: 1170px) {
+
+  /*links*/
+  /*ocultar links*/
+  .links-container {
+    height: 0;
+    overflow: visible;
+    transition: var(--transition);
+  }
+
+  /*fin de links*/
+
+
+  /* hero */
+  .banner {
+    min-height: 80vh;
+  }
+
+  /* fin hero */
+
 
   /* productos */
   .products-container {
