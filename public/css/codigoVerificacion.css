@@ -1,0 +1,161 @@
+/*
+=============== 
+Fonts
+===============
+*/
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap");
+
+/*
+=============== 
+Variables
+===============
+*/
+
+:root {
+  --clr-body: hsl(210, 36%, 96%);
+  --clr-1: hsl(209, 61%, 16%);
+  --clr-2: hsla(182, 63%, 54%);
+  --clr-3: hsl(210, 22%, 49%);
+  --clr-4: hsl(212, 33%, 89%);
+  --clr-5: hsl(205, 100%, 96%);
+  --clr-white: #fff;
+  --clr--lighter: hsl(209, 61%, 40%);
+  --clr-light-blue: hsl(209, 61%, 50%);
+  --btn-hover: hsla(182, 63%, 44%, 1);
+  --spacing: 0.25rem;
+
+  --ff-secondary: "Open Sans", sans-serif;
+  --ff-primary: "Roboto", sans-serif;
+
+  --transition: all 0.3s linear;
+
+  --radius: 0.5rem;
+  --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  --max-width: 1170px;
+  --fixed-width: 620px;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+    background: var(--clr-body);
+    color: var(--clr-1);
+    line-height: 1.5;
+    font-family: var(--ff-secondary);
+    font-size: 0.875rem;
+}
+
+/*formato de pequeno a grande*/
+h1,
+h2,
+h3 {
+  letter-spacing: var(--spacing);
+  /* text-transform: capitalize; */
+  line-height: 1;
+  font-family: var(--ff-primary);
+}
+
+h1 {
+  font-size: 2.6rem;
+}
+
+h4 {
+  margin-bottom: 0.8rem;
+  letter-spacing: var(--spacing);
+  font-size: 1rem;
+}
+
+p {
+  margin-bottom: 1.25rem;
+  color: var(--clr-letter-3);
+}
+
+img {
+  display: block;
+}
+
+ul {
+  list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.v-titulo{
+    font-size: 1.5rem;
+    color: var(--clr-1);
+    margin-bottom: 1.5rem;
+}
+
+.container-main{
+   margin: 0 auto;
+   padding: 3rem;
+}
+
+.v-label{
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+}
+
+.v-correo{
+    letter-spacing: 0.1rem;
+}
+
+.btn-verificar{
+    margin-top:0.4rem ;
+    width: 50%;
+    background-color: var(--clr-light-blue);
+    transition: var(--transition);
+}
+
+.btn-verificar:hover{
+    background-color: hsl(209, 61%, 40%);
+}
+
+.v-volver:hover{
+    color:var(--clr-light-blue) !important;
+}
+
+form{
+    background-color: #fff;
+    box-shadow: var(--light-shadow);
+    width: 100%;
+}
+
+
+
+/*de 950px para delante es decir pantallas grandes*/
+@media screen and (min-width: 1100px) {
+
+  /* estilos generales */
+  h2 {
+    font-size: 1rem;
+  }
+
+  .v-titulo{
+    font-size: 2.2rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+  }
+  /* fin de estilos generales */
+
+}
