@@ -58,9 +58,19 @@ exports.registrarCliente = async (req, res) => {
       }
     )
 
-
     // Renderizar la vista validacion.ejs y pasarle el resultado completo
-    res.render('cliente/validacionView', { result, message, to });
+    if(result.status=="success"){ //validar si se envio el correo
+      if(result2.estado=="exitoso"){ //validar si se guardo en la base de datos el usuario
+        res.render('cliente/validacionView', { result, result2 , message, to });
+      }
+      else{
+        res.json(result2);
+      }
+    }
+    else{
+      res.json(result);
+    }
+
     //res.json(result2); //imprimir json
   } catch (error) {
     console.error('Error al enviar el correo:', error);
