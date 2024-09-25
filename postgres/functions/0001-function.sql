@@ -44,12 +44,12 @@ BEGIN
     VALUES (v_codigo_usuario, v_direccion_envio, v_ubicacion_geoRef_Cli, CURRENT_TIMESTAMP, 'sistema', 'pendiente');
 
     -- Devolver un JSON de éxito
-    RETURN jsonb_build_object('mensaje', 'Usuario registrado exitosamente');
+    RETURN jsonb_build_object('estado','exitoso','mensaje', 'Usuario registrado exitosamente');
 EXCEPTION
     WHEN unique_violation THEN
-        RETURN jsonb_build_object('error', 'El código de usuario o el email ya existe');
+        RETURN jsonb_build_object('estado','error', 'mensaje','El código de usuario o el email ya existe');
     WHEN others THEN
-        RETURN jsonb_build_object('error', SQLERRM);
+        RETURN jsonb_build_object('estado','error','mensaje', SQLERRM);
 END;
 $$ LANGUAGE plpgsql;
 

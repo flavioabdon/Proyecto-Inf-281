@@ -18,7 +18,7 @@ BEGIN
 
     -- Verificar si existe el correo y el código en la tabla usuarios
     SELECT EXISTS (
-		select 1 from "Messages" m 
+		select 1 from "mensajes" m 
 		where m.to = v_correo and m.message = 'Codigo:' || v_codigo
     ) INTO v_existe;
 
@@ -26,6 +26,12 @@ BEGIN
 	 	-- Cambiar el estado de pendiente a activo
 		update  usuario set estado_registro='activo'
 		where email= v_correo;
+
+        -- cambiar el estado de pendiente a activo
+        update  cliente c set estado_registro='activo'
+		where c.codigo_usuario = (
+		select u.codigo_usuario from usuario u 
+		where u.email = v_correo);
 
         -- Retornar un JSON de éxito si el correo y el código son válidos
         RETURN json_build_object('status', 'success', 'message', 'Código verificado correctamente.');
