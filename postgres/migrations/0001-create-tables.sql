@@ -8,12 +8,14 @@
 --------------------------------------------------------------------------
 -- Modificado: Ruddy Cruz    Fecha: 19/9/2024                           --
 -- Actividad:                                                           --
--- * Verificacion codificacion UTF8 de la BD.								--
--- * Modificacion de la tabla USUARIO para añadir seguridad HASH y SAL y 	--
---   el campo ROL															--
--- * Creacion de nuevas tablas:.------
--- * Eliminacion del campo codigo_usuario de las tablas: ARTESANO, 
---   CLIENTE y DELIVERY                                     			    --
+-- * Verificacion codificacion UTF8 de la BD.							--
+-- * Modificacion de la tabla USUARIO para añadir seguridad HASH a la 	--
+--   contraseña y nuevo campo ROL										--
+-- * Creacion de nuevas tablas: ADMINISTRADOR, ALMACEN, CATEGORIA, ENVIO--
+--   EVENTOS_NOTICIAS, IMAGEN_PRODUCTO, PAGO_TRANSACCION, PEDIDO,       --
+--   PERMISO, PRODUCTO_ARTESANAL, RED_SOCIAL.                           --
+-- * Eliminacion del campo codigo_usuario de las tablas: ARTESANO,      --
+--   CLIENTE y DELIVERY                                     		    --
 ------------------------------------------------------------------
 
 
@@ -46,9 +48,7 @@ CREATE TABLE IF NOT EXISTS public.USUARIO (
     apellido character varying(50),
     email character varying(30) UNIQUE,	--el email es unico por cada usuario
     numero_Contacto VARCHAR(12),	
-    --contraseña character varying(20), reemplazamos este campo para añadir seguridad HASH y sal con los sig 2 campos
-    hash_contrasena BYTEA NOT NULL,  -- Almacena el hash de la contraseña
-    sal BYTEA NOT NULL,              -- Almacena la sal utilizada
+    contraseña character varying(255),
     ci character varying(15),
     sexo character varying(3),
     fotoPerf_url character varying(200),
@@ -340,9 +340,6 @@ CREATE TABLE IF NOT EXISTS public.IMAGEN_PRODUCTO (
     estado_registro character varying(15)
 );
 
-SHOW default_transaction_read_only;
-SET default_transaction_read_only = off;
-SELECT pg_is_in_recovery();
 
 
 
