@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const mailRoutes = require('./routes/mailRoutes');
 
@@ -10,7 +11,8 @@ app.set('view engine', 'ejs');
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static('public'));
+// Sirve archivos estáticos desde la carpeta "public"
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Usar las rutas definidas
 app.use('/', mailRoutes);
