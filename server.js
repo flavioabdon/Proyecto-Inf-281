@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mailRoutes = require('./routes/mailRoutes');
+const categoriaRoutes = require('./routes/categoriaRoutes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Usar las rutas definidas
 app.use('/', mailRoutes);
+app.use('/', categoriaRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
