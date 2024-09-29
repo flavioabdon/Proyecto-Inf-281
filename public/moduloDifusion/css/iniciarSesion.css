@@ -8,7 +8,7 @@
 }
 
 .side-image {
-    background-image: url("/img/login.webp");
+    background-image: url("/moduloDifusion/img/login.webp");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
