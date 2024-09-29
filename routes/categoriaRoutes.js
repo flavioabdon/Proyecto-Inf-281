@@ -10,6 +10,8 @@ router.get('/categoria', (req, res) => {
 // Ruta para registrar una nueva categoría
 router.post('/formRegistrarCategoria', categoriaController.registrarCategoria); // Usa el controlador para insertar
 
+// Ruta para listar categorías
+router.get('/listarCategorias', categoriaController.listarCategorias); // Usa el controlador para listar categorías
 
 
 module.exports = router;
