@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
 
 // Define las variables de configuración
-const dbName = 'bd_artesanias';       // Nombre de la base de datos
+const dbName = 'postgres';       // Nombre de la base de datos
 const dbUser = 'postgres';       // Nombre de usuario
-const dbPassword = '12345678';
+const dbPassword = '123';
 const dbHost = 'localhost';      // Host de la base de datos
 
 // Configura la conexión a la base de datos

@@ -84,18 +84,19 @@
 
                                 <div class="input-box">
                                     <i class="fas fa-key l-icon"></i>
-                                    <form action="" method="post" id="formIniciarSesion">
+                                    <form action="/formIniciarSesion" method="post" id="formIniciarSesion">
                                         <div class="input-field">
-                                            <input type="text" class="input" id="email" required="" autocomplete="off">
+                                            <input type="text" class="input" id="usuario" name="usuario" required="" autocomplete="off">
                                             <label for="email">Email</label>
                                         </div>
                                         <div class="input-field">
-                                            <input type="password" class="input" id="pass" required="">
+                                            <input type="password" class="input" id="password" name="password" required="">
                                             <label for="pass">Contraseña </label>
                                         </div>
                                         <div class="input-field">
 
                                             <input type="submit" class="submit" value="Ingresar">
+                                            <!--<button type="submit" name="submit" value="Ingresar">-->
                                         </div>
                                         <div class="signin">
                                             <span>Olvidaste tu Contraseña? <a href="#">Ingresa Aqui</a></span>

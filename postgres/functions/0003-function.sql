@@ -4,6 +4,13 @@
 -- Script                                                               --
 --                                                                      --
 ------------------------------------------------------------------
+--------------------------------------------------------------------------
+-- Modificado: Ruddy Cruz    Fecha: 27/9/2024                           --
+-- Actividad:                                                           --				
+-- * Modificacion de la fucion: fn_verificar_codigo	(cambiar el estado  --
+--   de pendiente a activo) el cliente y el usuario comparten id_usuario--
+--   por la logica de especializacion   lineas 155-157                  --
+------------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION fn_verificar_codigo(data JSON)
 RETURNS JSON AS $$
@@ -29,8 +36,8 @@ BEGIN
 
         -- cambiar el estado de pendiente a activo
         update  cliente c set estado_registro='activo'
-		where c.codigo_usuario = (
-		select u.codigo_usuario from usuario u 
+		where c.id_usuario = (
+		select u.id_usuario from usuario u 
 		where u.email = v_correo);
 
         -- Retornar un JSON de éxito si el correo y el código son válidos
