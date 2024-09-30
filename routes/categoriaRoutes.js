@@ -13,6 +13,9 @@ router.post('/formRegistrarCategoria', categoriaController.registrarCategoria); 
 // Ruta para listar categorías
 router.get('/listarCategorias', categoriaController.listarCategorias); // Usa el controlador para listar categorías
 
+// Ruta para actualizar una categoría existente
+router.put('/categoria/:id', categoriaController.actualizarCategoria);
+
 
 module.exports = router;
 

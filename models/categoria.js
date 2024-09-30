@@ -45,7 +45,30 @@ const listarCategorias = async () => {
 
 
 
+// Función para actualizar una categoría usando una consulta SQL normal
+const actualizarCategoria = async (id_categoria, nombre, descripcion, icono) => {
+
+    const query = `
+    SELECT * FROM fn_actualizar_categoria($1, $2, $3, $4);
+    `;
+    const values = [id_categoria, nombre, descripcion, icono];
+
+    try {
+        const [res] = await sequelize.query(query, {
+            bind: values,
+            type: sequelize.QueryTypes.SELECT
+        });
+        return res; // Devuelve la categoría actualizada
+    } catch (error) {
+        console.error('Error al actualizar la categoría:', error);
+        throw error;
+    }
+};
+
+
+
 module.exports = {
     registrarCategoria, // Exporta la función para usarla en otras partes de la aplicación
     listarCategorias, // Exporta la función para listar categorías
+    actualizarCategoria,
 };

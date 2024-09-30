@@ -1,6 +1,6 @@
 // JavaScript para manejar la selección de iconos
 document.querySelectorAll('.icon-option').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         // Remover la clase 'active' de todos los botones
         document.querySelectorAll('.icon-option').forEach(btn => btn.classList.remove('active'));
 
@@ -10,10 +10,16 @@ document.querySelectorAll('.icon-option').forEach(button => {
         // Obtener el icono seleccionado
         const icono = this.getAttribute('data-icon');
 
-        // Establecer el valor del input oculto
-        document.getElementById('iconoCategoria').value = icono;
+        // Establecer el valor del input oculto dependiendo de la acción (crear o actualizar)
+        const esActualizar = document.getElementById('formActualizarCategoria') !== null; // Comprobar si estamos en el formulario de actualización
 
-        // Mostrar el icono seleccionado al usuario
-        //document.getElementById('iconoSeleccionado').innerText = icono;
+        if (esActualizar) {
+            document.getElementById('iconoCategoriaActualizar').value = icono; // Para la actualización
+        } else {
+            document.getElementById('iconoCategoria').value = icono; // Para la creación
+        }
+
+        // Mostrar el icono seleccionado al usuario (opcional)
+        // document.getElementById('iconoSeleccionado').innerText = icono; // Puedes descomentar si quieres mostrar el icono seleccionado
     });
 });

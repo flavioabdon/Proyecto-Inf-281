@@ -9,7 +9,7 @@ const registrarCategoria = async (req, res) => {
         // Inserta la nueva categoría utilizando el modelo
         const nuevaCategoria = await categoriaModel.registrarCategoria(nombreCategoria, descripcionCategoria, iconoCategoria);
         // Devuelve un mensaje de éxito
-       
+
         res.status(201).json({ message: 'Categoría creada', categoria: nuevaCategoria });
 
     } catch (error) {
@@ -35,9 +35,29 @@ const listarCategorias = async (req, res) => {
     }
 };
 
+// Controlador para actualizar una categoría
+const actualizarCategoria = async (req, res) => {
+    const id_categoria = req.params.id; // El ID viene desde la URL
+    const { nombreCategoria, descripcionCategoria, iconoCategoria } = req.body; // Datos enviados en el cuerpo
+
+    try {
+        const categoriaActualizada = await categoriaModel.actualizarCategoria(
+            id_categoria,
+            nombreCategoria,
+            descripcionCategoria,
+            iconoCategoria
+        );
+        res.status(200).json({ message: 'Categoría actualizada', categoria: categoriaActualizada });
+    } catch (error) {
+        console.error('Error al actualizar la categoría:', error);
+        res.status(500).json({ message: 'Error al actualizar la categoría' });
+    }
+};
+
 
 
 module.exports = {
     registrarCategoria,
-    listarCategorias, // Exporta el controlador para listar categorías
+    listarCategorias,
+    actualizarCategoria
 };

@@ -387,6 +387,187 @@
                     </div>
 
 
+                    <!-- Modal para Actualizar Categoría -->
+                    <div class="modal fade" id="modalActualizarCategoria" tabindex="-1" role="dialog"
+                        aria-labelledby="modalActualizarCategoriaLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content p-2">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalActualizarCategoriaLabel">Actualizar Categoría</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formActualizarCategoria" action="">
+                                        <input type="hidden" id="idCategoriaActualizar" name="idCategoriaActualizar">
+                                        <!-- Campo oculto para el ID de la categoría -->
+                                        <div class="form-group">
+                                            <label for="nombreCategoriaActualizar">Nombre:</label>
+                                            <input type="text" class="form-control" id="nombreCategoriaActualizar"
+                                                placeholder="Introduce el nombre de la categoría"
+                                                name="nombreCategoriaActualizar" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="descripcionCategoriaActualizar">Descripción:</label>
+                                            <textarea class="form-control" id="descripcionCategoriaActualizar" rows="3"
+                                                placeholder="Introduce una descripción"
+                                                name="descripcionCategoriaActualizar" required></textarea>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <label for="iconoCategoriaActualizar">Ícono:</label>
+                                            <!-- Input oculto para guardar el icono seleccionado -->
+                                            <input type="" class="form-control" id="iconoCategoriaActualizar"
+                                                name="iconoCategoriaActualizar" required>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="icon-selector row">
+                                                        <!-- Serie de íconos a elegir -->
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-tshirt">
+                                                                <i class="fas fa-tshirt fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-cut">
+                                                                <i class="fas fa-cut fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-socks">
+                                                                <i class="fas fa-socks fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-ribbon">
+                                                                <i class="fas fa-ribbon fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-hand-holding-heart">
+                                                                <i class="fas fa-hand-holding-heart fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-ribbon">
+                                                                <i class="fas fa-ribbon fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-glasses">
+                                                                <i class="fas fa-glasses fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-feather-alt">
+                                                                <i class="fas fa-feather-alt fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-brush">
+                                                                <i class="fas fa-brush fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-hands">
+                                                                <i class="fas fa-hands fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-shopping-basket">
+                                                                <i class="fas fa-shopping-basket fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-seedling">
+                                                                <i class="fas fa-seedling fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-gift">
+                                                                <i class="fas fa-gift fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-hammer">
+                                                                <i class="fas fa-hammer fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-ring">
+                                                                <i class="fas fa-ring fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-crown">
+                                                                <i class="fas fa-crown fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-paint-brush">
+                                                                <i class="fas fa-paint-brush fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-6 col-md-2 mb-3 text-center">
+                                                            <button type="button"
+                                                                class="btn btn-outline-secondary icon-option"
+                                                                data-icon="fas fa-pen-fancy">
+                                                                <i class="fas fa-pen-fancy fa-2x"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" form="formActualizarCategoria"
+                                        class="btn btn-primary">Actualizar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                 </main>
                 <!-- fin de contenido -->
 

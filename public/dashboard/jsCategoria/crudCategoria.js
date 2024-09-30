@@ -24,7 +24,6 @@ async function listarCategorias() {
                 {
                     data: 'url_icon_categoria',
                     render: function (data) {
-                        // Devuelve un botón deshabilitado con el ícono correspondiente
                         return `
                             <button type="button" class="btn btn-primary icon-option" disabled>
                                 <i class="${data} fa-sm"></i>
@@ -102,7 +101,7 @@ document.getElementById('formRegistrarCategoria').addEventListener('submit', fun
 
     const nombreCategoria = document.getElementById('nombreCategoria').value;
     const descripcionCategoria = document.getElementById('descripcionCategoria').value;
-    const iconoCategoria = document.getElementById('iconoCategoria').value; // Asumiendo que obtienes el ícono de un campo
+    const iconoCategoria = document.getElementById('iconoCategoria').value; 
 
     // Validación del campo oculto (iconoCategoria)
     if (!iconoCategoria) {
@@ -160,6 +159,93 @@ document.getElementById('formRegistrarCategoria').addEventListener('submit', fun
             console.error('Error al registrar la categoría:', error);
         });
 });
+
+// ACTUALIZAR CATEGORIA
+// Evento para mostrar el modal con los datos de la categoría a actualizar
+document.getElementById('tablaCategoria').addEventListener('click', function (event) {
+    const btnEditar = event.target.closest('.btnEditar');
+
+    if (btnEditar) {
+        // Obtener la fila (tr) más cercana al botón de editar
+        const fila = $(btnEditar).closest('tr');
+
+        // Obtener los datos de la categoría de la fila usando la API del DataTable
+        const categoriaData = $('#tablaCategoria').DataTable().row(fila).data();
+
+        // Comprobar si se obtuvo correctamente la categoría
+        if (categoriaData) {
+            // Llenar el modal de actualización con los datos de la categoría
+            document.getElementById('idCategoriaActualizar').value = categoriaData.id_categoria;
+            document.getElementById('nombreCategoriaActualizar').value = categoriaData.nombre_categoria;
+            document.getElementById('descripcionCategoriaActualizar').value = categoriaData.descripcion;
+            document.getElementById('iconoCategoriaActualizar').value = categoriaData.url_icon_categoria;
+
+            // Mostrar el modal de actualización
+            $('#modalActualizarCategoria').modal('show');
+        } else {
+            console.error('No se pudo obtener los datos de la categoría.');
+        }
+    }
+});
+
+// Evento para actualizar la categoría al enviar el formulario
+document.getElementById('formActualizarCategoria').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const idCategoria = document.getElementById('idCategoriaActualizar').value;
+    const nombreCategoria = document.getElementById('nombreCategoriaActualizar').value;
+    const descripcionCategoria = document.getElementById('descripcionCategoriaActualizar').value;
+    const iconoCategoria = document.getElementById('iconoCategoriaActualizar').value;
+
+   
+
+    // Realizar la petición para actualizar la categoría
+    fetch(`/categoria/${idCategoria}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nombreCategoria: nombreCategoria,
+            descripcionCategoria: descripcionCategoria,
+            iconoCategoria: iconoCategoria
+        })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ocurrió un error al actualizar la categoría');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Mostrar una alerta de éxito con SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: '¡Categoría actualizada!',
+                text: 'La categoría ha sido actualizada correctamente.',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                $('#modalActualizarCategoria').modal('hide'); // Cerrar el modal
+            });
+
+            // Limpiar el formulario después de la actualización
+            document.getElementById('formActualizarCategoria').reset();
+
+            listarCategorias(); // Actualizar la lista de categorías
+        })
+        .catch(error => {
+            // Mostrar una alerta de error con SweetAlert
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Ocurrió un error al actualizar la categoría',
+                confirmButtonText: 'Aceptar'
+            });
+            console.error('Error al actualizar la categoría:', error);
+        });
+});
+
+
 
 
 // Llama a la función al cargar la página
