@@ -25,6 +25,7 @@ const registrarCategoria = async (nombre, descripcion, icono) => {
 
 
 
+
 // Función para listar todas las categorías
 const listarCategorias = async () => {
     const query = `
@@ -45,7 +46,7 @@ const listarCategorias = async () => {
 
 
 
-// Función para actualizar una categoría usando una consulta SQL normal
+// Función para actualizar una categoría
 const actualizarCategoria = async (id_categoria, nombre, descripcion, icono) => {
 
     const query = `
@@ -67,8 +68,28 @@ const actualizarCategoria = async (id_categoria, nombre, descripcion, icono) => 
 
 
 
+// Función para eliminar una categoría
+const eliminarCategoria = async (id_categoria) => {
+    const query = `
+    SELECT fn_eliminar_categoria($1);
+    `;
+    const values = [id_categoria];
+
+    try {
+        await sequelize.query(query, {
+            bind: values,
+            type: sequelize.QueryTypes.SELECT
+        });
+        //console.log(`Categoría con ID ${id_categoria} eliminada exitosamente.`);
+    } catch (error) {
+        console.error('Error al eliminar la categoría:', error);
+        throw error;
+    }
+};
+
 module.exports = {
     registrarCategoria, // Exporta la función para usarla en otras partes de la aplicación
     listarCategorias, // Exporta la función para listar categorías
     actualizarCategoria,
+    eliminarCategoria,
 };

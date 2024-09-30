@@ -94,7 +94,6 @@ async function listarCategorias() {
     }
 }
 
-
 // REGISTRAR CATEGORÍA
 document.getElementById('formRegistrarCategoria').addEventListener('submit', function (event) {
     event.preventDefault();
@@ -245,7 +244,60 @@ document.getElementById('formActualizarCategoria').addEventListener('submit', fu
         });
 });
 
+// ELIMINAR CATEGORÍA
+document.getElementById('tablaCategoria').addEventListener('click', function (event) {
+    if (event.target.closest('.btnBorrar')) {
+        // Obtener la fila (tr) más cercana al botón de eliminar
+        const fila = $(event.target).closest('tr');
 
+        // Obtener el ID de la categoría de la fila usando DataTable
+        const categoriaId = $('#tablaCategoria').DataTable().row(fila).data().id_categoria;
+        // Mostrar una confirmación de eliminación utilizando SweetAlert
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Quieres eliminar esta categoría?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Envía la solicitud de eliminación al servidor Node.js
+                fetch(`/eliminarCategoria/${categoriaId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ocurrió un error al eliminar la categoría');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Muestra una alerta de SweetAlert cuando se elimina la categoría correctamente
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Categoría eliminada!',
+                        text: 'La categoría ha sido eliminada correctamente',
+                        confirmButtonText: 'Aceptar'
+                    });
+
+                    // Actualiza la tabla de categorías
+                    listarCategorias(); // Llama a tu función para listar las categorías actualizadas
+                })
+                .catch(error => {
+                    // Muestra una alerta de SweetAlert cuando ocurre un error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error.message || 'Ocurrió un error al eliminar la categoría',
+                        confirmButtonText: 'Aceptar'
+                    });
+                    console.error('Error al eliminar la categoría:', error);
+                });
+            }
+        });
+    }
+});
 
 
 // Llama a la función al cargar la página

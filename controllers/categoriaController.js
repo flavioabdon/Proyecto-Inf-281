@@ -54,10 +54,21 @@ const actualizarCategoria = async (req, res) => {
     }
 };
 
-
+// Controlador para eliminar una categoría
+const eliminarCategoria = async (req, res) => {
+    const id_categoria = req.params.id; // El ID viene desde la URL
+    try {
+        await categoriaModel.eliminarCategoria(id_categoria); // Llama al modelo para eliminar la categoría
+        res.status(200).json({ message: 'Categoría eliminada' });
+    } catch (error) {
+        console.error('Error al eliminar la categoría:', error);
+        res.status(500).json({ message: 'Error al eliminar la categoría' });
+    }
+};
 
 module.exports = {
     registrarCategoria,
     listarCategorias,
-    actualizarCategoria
+    actualizarCategoria,
+    eliminarCategoria,
 };

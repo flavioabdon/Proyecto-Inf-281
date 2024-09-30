@@ -104,7 +104,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestionar:</h6>
-                        <a class="collapse-item" href="categoria.html">Categorías</a>
+                        <a class="collapse-item active" href="/categoria">Categorías</a>
                     </div>
                 </div>
             </li>
@@ -417,7 +417,7 @@
                                         <div class="form-group mb-0">
                                             <label for="iconoCategoriaActualizar">Ícono:</label>
                                             <!-- Input oculto para guardar el icono seleccionado -->
-                                            <input type="" class="form-control" id="iconoCategoriaActualizar"
+                                            <input type="hidden" class="form-control" id="iconoCategoriaActualizar"
                                                 name="iconoCategoriaActualizar" required>
                                             <div class="row">
                                                 <div class="col-12">
@@ -635,8 +635,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/dashboard/js/sb-admin-2.min.js"></script>
-    <script src="/dashboard/jsCategoria/icono.js"></script>
+    
     <script src="/dashboard/jsCategoria/crudCategoria.js"></script>
+    <script src="/dashboard/jsCategoria/icono.js"></script>
 
 
 

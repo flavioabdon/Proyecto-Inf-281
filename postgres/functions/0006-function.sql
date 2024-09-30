@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------
 -- Creado: Christian Medrano    Fecha: 29/9/2024                           --
 -- Actividad:                                                           --
--- Funcion que listar todas las categorias                                --
+-- Funcion que actualiza una categoria                               --
 ------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION fn_actualizar_categoria(
     p_id_categoria INT,

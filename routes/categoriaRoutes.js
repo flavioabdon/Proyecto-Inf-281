@@ -17,5 +17,9 @@ router.get('/listarCategorias', categoriaController.listarCategorias); // Usa el
 router.put('/categoria/:id', categoriaController.actualizarCategoria);
 
 
+//Ruta para eliminar una categoría
+router.delete('/eliminarCategoria/:id', categoriaController.eliminarCategoria); // Usa el controlador para eliminar una categoría
+
+
 module.exports = router;
 
