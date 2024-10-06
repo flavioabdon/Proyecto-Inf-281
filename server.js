@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mailRoutes = require('./routes/mailRoutes');
 const categoriaRoutes = require('./routes/categoriaRoutes');
+const almacenRoutes = require('./routes/almacenRoutes');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Usar las rutas definidas
 app.use('/', mailRoutes);
 app.use('/', categoriaRoutes);
+app.use('/', almacenRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
