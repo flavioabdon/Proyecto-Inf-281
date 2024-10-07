@@ -50,17 +50,17 @@ router.post('/formIniciarSesion', async (req, res) => {
       console.log(user.dataValues.rol)
       const area = user.dataValues.rol
       if(area ==='Administrador'){
-        //
-        res.redirect('/html/login/dashboard/index.html');
+        res.render('dashboard/clienteView');
       }else{
-        res.redirect('/html/login/dashboard-C/index.html');
+        res.render('dashboard/clienteView');
       }
       
       //res.json(user);
 
     } else {
       // Si no se encuentra el usuario, devolver null
-      res.json("null");
+      //res.json("null");
+      res.render('cliente/registrarView');
     }
   } catch (error) {
     console.error('Error al autenticar usuario:', error);

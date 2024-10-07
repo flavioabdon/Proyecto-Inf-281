@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mailRoutes = require('./routes/mailRoutes');
 const categoriaRoutes = require('./routes/categoriaRoutes');
 const almacenRoutes = require('./routes/almacenRoutes');
+const admRoutes = require('./routes/admRoutes');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', mailRoutes);
 app.use('/', categoriaRoutes);
 app.use('/', almacenRoutes);
+app.use('/', admRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;

@@ -1,0 +1,238 @@
+<%- include ("arriba") %>
+
+<!-- contenido del medio -->
+<main class="mx-5 my-5 contenido-principal">
+
+    <!-- Card Contenedor -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-secondary">Gestión de Clientes</h4>
+        </div>
+        <div class="card-body">
+            <!-- Botón para abrir el modal -->
+            <button class="btn btn-success my-1 mt-4 ml-4" data-toggle="modal"
+            data-target="#modalAgregarCliente">Añadir Cliente</button>
+
+        <div class="row contenedor-tabla py-4 px-4">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table id="tablaCliente"
+                        class="table table-bordered table-condensed table-hover" style="width:100%">
+                        <thead class="text-center">
+                            <tr>
+                                <th class="text-center">#:&nbsp;</th>
+                                <th>ID:&nbsp;</th>
+                                <th class="text-center">Nombre:&nbsp;</th>
+                                <th class="text-center">Apellido:&nbsp;</th>
+                                <th class="text-center">Email:&nbsp;</th>
+                                <th class="text-center">Celular:&nbsp;</th>
+                                <th class="text-center">CI:&nbsp;</th>
+                                <th class="text-center">Sexo:&nbsp;</th>
+                                <th class="text-center">Imagen de Perfil:&nbsp;</th>
+                                <th class="text-center">Fecha Creacion:&nbsp;</th>
+                                <th class="text-center">Fecha Modificacion:&nbsp;</th>
+                                <th class="text-center">Usuario Creacion:&nbsp;</th>
+                                <th class="text-center">Usuario Modificacion:&nbsp;</th>
+                                <th class="text-center">Dirección:&nbsp;</th>
+                                <th class="text-center">Registro:&nbsp;</th>
+                                <th class="text-center">Acciones:&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Contenido de la tabla -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- Modal para Añadir Categoría -->
+    <div class="modal fade" id="modalAgregarCliente" tabindex="-1" role="dialog"
+    aria-labelledby="modalAgregarCategoriaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content p-2">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAgregarCategoriaLabel">Añadir Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formRegistrarClienteC" method="POST" action="">
+                    <div class="form-group">
+                        <label for="nombreCliente">Nombre:</label>
+                        <input type="text" class="form-control" id="nombreCliente"
+                            placeholder="Introduce el nombre del cliente" name="nombreCliente"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidoCliente">Apellido:</label>
+                        <input type="text" class="form-control" id="apellidoCliente"
+                            placeholder="Introduce el apellido del cliente" name="apellidoCliente"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailcliente">Email:</label>
+                        <input type="text" class="form-control" id="emailCliente"
+                            placeholder="Introduce el email del cliente" name="emailCliente"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="celularCliente">Celular:</label>
+                        <input type="text" class="form-control" id="celularCliente"
+                            placeholder="Introduce el celular del cliente" name="celularCliente"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ciCliente">CI:</label>
+                        <input type="text" class="form-control" id="ciCliente"
+                            placeholder="Introduce el ci del cliente" name="ciCliente"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sexoCliente">Sexo:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i
+                                class="fa fa-venus-mars"></i></span>
+                            <select class="form-select" id="sexoCliente" name="sexoCliente" required>
+                                <option value="" disabled selected>Selecciona tu sexo</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fotoCliente">Foto:</label>
+                        <input type="text" class="form-control" id="fotoCliente"
+                            placeholder="Introduce la foto del cliente" name="fotoCliente"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccionCliente">Direccion:</label>
+                        <input type="text" class="form-control" id="direccionCliente"
+                            placeholder="Introduce la direccion del cliente" name="direccionCliente"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="latitud">Latitud:</label>
+                        <input type="text" class="form-control" id="latitud"
+                            placeholder="Latitud" name="latitud"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="longitud">Longitud:</label>
+                        <input type="text" class="form-control" id="longitud"
+                            placeholder="longitud" name="longitud"
+                            required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" form="formRegistrarClienteC" class="btn btn-success">Guardar
+                    Cliente</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+<!-- Modal para Actualizar Categoría -->
+<div class="modal fade" id="modalActualizarCliente" tabindex="-1" role="dialog"
+aria-labelledby="modalActualizarCategoriaLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content p-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalActualizarCategoriaLabel">Actualizar Cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="formActualizarCliente" action="">
+                <input type="hidden" id="idClienteActualizar" name="idClienteActualizar">
+                <!-- Campo oculto para el ID de la categoría -->
+                <div class="form-group">
+                    <label for="nombreClienteActualizar">Nombre:</label>
+                    <input type="text" class="form-control" id="nombreClienteActualizar"
+                        placeholder="Introduce el nombre del cliente"
+                        name="nombreClienteActualizar" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellidoClienteActualizar">Apellido:</label>
+                    <input type="text" class="form-control" id="apellidoClienteActualizar"
+                        placeholder="Introduce el apellido de la cliente"
+                        name="apellidoClienteActualizar" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailClienteActualizar">Email:</label>
+                    <input type="text" class="form-control" id="emailClienteActualizar"
+                        placeholder="Introduce el email de la cliente"
+                        name="emailClienteActualizar" required>
+                </div>
+                <div class="form-group">
+                    <label for="celularClienteActualizar">Celular:</label>
+                    <input type="text" class="form-control" id="celularClienteActualizar"
+                        placeholder="Introduce el celular de la cliente"
+                        name="celularClienteActualizar" required>
+                </div>
+                <div class="form-group">
+                    <label for="ciClienteActualizar">CI:</label>
+                    <input type="text" class="form-control" id="ciClienteActualizar"
+                        placeholder="Introduce el ci de la cliente"
+                        name="ciClienteActualizar" required>
+                </div>
+                <div class="form-group">
+                    <label for="sexoClienteActualizar">Sexo:</label>
+                    <input type="text" class="form-control" id="sexoClienteActualizar"
+                        placeholder="Introduce el sexo de la cliente"
+                        name="sexoClienteActualizar" required>
+                </div>
+                <div class="form-group">
+                    <label for="fotoClienteActualizar">Foto:</label>
+                    <input type="text" class="form-control" id="fotoClienteActualizar"
+                        placeholder="Introduce el foto de la cliente"
+                        name="fotoClienteActualizar" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccionClienteActualizar">Direccion:</label>
+                    <input type="text" class="form-control" id="direccionClienteActualizar"
+                        placeholder="Introduce el direccion de la cliente"
+                        name="direccionClienteActualizar" required>
+                </div>
+                <div class="form-group">
+                    <label for="estado_c">Estado registro:</label>
+                    <input type="text" class="form-control" id="estado_c"
+                        placeholder="Introduce el registro actual del cliente"
+                        name="estado_c" required>
+                </div>
+                <div class="form-group">
+                    <label for="latitud">Latitud:</label>
+                    <input type="text" class="form-control" id="latitud"
+                        placeholder="latitud"
+                        name="latitud" required>
+                </div>
+                <div class="form-group">
+                    <label for="longitud">Longitud:</label>
+                    <input type="text" class="form-control" id="longitud"
+                        placeholder="longitud"
+                        name="longitud" required>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" form="formActualizarCliente"
+                class="btn btn-primary">Actualizar
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+</main>
+<!-- fin de contenido -->
+
+<%- include ("abajo") %>
