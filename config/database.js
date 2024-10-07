@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 // Define las variables de configuración
 const dbName = 'bd281_GIT';       // Nombre de la base de datos
 const dbUser = 'postgres';       // Nombre de usuario
-const dbPassword = '123456';
+const dbPassword = '123456789';
 const dbHost = 'localhost';      // Host de la base de datos
 
 // Configura la conexión a la base de datos
