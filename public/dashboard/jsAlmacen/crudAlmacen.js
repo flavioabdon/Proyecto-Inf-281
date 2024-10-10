@@ -144,7 +144,7 @@ document.getElementById('formRegistrarAlmacen').addEventListener('submit', funct
 // Evento para mostrar el modal con los datos deL almacen a actualizar
 document.getElementById('tablaAlmacen').addEventListener('click', function (event) {
     const btnEditar = event.target.closest('.btnEditar');
-
+    //alert("holaaaaaa");
     if (btnEditar) {
         // Obtener la fila (tr) más cercana al botón de editar
         const fila = $(btnEditar).closest('tr');
@@ -156,7 +156,8 @@ document.getElementById('tablaAlmacen').addEventListener('click', function (even
         if (almacenData) {
             // Llenar el modal de actualización con los datos de la categoría
             document.getElementById('idAlmacenActualizar').value = almacenData.id_almacen;
-            document.getElementById('codAlmacenActualizar').value = almacenData.cod_Almacen;
+            document.getElementById('codAlmacenActualizar').value = almacenData.cod_almacen;
+            console.log(almacenData.cod_Almacen);
             document.getElementById('direccionAlmacenActualizar').value = almacenData.direccion_almacen;
             document.getElementById('capacidadAlmacenActualizar').value = almacenData.capacidad_unid;
 
