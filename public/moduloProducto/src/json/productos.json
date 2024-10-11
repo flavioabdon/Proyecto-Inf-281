@@ -1,0 +1,232 @@
+[
+    {
+        "id": "recCesta001",
+        "caracteristicas": {
+            "nombre": "Cesta de paja tejida a mano",
+            "descripcion": "Una cesta artesanal tejida a mano con paja natural, perfecta para almacenar frutas o como decoración en interiores.",
+            "categoria": "cestas",
+            "colores": [
+                "#f5deb3",
+                "#a0522d"
+            ],
+            "precio": 120,
+            "imagen": [
+                {
+                    "id": "attCestaImg001",
+                    "formato": {
+                        "grande": {
+                            "url": "https://i5.walmartimages.com/asr/0bffb43e-3637-46ed-bab1-3210264b502d.5e8d1d2847da50120b798d98b783890e.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "recCesta002",
+        "caracteristicas": {
+            "nombre": "Cesta de mimbre decorativa",
+            "descripcion": "Cesta de mimbre tejida con detalles en colores vivos, ideal para almacenar mantas o ropa en el hogar.",
+            "categoria": "cestas",
+            "colores": [
+                "#deb887",
+                "#556b2f"
+            ],
+            "precio": 150,
+            "imagen": [
+                {
+                    "id": "attCestaImg002",
+                    "formato": {
+                        "grande": {
+                            "url": "https://i.etsystatic.com/10281997/r/il/6c2ccc/1461521640/il_570xN.1461521640_dyc1.jpg"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "recBolso001",
+        "caracteristicas": {
+            "nombre": "Bolso de cuero artesanal",
+            "descripcion": "Bolso de cuero natural, hecho a mano por artesanos bolivianos, con un diseño minimalista y elegante.",
+            "categoria": "bolsos",
+            "colores": [
+                "#8b4513",
+                "#000"
+            ],
+            "precio": 300,
+            "imagen": [
+                {
+                    "id": "attBolsoImg001",
+                    "formato": {
+                        "grande": {
+                            "url": "https://www.nuestratiendaartesanal.com/wp-content/uploads/2020/06/MO02-Morral-Cuero.jpeg"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "recBolso002",
+        "caracteristicas": {
+            "nombre": "Bolso de aguayo",
+            "descripcion": "Bolso hecho con tejido de aguayo, tradicional de las culturas andinas, ideal para un estilo casual y único.",
+            "categoria": "bolsos",
+            "colores": [
+                "#ff4500",
+                "#deb887"
+            ],
+            "precio": 250,
+            "imagen": [
+                {
+                    "id": "attBolsoImg002",
+                    "formato": {
+                        "grande": {
+                            "url": "https://www.caserita-bolivia.es/1615/bolso-ejecutivo-con-aguayo.jpg"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "recJoyas001",
+        "caracteristicas": {
+            "nombre": "Collar de plata con piedras andinas",
+            "descripcion": "Collar hecho a mano con plata y piedras naturales de la región andina, con un diseño único y elegante.",
+            "categoria": "joyas",
+            "colores": [
+                "#c0c0c0",
+                "#4682b4"
+            ],
+            "precio": 450,
+            "imagen": [
+                {
+                    "id": "attJoyasImg001",
+                    "formato": {
+                        "grande": {
+                            "url": "https://d20f60vzbd93dl.cloudfront.net/uploads/tienda_005018/tienda_005018_a7dbf53da9e886a4617ca8004b257b098eccd3c0_producto_large_90.JPEG"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "recJoyas002",
+        "caracteristicas": {
+            "nombre": "Pulsera de cobre y alpaca",
+            "descripcion": "Pulsera hecha con cobre y alpaca, resaltando los materiales tradicionales de Bolivia, ideal para complementar cualquier atuendo.",
+            "categoria": "joyas",
+            "colores": [
+                "#b87333",
+                "#c0c0c0"
+            ],
+            "precio": 180,
+            "imagen": [
+                {
+                    "id": "attJoyasImg002",
+                    "formato": {
+                        "grande": {
+                            "url": "https://www.mendoza.gov.ar/wp-content/uploads/sites/49/2017/03/20191019_180305-600x800.jpg"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "recTejidos001",
+        "caracteristicas": {
+            "nombre": "Chal tejido de alpaca",
+            "descripcion": "Chal suave tejido con lana de alpaca, perfecto para los días fríos, hecho por manos artesanas en Bolivia.",
+            "categoria": "tejidos",
+            "colores": [
+                "#708090",
+                "#f5f5dc"
+            ],
+            "precio": 600,
+            "imagen": [
+                {
+                    "id": "attTejidosImg001",
+                    "formato": {
+                        "grande": {
+                            "url": "https://i.ytimg.com/vi/7UyuC1kU-S0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDUbMhH1ynsJG7SUlyonCAtYLsxFw"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "recTejidos002",
+        "caracteristicas": {
+            "nombre": "Bufanda de lana tejida a mano",
+            "descripcion": "Bufanda tejida a mano con lana natural, en colores tradicionales de Bolivia, perfecta para el invierno.",
+            "categoria": "tejidos",
+            "colores": [
+                "#d2691e",
+                "#ffefd5"
+            ],
+            "precio": 120,
+            "imagen": [
+                {
+                    "id": "attTejidosImg002",
+                    "formato": {
+                        "grande": {
+                            "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHDhnPezqNr_bUwTa8UOqBET2-9aiuU-fyVQ&s"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "rec43w3ipXvP28vog",
+        "caracteristicas": {
+            "nombre": "Banco de madera tallada",
+            "descripcion": "Un banco artesanal hecho a mano con detalles tallados en madera, ideal para interiores rústicos.",
+            "categoria": "muebles",
+            "colores": [
+                "#a0522d",
+                "#f15025"
+            ],
+            "precio": 450,
+            "imagen": [
+                {
+                    "id": "attcvDDMikF6G2iNi",
+                    "formato": {
+                        "grande": {
+                            "url": "https://previews.123rf.com/images/onepony/onepony1101/onepony110100049/8764276-un-banco-de-madera-de-teca-tallado-en-la-sombra-de-un-%C3%A1rbol-en-un-tranquilo-jard%C3%ADn.jpg"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "id": "rec4f2RIftFCb7aHh",
+        "caracteristicas": {
+            "nombre": "Mesa de piedra andina",
+            "descripcion": "Una mesa hecha con piedra de la región andina, perfecta para exteriores y ambientes naturales.",
+            "categoria": "muebles",
+            "colores": [
+                "#696969",
+                "#222"
+            ],
+            "precio": 1200,
+            "imagen": [
+                {
+                    "id": "attP2cUyxU35M1zbw",
+                    "formato": {
+                        "grande": {
+                            "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/49/97/85/disfruta-de-buenos-platos.jpg?w=1200&h=-1&s=1"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+]
