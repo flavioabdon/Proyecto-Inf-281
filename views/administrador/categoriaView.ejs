@@ -12,24 +12,29 @@
 
 
 
+    <!-- datatables -->
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
+
+
+
     <!-- Custom fonts for this template-->
     <link href="/dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="/dashboard/css/sb-admin-2.min.css" rel="stylesheet">
-
     <!-- iconos -->
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
-    <!-- datatables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.6/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css">
+
+    <!-- Custom styles for this template-->
+    <link href="/dashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
 
     <!-- miCss -->
-    <link rel="stylesheet" href="/dashboard/css/tabla.css">
+
 
 </head>
 
@@ -101,7 +106,7 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Modulos</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestionar:</h6>
                         <a class="collapse-item active" href="/categoria">Categorías</a>
@@ -176,27 +181,27 @@
                     <!-- Card Contenedor -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h4 class="m-0 font-weight-bold text-secondary">Gestión de Categorías</h4>
+                            <h4 class="m-0 font-weight-bold text-secondary text-center">Gestión de Categorías</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body ">
                             <!-- Botón para abrir el modal -->
                             <button class="btn btn-success my-1 mt-4 ml-4" data-toggle="modal"
                                 data-target="#modalAgregarCategoria">Añadir Categoría</button>
 
-                            <div class="row contenedor-tabla py-4 px-4">
+                            <div class="row contenedor-tabla">
                                 <div class="col-lg-12">
-                                    <div class="table-responsive">
-                                        <table id="tablaCategoria"
-                                            class="table table-bordered table-condensed table-hover" style="width:100%">
-                                            <thead class="text-center">
+                                    <div class="table-responsive px-4 py-2">
+                                        <table id="tablaCategoria" class="table  table-hover responsive nowrap"
+                                            style="width:100%">
+                                            <thead class="thead-light text-center">
                                                 <tr>
-                                                    <th class="text-center">#:&nbsp;</th>
+                                                    <th class="">#:&nbsp;</th>
                                                     <th>ID:&nbsp;</th>
-                                                    <th class="text-center">Nombre:&nbsp;</th>
-                                                    <th class="text-center">Descripción:&nbsp;</th>
-                                                    <th class="text-center">Icono:&nbsp;</th>
-                                                    <th class="text-center">Estado:&nbsp;</th>
-                                                    <th class="text-center">Acciones:&nbsp;</th>
+                                                    <th class="">Nombre:&nbsp;</th>
+                                                    <th class="">Descripción:&nbsp;</th>
+                                                    <th class="">Icono:&nbsp;</th>
+                                                    <th class="">Estado:&nbsp;</th>
+                                                    <th class="">Acciones:&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -212,7 +217,7 @@
                     <!-- Modal para Añadir Categoría -->
                     <div class="modal fade" id="modalAgregarCategoria" tabindex="-1" role="dialog"
                         aria-labelledby="modalAgregarCategoriaLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-md  modal-dialog-centered" role="document">
                             <div class="modal-content p-2">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="modalAgregarCategoriaLabel">Añadir Categoría</h5>
@@ -222,161 +227,100 @@
                                 </div>
                                 <div class="modal-body">
                                     <form id="formRegistrarCategoria" method="POST" action="">
+                                        <!-- Nombre de la Categoría -->
                                         <div class="form-group">
                                             <label for="nombreCategoria">Nombre:</label>
                                             <input type="text" class="form-control" id="nombreCategoria"
                                                 placeholder="Introduce el nombre de la categoría" name="nombreCategoria"
                                                 required>
                                         </div>
+                                        <!-- Descripción de la Categoría -->
                                         <div class="form-group">
                                             <label for="descripcionCategoria">Descripción:</label>
                                             <textarea class="form-control" id="descripcionCategoria" rows="3"
                                                 placeholder="Introduce una descripción" name="descripcionCategoria"
                                                 required></textarea>
                                         </div>
-                                        <div class="form-group mb-0">
+                                        <!-- Selección de Ícono -->
+                                        <div class="form-group">
                                             <label for="iconoCategoria">Ícono:</label>
-                                            <!-- Input oculto para guardar el icono seleccionado -->
                                             <input type="hidden" class="form-control" id="iconoCategoria"
                                                 name="iconoCategoria" required>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="icon-selector row">
-                                                        <!-- Serie de íconos a elegir -->
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-tshirt">
-                                                                <i class="fas fa-tshirt fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-cut">
-                                                                <i class="fas fa-cut fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-socks">
-                                                                <i class="fas fa-socks fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-ribbon">
-                                                                <i class="fas fa-ribbon fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-hand-holding-heart">
-                                                                <i class="fas fa-hand-holding-heart fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-ribbon">
-                                                                <i class="fas fa-ribbon fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-glasses">
-                                                                <i class="fas fa-glasses fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-feather-alt">
-                                                                <i class="fas fa-feather-alt fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-brush">
-                                                                <i class="fas fa-brush fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-hands">
-                                                                <i class="fas fa-hands fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-shopping-basket">
-                                                                <i class="fas fa-shopping-basket fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-seedling">
-                                                                <i class="fas fa-seedling fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-gift">
-                                                                <i class="fas fa-gift fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-hammer">
-                                                                <i class="fas fa-hammer fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-ring">
-                                                                <i class="fas fa-ring fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-crown">
-                                                                <i class="fas fa-crown fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-paint-brush">
-                                                                <i class="fas fa-paint-brush fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-pen-fancy">
-                                                                <i class="fas fa-pen-fancy fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="icon-selector d-flex flex-wrap justify-content-center">
+                                                <!-- Íconos disponibles para seleccionar -->
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-tshirt">
+                                                    <i class="fas fa-tshirt fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-cut">
+                                                    <i class="fas fa-cut fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-socks">
+                                                    <i class="fas fa-socks fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-ribbon">
+                                                    <i class="fas fa-ribbon fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-hand-holding-heart">
+                                                    <i class="fas fa-hand-holding-heart fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-glasses">
+                                                    <i class="fas fa-glasses fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-feather-alt">
+                                                    <i class="fas fa-feather-alt fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-brush">
+                                                    <i class="fas fa-brush fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-hands">
+                                                    <i class="fas fa-hands fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-shopping-basket">
+                                                    <i class="fas fa-shopping-basket fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-seedling">
+                                                    <i class="fas fa-seedling fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-gift">
+                                                    <i class="fas fa-gift fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-hammer">
+                                                    <i class="fas fa-hammer fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-ring">
+                                                    <i class="fas fa-ring fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-crown">
+                                                    <i class="fas fa-crown fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-paint-brush">
+                                                    <i class="fas fa-paint-brush fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-pen-fancy">
+                                                    <i class="fas fa-pen-fancy fa-2x"></i>
+                                                </button>
                                             </div>
-                                            <!-- Icono seleccionado -->
-                                            <!-- <p>Ícono seleccionado: <span id="iconoSeleccionado"></span></p> -->
                                         </div>
                                     </form>
                                 </div>
+                                <!-- Modal footer con botones de acción -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="formRegistrarCategoria" class="btn btn-success">Guardar
@@ -390,7 +334,7 @@
                     <!-- Modal para Actualizar Categoría -->
                     <div class="modal fade" id="modalActualizarCategoria" tabindex="-1" role="dialog"
                         aria-labelledby="modalActualizarCategoriaLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
                             <div class="modal-content p-2">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="modalActualizarCategoriaLabel">Actualizar Categoría</h5>
@@ -419,138 +363,76 @@
                                             <!-- Input oculto para guardar el icono seleccionado -->
                                             <input type="hidden" class="form-control" id="iconoCategoriaActualizar"
                                                 name="iconoCategoriaActualizar" required>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="icon-selector row">
-                                                        <!-- Serie de íconos a elegir -->
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-tshirt">
-                                                                <i class="fas fa-tshirt fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-cut">
-                                                                <i class="fas fa-cut fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-socks">
-                                                                <i class="fas fa-socks fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-ribbon">
-                                                                <i class="fas fa-ribbon fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-hand-holding-heart">
-                                                                <i class="fas fa-hand-holding-heart fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-ribbon">
-                                                                <i class="fas fa-ribbon fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-glasses">
-                                                                <i class="fas fa-glasses fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-feather-alt">
-                                                                <i class="fas fa-feather-alt fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-brush">
-                                                                <i class="fas fa-brush fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-hands">
-                                                                <i class="fas fa-hands fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-shopping-basket">
-                                                                <i class="fas fa-shopping-basket fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-seedling">
-                                                                <i class="fas fa-seedling fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-gift">
-                                                                <i class="fas fa-gift fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-hammer">
-                                                                <i class="fas fa-hammer fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-ring">
-                                                                <i class="fas fa-ring fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-crown">
-                                                                <i class="fas fa-crown fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-paint-brush">
-                                                                <i class="fas fa-paint-brush fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-6 col-md-2 mb-3 text-center">
-                                                            <button type="button"
-                                                                class="btn btn-outline-secondary icon-option"
-                                                                data-icon="fas fa-pen-fancy">
-                                                                <i class="fas fa-pen-fancy fa-2x"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="icon-selector d-flex flex-wrap justify-content-center">
+                                                <!-- Serie de íconos a elegir -->
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-tshirt">
+                                                    <i class="fas fa-tshirt fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-cut">
+                                                    <i class="fas fa-cut fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-socks">
+                                                    <i class="fas fa-socks fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-ribbon">
+                                                    <i class="fas fa-ribbon fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-hand-holding-heart">
+                                                    <i class="fas fa-hand-holding-heart fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-glasses">
+                                                    <i class="fas fa-glasses fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-feather-alt">
+                                                    <i class="fas fa-feather-alt fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-brush">
+                                                    <i class="fas fa-brush fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-hands">
+                                                    <i class="fas fa-hands fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-shopping-basket">
+                                                    <i class="fas fa-shopping-basket fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-seedling">
+                                                    <i class="fas fa-seedling fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-gift">
+                                                    <i class="fas fa-gift fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-hammer">
+                                                    <i class="fas fa-hammer fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-ring">
+                                                    <i class="fas fa-ring fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-crown">
+                                                    <i class="fas fa-crown fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-paint-brush">
+                                                    <i class="fas fa-paint-brush fa-2x"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary icon-option m-2"
+                                                    data-icon="fas fa-pen-fancy">
+                                                    <i class="fas fa-pen-fancy fa-2x"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -558,14 +440,11 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="formActualizarCategoria"
-                                        class="btn btn-primary">Actualizar
-                                    </button>
+                                        class="btn btn-primary">Actualizar</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
 
 
                 </main>
@@ -625,17 +504,21 @@
     <script src="/dashboard/vendor/jquery/jquery.min.js"></script>
     <script src="/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+
+
+    <!-- Custom scripts for all pages-->
+    <script src="/dashboard/js/sb-admin-2.min.js"></script>
+
     <!-- Core plugin JavaScript-->
     <script src="/dashboard/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- datatables -->
-    <script src="https://cdn.datatables.net/2.0.6/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.6/js/dataTables.bootstrap5.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="/dashboard/js/sb-admin-2.min.js"></script>
-    
+
     <script src="/dashboard/jsCategoria/crudCategoria.js"></script>
     <script src="/dashboard/jsCategoria/icono.js"></script>
 
