@@ -4,7 +4,7 @@ const almacenController = require('../controllers/almacenController');
 
 // Ruta para la vista de almacenes
 router.get('/almacen', (req, res) => {
-    res.render('administrador/almacenView'); // Renderiza la vista 'almacenView.ejs'
+    res.render('administrador/almacenView',{ currentPage: "almacen" } ); // Renderiza la vista 'almacenView.ejs'
 });
 
 // Ruta para registrar un nuevo almacén

@@ -1,0 +1,95 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/indexAdmin">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Admin</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Inicio -->
+    <li class="nav-item <%= (currentPage === 'indexAdmin') ? 'active' : '' %>">
+        <a class="nav-link" href="/indexAdmin">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+    </li>
+
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Usuarios
+    </div>
+
+    <!-- Nav Item - Clientes -->
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Clientes</span></a>
+    </li>
+    <!-- Nav Item - Artesanos -->
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-fw fa-paint-brush"></i>
+            <span>Artesanos</span></a>
+    </li>
+    <!-- Nav Item - Deliverys -->
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-fw fa-motorcycle"></i>
+            <span>Deliverys</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Gestion Productos
+    </div>
+
+    <!-- Nav Item - Tables Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+            aria-controls="collapsePages">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Modulos</span>
+        </a>
+        <div id="collapsePages" class="collapse <%= (currentPage !== 'indexAdmin') ? 'show' : '' %>" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Gestionar:</h6>
+                <a class="collapse-item <%= (currentPage === 'categoria') ? 'active' : '' %>" href="/categoria">Categorías</a>
+                <a class="collapse-item <%= (currentPage === 'almacen') ? 'active' : '' %>"" href="/almacen">Almacenes</a>
+                <a class="collapse-item" href="/comunidad">Comunidades</a>
+                <a class="collapse-item" href="/productos">Productos</a>
+            </div>
+
+        </div>
+
+    </li>
+
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
+<!-- End of Sidebar -->

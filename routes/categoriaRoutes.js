@@ -4,7 +4,7 @@ const categoriaController = require('../controllers/categoriaController');
 
 // Ruta para la vista de categorías
 router.get('/categoria', (req, res) => {
-    res.render('administrador/categoriaView'); // Renderiza la vista 'categoriaView.ejs'
+    res.render('administrador/categoriaView', { currentPage: "categoria" }); // Renderiza la vista 'categoriaView.ejs'
 });
 
 // Ruta para registrar una nueva categoría
