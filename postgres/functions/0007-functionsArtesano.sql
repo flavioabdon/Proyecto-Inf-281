@@ -136,7 +136,6 @@ RETURNS TABLE (
 	apellido VARCHAR(100),
 	email VARCHAR(30),
 	numero_contacto VARCHAR(12),
-	contraseña VARCHAR(255),
 	ci VARCHAR(15),
 	sexo VARCHAR(20),
 	fotoperf_url VARCHAR(200),
@@ -157,7 +156,6 @@ BEGIN
 		u.apellido,
 		u.email,
 		u.numero_contacto,
-		u.contraseña,
 		u.ci,
 		u.sexo,
 		u.fotoperf_url,
@@ -172,7 +170,8 @@ BEGIN
         public.USUARIO u, public.ARTESANO a, public.COMUNIDAD c where u.id_usuario = a.id_usuario and a.id_comunidad = c.id_comunidad;
 END;
 $$ LANGUAGE plpgsql;
-
+--pruebita
+select * from fn_listar_artesanos()
 
 --------------------------------------------------------------------------
 -- Creado: Daniel Tapia    Fecha: 04/10/2024                           --
@@ -190,9 +189,8 @@ CREATE OR REPLACE FUNCTION fn_actualizar_artesano(
 	sexoArtesano VARCHAR(20),
 	fotoArtesano VARCHAR(200),
     usuario VARCHAR(20),
-	estado_c VARCHAR(15),
 	espArtesano VARCHAR(50),
-	idCom INT
+	estado_c VARCHAR(15)
 )
 RETURNS TABLE(
     id_usuario INT,
@@ -236,8 +234,7 @@ BEGIN
 		fecha_modificacion = NOW(),
 		usuario_modificacion = usuario,
 		estado_registro = estado_c,
-		especialidad_artesano = espArtesano,
-		id_comunidad = idCom
+		especialidad_artesano = espArtesano
 	WHERE a.id_usuario = id_usuario_C;  -- Corrección en el WHERE
 
 	-- Devolver los datos actualizados
@@ -271,10 +268,9 @@ $$ LANGUAGE plpgsql;
 
 --pruebita
 select fn_actualizar_artesano(7,'Hulk','Hogan','lalaho@gmail.com','74135694',
-'e8549483e76a407ffb91c8055bd97de5','17129036','Masculino','http://example.com/foto.jpg',
-'ADM','pendiente','Costuras',1)
+'17129036','Masculino','http://example.com/foto.jpg',
+'ADM','Costuras','pendiente')
 select * from artesano
-
 
 --------------------------------------------------------------------------
 -- Creado: Daniel Tapia    Fecha: 04/10/2024                           --

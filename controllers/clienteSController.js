@@ -38,11 +38,11 @@ const listarClientes = async (req, res) => {
 // Controlador para actualizar una categoría
 const actualizarCliente = async (req, res) => {
     const id_cliente = req.params.id; // El ID viene desde la URL
-    const { nombreCliente, apellidoCliente, emailCliente, celularCliente, ciCliente, sexoCliente, fotoCliente, direccionCliente, estado_c, latitud, longitud } = req.body; // Datos enviados en el cuerpo
+    const { nombreCliente, apellidoCliente, emailCliente, celularCliente, ciCliente, sexoCliente, fotoCliente, direccionCliente, longitud, latitud, estadoCliente } = req.body; // Datos enviados en el cuerpo
     try {
         const clienteActualizado = await clienteModel.actualizarCliente(
             id_cliente,
-            nombreCliente, apellidoCliente, emailCliente, celularCliente, ciCliente, sexoCliente, fotoCliente, direccionCliente, latitud, longitud, estado_c
+            nombreCliente, apellidoCliente, emailCliente, celularCliente, ciCliente, sexoCliente, fotoCliente, direccionCliente, longitud, latitud, estadoCliente
         );
         res.status(200).json({ message: 'Cliente actualizado', cliente: clienteActualizado });
     } catch (error) {

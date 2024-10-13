@@ -63,41 +63,41 @@
             <div class="modal-body">
                 <form id="formRegistrarArtesano" method="POST" action="">
                     <div class="form-group">
-                        <label for="nombreCliente">Nombre:</label>
-                        <input type="text" class="form-control" id="nombreCliente"
-                            placeholder="Introduce el nombre del cliente" name="nombreCliente"
+                        <label for="nombreArtesano">Nombre:</label>
+                        <input type="text" class="form-control" id="nombreArtesano"
+                            placeholder="Introduce el nombre del Artesano" name="nombreArtesano"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="apellidoCliente">Apellido:</label>
-                        <input type="text" class="form-control" id="apellidoCliente"
-                            placeholder="Introduce el apellido del cliente" name="apellidoCliente"
+                        <label for="apellidoArtesano">Apellido:</label>
+                        <input type="text" class="form-control" id="apellidoArtesano"
+                            placeholder="Introduce el apellido del Artesano" name="apellidoArtesano"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="emailcliente">Email:</label>
-                        <input type="text" class="form-control" id="emailCliente"
-                            placeholder="Introduce el email del cliente" name="emailCliente"
+                        <label for="emailArtesano">Email:</label>
+                        <input type="text" class="form-control" id="emailArtesano"
+                            placeholder="Introduce el email del Artesano" name="emailArtesano"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="celularCliente">Celular:</label>
-                        <input type="text" class="form-control" id="celularCliente"
-                            placeholder="Introduce el celular del cliente" name="celularCliente"
+                        <label for="celularArtesano">Celular:</label>
+                        <input type="text" class="form-control" id="celularArtesano"
+                            placeholder="Introduce el celular del Artesano" name="celularArtesano"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="ciCliente">CI:</label>
-                        <input type="text" class="form-control" id="ciCliente"
-                            placeholder="Introduce el ci del cliente" name="ciCliente"
+                        <label for="ciArtesano">CI:</label>
+                        <input type="text" class="form-control" id="ciArtesano"
+                            placeholder="Introduce el ci del Artesano" name="ciArtesano"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="sexoCliente">Sexo:</label>
+                        <label for="sexoArtesano">Sexo:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i
                                 class="fa fa-venus-mars"></i></span>
-                            <select class="form-select" id="sexoCliente" name="sexoCliente" required>
+                            <select class="form-select" id="sexoArtesano" name="sexoArtesano" required>
                                 <option value="" disabled selected>Selecciona tu sexo</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
@@ -105,9 +105,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="fotoCliente">Foto:</label>
-                        <input type="text" class="form-control" id="fotoCliente"
-                            placeholder="Introduce la foto del cliente" name="fotoCliente"
+                        <label for="fotoArtesano">Foto:</label>
+                        <input type="text" class="form-control" id="fotoArtesano"
+                            placeholder="Introduce la foto del Artesano" name="fotoArtesano"
                             required>
                     </div>
                     <div class="form-group">
@@ -132,7 +132,76 @@
     </div>
 </div>
     
+<!-- Modal para actualizar cliente -->
+<!--<div class="modal fade" id="modalActualizarArtesano" tabindex="-1" role="dialog" aria-labelledby="modalActualizarArtesanoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalActualizarArtesanoLabel">Actualizar Artesano</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formActualizarArtesano">
+                <div class="modal-body">
+                    <input type="hidden" id="idArtesanoActualizar" name="idArtesano">
 
+                    <div class="form-group">
+                        <label for="nombreArtesanoActualizar">Nombre</label>
+                        <input type="text" class="form-control" id="nombreArtesanoActualizar" name="nombreArtesano" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellidoArtesanoActualizar">Apellido</label>
+                        <input type="text" class="form-control" id="apellidoArtesanoActualizar" name="apellidoArtesano" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailArtesanoActualizar">Email</label>
+                        <input type="email" class="form-control" id="emailArtesanoActualizar" name="emailArtesano" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="celularArtesanoActualizar">Celular</label>
+                        <input type="text" class="form-control" id="celularArtesanoActualizar" name="celularArtesano" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ciArtesanoActualizar">CI</label>
+                        <input type="text" class="form-control" id="ciArtesanoActualizar" name="ciArtesano" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sexoArtesanoActualizar">Sexo</label>
+                        <select class="form-control" id="sexoArtesanoActualizar" name="sexoArtesano">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fotoArtesanoActualizar">Foto</label>
+                        <input type="text" class="form-control" id="fotoArtesanoActualizar" name="fotoArtesano">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="especialidadArtesanoActualizar">Especialidad</label>
+                        <input type="text" class="form-control" id="especialidadArtesanoActualizar" name="especialidadArtesano" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="estado_c">Estado</label>
+                        <input type="text" class="form-control" id="estado_c" name="estadoArtesano" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>-->
     </main>
     <!-- fin de contenido -->
 

@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS public.USUARIO (
     numero_Contacto VARCHAR(12),	
     contraseña character varying(255),
     ci character varying(15),
-    sexo character varying(3),
+    sexo character varying(20),
     fotoPerf_url character varying(200),
     rol character varying(20) NOT NULL,  -- Ejemplo: 'ADMINISTRADOR', 'ARTESANO', 'CLIENTE', 'DELIVERY'
     fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,

@@ -11,12 +11,12 @@
             <div class="card-body">
                 <!-- Botón para abrir el modal -->
                 <button class="btn btn-success my-1 mt-4 ml-4" data-toggle="modal"
-                    data-target="#modalAgregarArtesano">Añadir Delivery</button>
+                    data-target="#modalAgregarDelivery">Añadir Delivery</button>
 
                 <div class="row contenedor-tabla py-4 px-4">
                     <div class="col-lg-12">
                         <div class="table-responsive">
-                            <table id="tablaArtesano"
+                            <table id="tablaDelivery"
                                 class="table table-bordered table-condensed table-hover" style="width:100%">
                                 <thead class="text-center">
                                     <tr>
@@ -33,8 +33,8 @@
                                         <th class="text-center">Fecha Modificacion:&nbsp;</th>
                                         <th class="text-center">Usuario Creacion:&nbsp;</th>
                                         <th class="text-center">Usuario Modificacion:&nbsp;</th>
-                                        <th class="text-center">Especialidad:&nbsp;</th>
-                                        <th class="text-center">Nombre comunidad:&nbsp;</th>
+                                        <th class="text-center">Vehiculo:&nbsp;</th>
+                                        <th class="text-center">Matricula:&nbsp;</th>
                                         <th class="text-center">Registro:&nbsp;</th>
                                         <th class="text-center">Acciones:&nbsp;</th>
                                     </tr>
@@ -50,7 +50,7 @@
         </div>
 
         <!-- Modal para Añadir Categoría -->
-    <div class="modal fade" id="modalAgregarArtesano" tabindex="-1" role="dialog"
+    <div class="modal fade" id="modalAgregarDelivery" tabindex="-1" role="dialog"
     aria-labelledby="modalAgregarCategoriaLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content p-2">
@@ -61,43 +61,43 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formRegistrarArtesano" method="POST" action="">
+                <form id="formRegistrarDelivery" method="POST" action="">  <!--action="/formRegistrarDelivery": llena pero muestra la informacion del codigo directamente-->
                     <div class="form-group">
-                        <label for="nombreCliente">Nombre:</label>
-                        <input type="text" class="form-control" id="nombreCliente"
-                            placeholder="Introduce el nombre del cliente" name="nombreCliente"
+                        <label for="nombreDelivery">Nombre:</label>
+                        <input type="text" class="form-control" id="nombreDelivery"
+                            placeholder="Introduce el nombre del Delivery" name="nombreDelivery"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="apellidoCliente">Apellido:</label>
-                        <input type="text" class="form-control" id="apellidoCliente"
-                            placeholder="Introduce el apellido del cliente" name="apellidoCliente"
+                        <label for="apellidoDelivery">Apellido:</label>
+                        <input type="text" class="form-control" id="apellidoDelivery"
+                            placeholder="Introduce el apellido del Delivery" name="apellidoDelivery"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="emailcliente">Email:</label>
-                        <input type="text" class="form-control" id="emailCliente"
-                            placeholder="Introduce el email del cliente" name="emailCliente"
+                        <label for="emailDelivery">Email:</label>
+                        <input type="text" class="form-control" id="emailDelivery"
+                            placeholder="Introduce el email del Delivery" name="emailDelivery"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="celularCliente">Celular:</label>
-                        <input type="text" class="form-control" id="celularCliente"
-                            placeholder="Introduce el celular del cliente" name="celularCliente"
+                        <label for="celularDelivery">Celular:</label>
+                        <input type="text" class="form-control" id="celularDelivery"
+                            placeholder="Introduce el celular del Delivery" name="celularDelivery"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="ciCliente">CI:</label>
-                        <input type="text" class="form-control" id="ciCliente"
-                            placeholder="Introduce el ci del cliente" name="ciCliente"
+                        <label for="ciDelivery">CI:</label>
+                        <input type="text" class="form-control" id="ciDelivery"
+                            placeholder="Introduce el ci del Delivery" name="ciDelivery"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="sexoCliente">Sexo:</label>
+                        <label for="sexoDelivery">Sexo:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i
                                 class="fa fa-venus-mars"></i></span>
-                            <select class="form-select" id="sexoCliente" name="sexoCliente" required>
+                            <select class="form-select" id="sexoDelivery" name="sexoDelivery" required>
                                 <option value="" disabled selected>Selecciona tu sexo</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
@@ -105,33 +105,109 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="fotoCliente">Foto:</label>
-                        <input type="text" class="form-control" id="fotoCliente"
-                            placeholder="Introduce la foto del cliente" name="fotoCliente"
+                        <label for="fotoDelivery">Foto:</label>
+                        <input type="text" class="form-control" id="fotoDelivery"
+                            placeholder="Introduce la foto del Delivery" name="fotoDelivery"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="especialidadArtesano">Especialidad:</label>
-                        <input type="text" class="form-control" id="especialidadArtesano"
-                            placeholder="Introduce la especialidad del artesano" name="especialidadArtesano"
+                        <label for="vehiculoDelivery">Vehiculo:</label>
+                        <input type="text" class="form-control" id="vehiculoDelivery"
+                            placeholder="Introduce el tipo de vehiculo" name="vehiculoDelivery"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="nroComunidad">Numero de comunidad:</label>
-                        <input type="text" class="form-control" id="nroComunidad"
-                            placeholder="numero de comunidad" name="nroComunidad"
+                        <label for="matriculaDelivery">Matricula:</label>
+                        <input type="text" class="form-control" id="matriculaDelivery"
+                            placeholder="Introduce el numero de matricula" name="matriculaDelivery"
                             required>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" form="formRegistrarArtesano" class="btn btn-success">Guardar
+                <button type="submit" form="formRegistrarDelivery" class="btn btn-success">Guardar
                     Delivery</button>
             </div>
         </div>
     </div>
 </div>
+
+    <!-- Modal para actualizar delivery -->
+    <!--<div class="modal fade" id="modalActualizarDelivery" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalActualizarDeliveryLabel">Actualizar Delivery</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formActualizarDelivery">
+                    <div class="modal-body">
+                        <input type="hidden" id="idDeliveryActualizar" name="idDelivery">
     
+                        <div class="form-group">
+                            <label for="nombreDeliveryActualizar">Nombre</label>
+                            <input type="text" class="form-control" id="nombreDeliveryActualizar" name="nombreDelivery" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="apellidoDeliveryActualizar">Apellido</label>
+                            <input type="text" class="form-control" id="apellidoDeliveryActualizar" name="apellidoDelivery" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="emailDeliveryActualizar">Email</label>
+                            <input type="email" class="form-control" id="emailDeliveryActualizar" name="emailDelivery" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="celularDeliveryActualizar">Celular</label>
+                            <input type="text" class="form-control" id="celularDeliveryActualizar" name="DeliveryCliente" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="ciDeliveryActualizar">CI</label>
+                            <input type="text" class="form-control" id="ciDeliveryActualizar" name="ciDelivery" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="sexoDeliveryActualizar">Sexo</label>
+                            <select class="form-control" id="sexoDeliveryActualizar" name="sexoDelivery">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="fotoDeliveryActualizar">Foto</label>
+                            <input type="text" class="form-control" id="fotoDeliveryActualizar" name="fotoDelivery">
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="vehiculoDeliveryActualizar">Vehiculo</label>
+                            <input type="text" class="form-control" id="vehiculoDeliveryActualizar" name="vehiculoDelivery" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="matriculaDeliveryActualizar">matricula</label>
+                            <input type="text" class="form-control" id="matriculaDeliveryActualizar" name="matriculaDelivery" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="estado_c">Estado</label>
+                            <input type="text" class="form-control" id="estado_c" name="estadoCliente" required>
+                        </div>
+                    </div>
+    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>-->
 
     </main>
     <!-- fin de contenido -->

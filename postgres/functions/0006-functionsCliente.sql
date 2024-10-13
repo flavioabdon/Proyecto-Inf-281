@@ -122,7 +122,7 @@ $$ LANGUAGE plpgsql;
 --pruebita
 select md5('lupe123')
 select public.fn_adm_insertar_cliente('Lupe','Molina','lalala@gmail.com','74135694',
-'e8549483e76a407ffb91c8055bd97de5','10289036','Femenino','http://example.com/foto.jpg',
+'10289036','Femenino','http://example.com/foto.jpg',
 'ADM','Calle Ejemplo 123','-68.1193','-16.5000');
 
 
@@ -134,43 +134,48 @@ select public.fn_adm_insertar_cliente('Lupe','Molina','lalala@gmail.com','741356
 
 CREATE OR REPLACE FUNCTION fn_listar_clientes()
 RETURNS TABLE (
-	numero_registro BIGINT,
+    numero_registro BIGINT,
     id_usuario INT,
-	nombre VARCHAR(30),
-	apellido VARCHAR(100),
-	email VARCHAR(30),
-	numero_contacto VARCHAR(12),
-	ci VARCHAR(15),
-	sexo VARCHAR(20),
-	fotoperf_url VARCHAR(200),
-	fecha_creacion TIMESTAMP WITH TIME ZONE,
-	fecha_modificacion TIMESTAMP WITH TIME ZONE,
-	usuario_creacion VARCHAR(20),
-	usuario_modificacion VARCHAR(20),
-	direccion_envio VARCHAR(200),
-	estado_registro VARCHAR(15)
-	
+    nombre VARCHAR(30),
+    apellido VARCHAR(100),
+    email VARCHAR(30),
+    numero_contacto VARCHAR(12),
+    ci VARCHAR(15),
+    sexo VARCHAR(20),
+    fotoperf_url VARCHAR(200),
+    fecha_creacion TIMESTAMP WITH TIME ZONE,
+    fecha_modificacion TIMESTAMP WITH TIME ZONE,
+    usuario_creacion VARCHAR(20),
+    usuario_modificacion VARCHAR(20),
+    direccion_envio VARCHAR(200),
+    longitud DOUBLE PRECISION,
+    latitud DOUBLE PRECISION,
+    estado_registro VARCHAR(15)
 ) AS $$
 BEGIN
     RETURN QUERY
     SELECT 
         ROW_NUMBER() OVER (ORDER BY c.id_usuario ASC) AS numero_registro,
         c.id_usuario,
-		u.nombre,
-		u.apellido,
-		u.email,
-		u.numero_contacto,
-		u.ci,
-		u.sexo,
-		u.fotoperf_url,
-		c.fecha_creacion,
-		c.fecha_modificacion,
-		c.usuario_creacion,
-		c.usuario_modificacion,
-		c.direccion_envio,
-		c.estado_registro
+        u.nombre,
+        u.apellido,
+        u.email,
+        u.numero_contacto,
+        u.ci,
+        u.sexo,
+        u.fotoperf_url,
+        c.fecha_creacion,
+        c.fecha_modificacion,
+        c.usuario_creacion,
+        c.usuario_modificacion,
+        c.direccion_envio,
+        ST_X(c.ubicacion_georef_cli) AS longitud,
+        ST_Y(c.ubicacion_georef_cli) AS latitud,
+        c.estado_registro
     FROM 
-        public.USUARIO u, public.CLIENTE c where u.id_usuario = c.id_usuario;
+        public.USUARIO u, public.CLIENTE c 
+    WHERE 
+        u.id_usuario = c.id_usuario;
 END;
 $$ LANGUAGE plpgsql;
 --pruebita
@@ -240,6 +245,7 @@ BEGIN
 		fecha_modificacion = NOW(),
 		usuario_modificacion = usuario,
 		estado_registro = estado_c
+
 	WHERE u.id_usuario = id_usuario_C;  -- Corrección en el WHERE
 
 	-- Actualizar la tabla cliente
@@ -282,7 +288,7 @@ $$ LANGUAGE plpgsql;
 
 --pruebita
 select fn_actualizar_cliente(6,'Lupe','Molina','lalala@gmail.com','74135694',
-'e8549483e76a407ffb91c8055bd97de5','10289036','Femenino','http://example.com/foto.jpg',
+'10289036','Femenino','http://example.com/foto.jpg',
 'ADM','Calle Ejemplo 123','-68.1193','-16.5000','pendiente')
 select * from cliente
 

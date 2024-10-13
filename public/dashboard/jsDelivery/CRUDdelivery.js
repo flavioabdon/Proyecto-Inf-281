@@ -1,22 +1,22 @@
-async function listarArtesanos() {
+async function listarDeliverys() {
     try {
-        const response = await fetch('/listarArtesanos'); // Ajusta esta URL según tu backend
+        const response = await fetch('/listarDeliverys'); // Ajusta esta URL según tu backend
         if (!response.ok) {
-            throw new Error('No se pudieron cargar los datos de los artesanos');
+            throw new Error('No se pudieron cargar los datos de los deliverys');
         }
 
-        const artesanos = await response.json(); // Convierte la respuesta a JSON
+        const deliverys = await response.json(); // Convierte la respuesta a JSON
 
         // Limpiar la tabla antes de actualizar (verificar si ya está inicializada)
-        if ($.fn.DataTable.isDataTable('#tablaArtesano')) {
-            $('#tablaArtesano').DataTable().clear().destroy();
+        if ($.fn.DataTable.isDataTable('#tablaDelivery')) {
+            $('#tablaDelivery').DataTable().clear().destroy();
         }
 
         // Inicializar DataTables con los datos actualizados
-        $('#tablaArtesano').DataTable({
+        $('#tablaDelivery').DataTable({
             responsive: true,
             autoWidth: true,
-            data: artesanos,
+            data: deliverys,
             columns: [
                 { data: 'numero_registro' },
                 { data: 'id_usuario' },
@@ -31,8 +31,8 @@ async function listarArtesanos() {
                 { data: 'fecha_modificacion' },
                 { data: 'usuario_creacion' },
                 { data: 'usuario_modificacion' },
-                { data: 'especialidad_artesano' },
-                { data: 'nombrecom' },
+                { data: 'tipo_vehiculo' },
+                { data: 'matricula_vehiculo' },
                 {
                     data: 'estado_registro',
                     render: function (data) {
@@ -91,43 +91,49 @@ async function listarArtesanos() {
             ]
         });
     } catch (error) {
-        console.error('Error al cargar los artesanos:', error); // Manejo de errores
+        console.error('Error al cargar los deliverys:', error); // Manejo de errores
     }
 }
+
+$(document).ready(function() {
+    listarDeliverys();
+});
+
+
 // REGISTRAR CATEGORÍA
-document.getElementById('formRegistrarArtesano').addEventListener('submit', function (event) {
+document.getElementById('formRegistrarDelivery').addEventListener('submit', function (event) {
     event.preventDefault();
-    const nombreArtesano = document.getElementById('nombreArtesano').value;
-    const apellidoArtesano = document.getElementById('apellidoArtesano').value;
-    const emailArtesano = document.getElementById('emailArtesano').value;
-    const celularArtesano = document.getElementById('celularArtesano').value;
-    const ciArtesano = document.getElementById('ciArtesano').value;
-    const sexoArtesano = document.getElementById('sexoArtesano').value;
-    const fotoArtesano = document.getElementById('fotoArtesano').value;
-    const especialidadArtesano = document.getElementById('especialidadArtesano').value;
-    const nroComunidad = document.getElementById('nroComunidad').value;
+    const nombreDelivery = document.getElementById('nombreDelivery').value;
+    const apellidoDelivery = document.getElementById('apellidoDelivery').value;
+    const emailDelivery = document.getElementById('emailDelivery').value;
+    const celularDelivery = document.getElementById('celularDelivery').value;
+    const ciDelivery = document.getElementById('ciDelivery').value;
+    const sexoDelivery = document.getElementById('sexoDelivery').value;
+    const fotoDelivery = document.getElementById('fotoDelivery').value;
+    const vehiculoDelivery = document.getElementById('vehiculoDelivery').value;
+    const matriculaDelivery = document.getElementById('matriculaDelivery').value;
 
     // Envía los datos al servidor Node.js
-    fetch('/formRegistrarArtesano', {
+    fetch('/formRegistrarDelivery', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            nombreArtesano: nombreArtesano,
-            apellidoArtesano:apellidoArtesano,
-            emailArtesano:emailArtesano,
-            celularArtesano:celularArtesano,
-            ciArtesano:ciArtesano,
-            sexoArtesano:sexoArtesano,
-            fotoArtesano:fotoArtesano,
-            especialidadArtesano:especialidadArtesano,
-            nroComunidad:nroComunidad
+            nombreDelivery: nombreDelivery,
+            apellidoDelivery:apellidoDelivery,
+            emailDelivery:emailDelivery,
+            celularDelivery:celularDelivery,
+            ciDelivery:ciDelivery,
+            sexoDelivery:sexoDelivery,
+            fotoDelivery:fotoDelivery,
+            vehiculoDelivery:vehiculoDelivery,
+            matriculaDelivery:matriculaDelivery
         })
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ocurrió un error al registrar el artesano');
+                throw new Error('Ocurrió un error al registrar el delivery');
             }
             return response.json().catch(() => {
                 throw new Error('La respuesta no es un JSON válido');
@@ -137,42 +143,42 @@ document.getElementById('formRegistrarArtesano').addEventListener('submit', func
             // Muestra una alerta de SweetAlert cuando se registra la categoría correctamente
             Swal.fire({
                 icon: 'success',
-                title: '¡Artesano registrado!',
-                text: 'El artesano ha sido registrado correctamente',
+                title: '¡Delivery registrado!',
+                text: 'El delivery ha sido registrado correctamente',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
-                $('#modalAgregarArtesano').modal('hide');
+                $('#modalAgregarDelivery').modal('hide');
             });
 
             // Limpiar el formulario después de registrar la categoría
-            document.getElementById('formRegistrarArtesano').reset();
+            document.getElementById('formRegistrarDelivery').reset();
 
-            listarArtesanos(); // Llama a tu función para listar las categorías actualizadas
+            listarDeliverys(); // Llama a tu función para listar las categorías actualizadas
         })
         .catch(error => {
             // Muestra una alerta de SweetAlert cuando ocurre un error
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.message || 'Ocurrió un error al registrar el artesano',
+                text: error.message || 'Ocurrió un error al registrar el delivery',
                 confirmButtonText: 'Aceptar'
             });
-            console.error('Error al registrar el artesano:', error);
+            console.error('Error al registrar el delivery:', error);
         });
 });
 
 // ELIMINAR CATEGORÍA
-document.getElementById('tablaArtesano').addEventListener('click', function (event) {
+document.getElementById('tablaDelivery').addEventListener('click', function (event) {
     if (event.target.closest('.btnBorrar')) {
         // Obtener la fila (tr) más cercana al botón de eliminar
         const fila = $(event.target).closest('tr');
 
         // Obtener el ID de la categoría de la fila usando DataTable
-        const artesanoId = $('#tablaArtesano').DataTable().row(fila).data().id_usuario;
+        const deliveryId = $('#tablaDelivery').DataTable().row(fila).data().id_usuario;
         // Mostrar una confirmación de eliminación utilizando SweetAlert
         Swal.fire({
             title: '¿Estás seguro?',
-            text: '¿Quieres eliminar este artesano?',
+            text: '¿Quieres eliminar este delivery?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
@@ -180,12 +186,12 @@ document.getElementById('tablaArtesano').addEventListener('click', function (eve
         }).then((result) => {
             if (result.isConfirmed) {
                 // Envía la solicitud de eliminación al servidor Node.js
-                fetch(`/eliminarArtesano/${artesanoId}`, {
+                fetch(`/eliminarDelivery/${deliveryId}`, {
                     method: 'DELETE'
                 })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Ocurrió un error al eliminar el artesano');
+                        throw new Error('Ocurrió un error al eliminar el delivery');
                     }
                     return response.json();
                 })
@@ -193,31 +199,30 @@ document.getElementById('tablaArtesano').addEventListener('click', function (eve
                     // Muestra una alerta de SweetAlert cuando se elimina la categoría correctamente
                     Swal.fire({
                         icon: 'success',
-                        title: '¡Artesano eliminado!',
-                        text: 'El artesano ha  sido eliminado correctamente',
+                        title: '¡Delivery eliminado!',
+                        text: 'El delivery ha  sido eliminado correctamente',
                         confirmButtonText: 'Aceptar'
                     });
 
                     // Actualiza la tabla de categorías
-                    listarArtesanos(); // Llama a tu función para listar las categorías actualizadas
+                    listarDeliverys(); // Llama a tu función para listar las categorías actualizadas
                 })
                 .catch(error => {
                     // Muestra una alerta de SweetAlert cuando ocurre un error
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: error.message || 'Ocurrió un error al eliminar al artesano',
+                        text: error.message || 'Ocurrió un error al eliminar al delivery',
                         confirmButtonText: 'Aceptar'
                     });
-                    console.error('Error al eliminar el artesano:', error);
+                    console.error('Error al eliminar el delivery:', error);
                 });
             }
         });
     }
 });
-
-// ACTUALIZAR CATEGORÍA
-/*document.getElementById('tablaArtesano').addEventListener('click', function (event) {
+//-----ACTUALIZAR DELIVERYS
+/*document.getElementById('tablaDelivery').addEventListener('click', function (event) {
     const btnEditar = event.target.closest('.btnEditar');
 
     if (btnEditar) {
@@ -225,57 +230,57 @@ document.getElementById('tablaArtesano').addEventListener('click', function (eve
         const fila = $(btnEditar).closest('tr');
 
         // Obtener los datos de la categoría de la fila usando la API del DataTable
-        const clienteData = $('#tablaArtesano').DataTable().row(fila).data();
+        const clienteData = $('#tablaDelivery').DataTable().row(fila).data();
         console.log(clienteData.nombre);
 
         // Comprobar si se obtuvo correctamente la categoría
         if (clienteData) {
             // Llenar el modal de actualización con los datos de la categoría
-            document.getElementById('idArtesanoActualizar').value = clienteData.id_usuario;
-            document.getElementById('nombreArtesanoActualizar').value = clienteData.nombre;
-            document.getElementById('apellidoArtesanoActualizar').value = clienteData.apellido;
-            document.getElementById('emailArtesanoActualizar').value = clienteData.email;
-            document.getElementById('celularArtesanoActualizar').value = clienteData.numero_contacto;
-            document.getElementById('ciArtesanoActualizar').value = clienteData.ci;
-            document.getElementById('sexoArtesanoActualizar').value = clienteData.sexo;
-            document.getElementById('fotoArtesanoActualizar').value = clienteData.fotoperf_url;
-            document.getElementById('especialidadArtesanoActualizar').value = clienteData.especialidad_artesano;
-            //document.getElementById('nroComunidadArtesanoActualizar').value = clienteData.nombrecom;
+            document.getElementById('idDeliveryActualizar').value = clienteData.id_usuario;
+            document.getElementById('nombreDeliveryActualizar').value = clienteData.nombre;
+            document.getElementById('apellidoDeliveryActualizar').value = clienteData.apellido;
+            document.getElementById('emailDeliveryActualizar').value = clienteData.email;
+            document.getElementById('celularDeliveryActualizar').value = clienteData.numero_contacto;
+            document.getElementById('ciDeliveryActualizar').value = clienteData.ci;
+            document.getElementById('sexoDeliveryActualizar').value = clienteData.sexo;
+            document.getElementById('fotoDeliveryActualizar').value = clienteData.fotoperf_url;
+            document.getElementById('vehiculoDeliveryActualizar').value = clienteData.tipo_vehiculo;
+            document.getElementById('matriculaDeliveryActualizar').value = clienteData.matricula_vehiculo;
             document.getElementById('estado_c').value = clienteData.estado_registro;
             // Mostrar el modal de actualización
-            $('#modalActualizarArtesano').modal('show');
+            $('#modalActualizarDelivery').modal('show');
         } else {
-            console.error('No se pudo obtener los datos del artesano.');
+            console.error('No se pudo obtener los datos del delivery.');
         }
     }
 });*/
-/*document.getElementById('formActualizarArtesano').addEventListener('submit', function (event) {
+/*document.getElementById('formActualizarDelivery').addEventListener('submit', function (event) {
     event.preventDefault();
     
     
-    const idArtesano = document.getElementById('idArtesanoActualizar').value;
-    const nombreArtesano = document.getElementById('nombreArtesanoActualizar').value;
-    const apellidoArtesano = document.getElementById('apellidoArtesanoActualizar').value;
-    const emailArtesano = document.getElementById('emailArtesanoActualizar').value;
-    const celularArtesano = document.getElementById('celularArtesanoActualizar').value;
-    const ciArtesano = document.getElementById('ciArtesanoActualizar').value;
-    const sexoArtesano = document.getElementById('sexoArtesanoActualizar').value;
-    const fotoArtesano = document.getElementById('fotoArtesanoActualizar').value;
-    const especialidadArtesano = document.getElementById('especialidadArtesanoActualizar').value;
-    const estadoArtesano = document.getElementById('estado_c').value;
-    //const nroComunidadArtesano = document.getElementById('nroComunidadArtesanoActualizar').value;
+    const idDelivery = document.getElementById('idDeliveryActualizar').value;
+    const nombreDelivery = document.getElementById('nombreDeliveryActualizar').value;
+    const apellidoDelivery = document.getElementById('apellidoDeliveryActualizar').value;
+    const emailDelivery = document.getElementById('emailDeliveryActualizar').value;
+    const celularDelivery = document.getElementById('celularDeliveryActualizar').value;
+    const ciDelivery = document.getElementById('ciDeliveryActualizar').value;
+    const sexoDelivery = document.getElementById('sexoDeliveryActualizar').value;
+    const fotoDelivery = document.getElementById('fotoDeliveryActualizar').value;
+    const vehiculoDelivery = document.getElementById('vehiculoDeliveryActualizar').value;
+    const estadoDelivery = document.getElementById('estado_c').value;
+    const matriculaDelivery = document.getElementById('matriculaDeliveryActualizar').value;
 
     const datosCliente = {
-        nombreArtesano: nombreArtesano,
-        apellidoArtesano: apellidoArtesano,
-        emailArtesano: emailArtesano,
-        celularArtesano: celularArtesano,
-        ciArtesano: ciArtesano,
-        sexoArtesano: sexoArtesano,
-        fotoArtesano: fotoArtesano,
-        especialidadArtesano: especialidadArtesano,
-        //nroComunidadArtesano: nroComunidadArtesano,
-        estadoArtesano: estadoArtesano
+        nombreDelivery: nombreDelivery,
+        apellidoDelivery: apellidoDelivery,
+        emailDelivery: emailDelivery,
+        celularDelivery: celularDelivery,
+        ciDelivery: ciDelivery,
+        sexoDelivery: sexoDelivery,
+        fotoDelivery: fotoDelivery,
+        vehiculoDelivery: vehiculoDelivery,
+        matriculaDelivery: matriculaDelivery,
+        estadoDelivery: estadoDelivery
     };
 
     // Mostrar los datos en la consola en formato JSON
@@ -283,27 +288,27 @@ document.getElementById('tablaArtesano').addEventListener('click', function (eve
 
 
     // Realizar la petición para actualizar la categoría
-    fetch(`/artesano/${idArtesano}`, {
+    fetch(`/delivery/${idDelivery}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            nombreArtesano: nombreArtesano,
-            apellidoArtesano: apellidoArtesano,
-            emailArtesano: emailArtesano,
-            celularArtesano: celularArtesano,
-            ciArtesano: ciArtesano,
-            sexoArtesano: sexoArtesano,
-            fotoArtesano: fotoArtesano,
-            especialidadArtesano: especialidadArtesano,
-            //nroComunidadArtesano: nroComunidadArtesano,
-            estadoArtesano: estadoArtesano
+            nombreDelivery: nombreDelivery,
+            apellidoDelivery: apellidoDelivery,
+            emailDelivery: emailDelivery,
+            celularDelivery: celularDelivery,
+            ciDelivery: ciDelivery,
+            sexoDelivery: sexoDelivery,
+            fotoDelivery: fotoDelivery,
+            vehiculoDelivery: vehiculoDelivery,
+            matriculaDelivery: matriculaDelivery,
+            estadoDelivery: estadoDelivery
         })
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ocurrió un error al actualizar el artesano');
+                throw new Error('Ocurrió un error al actualizar el delivery');
             }
             return response.json();
         })
@@ -311,28 +316,27 @@ document.getElementById('tablaArtesano').addEventListener('click', function (eve
             // Mostrar una alerta de éxito con SweetAlert
             Swal.fire({
                 icon: 'success',
-                title: '¡Artesano actualizado!',
-                text: 'El artesano ha sido actualizado correctamente.',
+                title: '¡Delivery actualizado!',
+                text: 'El delivery ha sido actualizado correctamente.',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
-                $('#modalActualizarArtesano').modal('hide'); // Cerrar el modal
+                $('#modalActualizarDelivery').modal('hide'); // Cerrar el modal
             });
 
             // Limpiar el formulario después de la actualización
-            document.getElementById('formActualizarArtesano').reset();
+            document.getElementById('formActualizarDelivery').reset();
 
-            listarArtesanos(); // Actualizar la lista de categorías
+            listarDeliverys(); // Actualizar la lista de categorías
         })
         .catch(error => {
             // Mostrar una alerta de error con SweetAlert
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.message || 'Ocurrió un error al actualizar el artesano',
+                text: error.message || 'Ocurrió un error al actualizar el delivery',
                 confirmButtonText: 'Aceptar'
             });
-            console.error('Error al actualizar el artesano:', error);
+            console.error('Error al actualizar el delivery:', error);
         });
 });*/
-
-document.addEventListener('DOMContentLoaded', listarArtesanos);
+document.addEventListener('DOMContentLoaded', listarDeliverys);

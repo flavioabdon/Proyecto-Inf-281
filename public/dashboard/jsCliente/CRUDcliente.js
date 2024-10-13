@@ -8,9 +8,7 @@ async function listarClientes() {
         const clientes = await response.json(); // Convierte la respuesta a JSON
 
         // Limpiar la tabla antes de actualizar (verificar si ya está inicializada)
-        if ($.fn.DataTable.isDataTable('#tablaCliente')) {
-            $('#tablaCliente').DataTable().clear().destroy();
-        }
+        $('#tablaCliente').DataTable().clear().destroy();
 
         // Inicializar DataTables con los datos actualizados
         $('#tablaCliente').DataTable({
@@ -32,6 +30,8 @@ async function listarClientes() {
                 { data: 'usuario_creacion' },
                 { data: 'usuario_modificacion' },
                 { data: 'direccion_envio' },
+                { data: 'longitud' },
+                { data: 'latitud' },
                 {
                     data: 'estado_registro',
                     render: function (data) {
@@ -105,8 +105,8 @@ document.getElementById('formRegistrarClienteC').addEventListener('submit', func
     const sexoCliente = document.getElementById('sexoCliente').value;
     const fotoCliente = document.getElementById('fotoCliente').value;
     const direccionCliente = document.getElementById('direccionCliente').value;
-    const latitud = document.getElementById('latitud').value;
-    const longitud = document.getElementById('longitud').value;
+    const latitud = document.getElementById('latitudCliente').value;
+    const longitud = document.getElementById('longitudCliente').value;
 
     // Envía los datos al servidor Node.js
     fetch('/formRegistrarClienteC', {
@@ -162,44 +162,6 @@ document.getElementById('formRegistrarClienteC').addEventListener('submit', func
             console.error('Error al registrar el cliente:', error);
         });
 });
-
-
-// ACTUALIZAR CATEGORIA
-// Evento para mostrar el modal con los datos de la categoría a actualizar
-document.getElementById('tablaCliente').addEventListener('click', function (event) {
-    const btnEditar = event.target.closest('.btnEditar');
-
-    if (btnEditar) {
-        // Obtener la fila (tr) más cercana al botón de editar
-        const fila = $(btnEditar).closest('tr');
-
-        // Obtener los datos de la categoría de la fila usando la API del DataTable
-        const clienteData = $('#tablaCliente').DataTable().row(fila).data();
-
-        // Comprobar si se obtuvo correctamente la categoría
-        if (clienteData) {
-            // Llenar el modal de actualización con los datos de la categoría
-            document.getElementById('idClienteActualizar').value = clienteData.id_usuario;
-            document.getElementById('nombreClienteActualizar').value = clienteData.nombre;
-            document.getElementById('apellidoClienteActualizar').value = clienteData.apellido;
-            document.getElementById('emailClienteActualizar').value = clienteData.email;
-            document.getElementById('celularClienteActualizar').value = clienteData.numero_contacto;
-            document.getElementById('ciClienteActualizar').value = clienteData.ci;
-            document.getElementById('sexoClienteActualizar').value = clienteData.sexo;
-            document.getElementById('fotoClienteActualizar').value = clienteData.fotoperf_url;
-            document.getElementById('direccionClienteActualizar').value = clienteData.direccion_envio;
-            document.getElementById('estado_c').value = clienteData.estado_registro;
-            //document.getElementById('latitud').value = clienteData.direccion_envio;
-            //document.getElementById('longitud').value = clienteData.direccion_envio;
-
-            // Mostrar el modal de actualización
-            $('#modalActualizarCliente').modal('show');
-        } else {
-            console.error('No se pudo obtener los datos del cliente.');
-        }
-    }
-});
-
 
 // ELIMINAR CATEGORÍA
 document.getElementById('tablaCliente').addEventListener('click', function (event) {
@@ -257,16 +219,46 @@ document.getElementById('tablaCliente').addEventListener('click', function (even
 });
 
 
-// Llamar a la función listarClientes cuando la página esté lista
-$(document).ready(function() {
-    listarClientes();
-});
+// ACTUALIZAR CATEGORIA
+// Evento para mostrar el modal con los datos de la categoría a actualizar
+/*document.getElementById('tablaCliente').addEventListener('click', function (event) {
+    const btnEditar = event.target.closest('.btnEditar');
 
+    if (btnEditar) {
+        // Obtener la fila (tr) más cercana al botón de editar
+        const fila = $(btnEditar).closest('tr');
+
+        // Obtener los datos de la categoría de la fila usando la API del DataTable
+        const clienteData = $('#tablaCliente').DataTable().row(fila).data();
+
+        // Comprobar si se obtuvo correctamente la categoría
+        if (clienteData) {
+            // Llenar el modal de actualización con los datos de la categoría
+            document.getElementById('idClienteActualizar').value = clienteData.id_usuario;
+            document.getElementById('nombreClienteActualizar').value = clienteData.nombre;
+            document.getElementById('apellidoClienteActualizar').value = clienteData.apellido;
+            document.getElementById('emailClienteActualizar').value = clienteData.email;
+            document.getElementById('celularClienteActualizar').value = clienteData.numero_contacto;
+            document.getElementById('ciClienteActualizar').value = clienteData.ci;
+            document.getElementById('sexoClienteActualizar').value = clienteData.sexo;
+            document.getElementById('fotoClienteActualizar').value = clienteData.fotoperf_url;
+            document.getElementById('direccionClienteActualizar').value = clienteData.direccion_envio;
+            document.getElementById('longitudClienteActualizar').value = clienteData.longitud;
+            document.getElementById('latitudClienteActualizar').value = clienteData.latitud;
+            document.getElementById('estado_c').value = clienteData.estado_registro;
+
+            // Mostrar el modal de actualización
+            $('#modalActualizarCliente').modal('show');
+        } else {
+            console.error('No se pudo obtener los datos del cliente.');
+        }
+    }
+});*/
 // Evento para actualizar la categoría al enviar el formulario
-document.getElementById('formActualizarCliente').addEventListener('submit', function (event) {
-    event.preventDefault();
-    alert.message("Accede")
-    
+/*document.getElementById('formActualizarCliente').addEventListener('submit', function(event) {
+    event.preventDefault();  // Evita que el formulario se envíe de manera tradicional
+
+    // Obtener los valores de los campos del formulario
     const idCliente = document.getElementById('idClienteActualizar').value;
     const nombreCliente = document.getElementById('nombreClienteActualizar').value;
     const apellidoCliente = document.getElementById('apellidoClienteActualizar').value;
@@ -276,32 +268,34 @@ document.getElementById('formActualizarCliente').addEventListener('submit', func
     const sexoCliente = document.getElementById('sexoClienteActualizar').value;
     const fotoCliente = document.getElementById('fotoClienteActualizar').value;
     const direccionCliente = document.getElementById('direccionClienteActualizar').value;
+    const latitud = document.getElementById('latitudClienteActualizar').value;
+    const longitud = document.getElementById('longitudClienteActualizar').value;
     const estadoCliente = document.getElementById('estado_c').value;
-    const latitud = document.getElementById('latitud').value;
-    const longitud = document.getElementById('longitud').value;
 
-   
+    // Crear el objeto JSON con los datos
+    const clienteData = {
+        nombreCliente: nombreCliente,
+        apellidoCliente: apellidoCliente,
+        emailCliente: emailCliente,
+        celularCliente: celularCliente,
+        ciCliente: ciCliente,
+        sexoCliente: sexoCliente,
+        fotoCliente: fotoCliente,
+        direccionCliente: direccionCliente,
+        latitud: latitud,
+        longitud: longitud,
+        estadoCliente: estadoCliente
+    };
 
-    // Realizar la petición para actualizar la categoría
-    fetch(`/cliente/${idCliente}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            nombreCliente:nombreCliente,
-            apellidoCliente:apellidoCliente,
-            emailCliente:emailCliente,
-            celularCliente:celularCliente,
-            ciCliente:ciCliente,
-            sexoCliente:sexoCliente,
-            fotoCliente:fotoCliente,
-            direccionCliente:direccionCliente,
-            estadoCliente:estadoCliente,
-            latitud:latitud,
-            longitud:longitud
+        // Enviar la solicitud PUT con los datos en formato JSON
+        fetch(`/cliente/${idCliente}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(clienteData) // Convertir el objeto a JSON
         })
-    })
+
         .then(response => {
             if (!response.ok) {
                 throw new Error('Ocurrió un error al actualizar el cliente');
@@ -312,7 +306,7 @@ document.getElementById('formActualizarCliente').addEventListener('submit', func
             // Mostrar una alerta de éxito con SweetAlert
             Swal.fire({
                 icon: 'success',
-                title: '¡Cliente actualizado!',
+                title: '¡Cliente  actualizado!',
                 text: 'El cliente ha sido actualizado correctamente.',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
@@ -329,11 +323,12 @@ document.getElementById('formActualizarCliente').addEventListener('submit', func
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.message || 'Ocurrió un error al actualizar el cliente',
+                text: error.message || 'Ocurrió un error al actualizar la categoría',
                 confirmButtonText: 'Aceptar'
             });
-            console.error('Error al actualizar el cliente:', error);
+            console.error('Error al actualizar la categoría:', error);
         });
-});
+});*/
 
 
+document.addEventListener('DOMContentLoaded', listarClientes);

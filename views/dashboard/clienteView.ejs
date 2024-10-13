@@ -1,5 +1,4 @@
 <%- include ("arriba") %>
-
 <!-- contenido del medio -->
 <main class="mx-5 my-5 contenido-principal">
 
@@ -34,6 +33,8 @@
                                 <th class="text-center">Usuario Creacion:&nbsp;</th>
                                 <th class="text-center">Usuario Modificacion:&nbsp;</th>
                                 <th class="text-center">Dirección:&nbsp;</th>
+                                <th class="text-center">Longitud:&nbsp;</th>
+                                <th class="text-center">Latitud:&nbsp;</th>
                                 <th class="text-center">Registro:&nbsp;</th>
                                 <th class="text-center">Acciones:&nbsp;</th>
                             </tr>
@@ -49,11 +50,11 @@
     </div>
     <!-- Modal para Añadir Categoría -->
     <div class="modal fade" id="modalAgregarCliente" tabindex="-1" role="dialog"
-    aria-labelledby="modalAgregarCategoriaLabel" aria-hidden="true">
+    aria-labelledby="modalAgregarClienteLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content p-2">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAgregarCategoriaLabel">Añadir Cliente</h5>
+                <h5 class="modal-title" id="modalAgregarClienteLabel">Añadir Cliente</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -115,15 +116,15 @@
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="latitud">Latitud:</label>
-                        <input type="text" class="form-control" id="latitud"
-                            placeholder="Latitud" name="latitud"
+                        <label for="latitudCliente">Latitud:</label>
+                        <input type="text" class="form-control" id="latitudCliente"
+                            placeholder="Latitud" name="latitudCliente"
                             required>
                     </div>
                     <div class="form-group">
-                        <label for="longitud">Longitud:</label>
-                        <input type="text" class="form-control" id="longitud"
-                            placeholder="longitud" name="longitud"
+                        <label for="longitudCliente">Longitud:</label>
+                        <input type="text" class="form-control" id="longitudCliente"
+                            placeholder="longitud" name="longitudCliente"
                             required>
                     </div>
             </div>
@@ -137,102 +138,98 @@
 </div>
     
 
-<!-- Modal para Actualizar Categoría -->
-<div class="modal fade" id="modalActualizarCliente" tabindex="-1" role="dialog"
-aria-labelledby="modalActualizarCategoriaLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content p-2">
-        <div class="modal-header">
-            <h5 class="modal-title" id="modalActualizarCategoriaLabel">Actualizar Cliente</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form id="formActualizarCliente" action="">
-                <input type="hidden" id="idClienteActualizar" name="idClienteActualizar">
-                <!-- Campo oculto para el ID de la categoría -->
-                <div class="form-group">
-                    <label for="nombreClienteActualizar">Nombre:</label>
-                    <input type="text" class="form-control" id="nombreClienteActualizar"
-                        placeholder="Introduce el nombre del cliente"
-                        name="nombreClienteActualizar" required>
-                </div>
-                <div class="form-group">
-                    <label for="apellidoClienteActualizar">Apellido:</label>
-                    <input type="text" class="form-control" id="apellidoClienteActualizar"
-                        placeholder="Introduce el apellido de la cliente"
-                        name="apellidoClienteActualizar" required>
-                </div>
-                <div class="form-group">
-                    <label for="emailClienteActualizar">Email:</label>
-                    <input type="text" class="form-control" id="emailClienteActualizar"
-                        placeholder="Introduce el email de la cliente"
-                        name="emailClienteActualizar" required>
-                </div>
-                <div class="form-group">
-                    <label for="celularClienteActualizar">Celular:</label>
-                    <input type="text" class="form-control" id="celularClienteActualizar"
-                        placeholder="Introduce el celular de la cliente"
-                        name="celularClienteActualizar" required>
-                </div>
-                <div class="form-group">
-                    <label for="ciClienteActualizar">CI:</label>
-                    <input type="text" class="form-control" id="ciClienteActualizar"
-                        placeholder="Introduce el ci de la cliente"
-                        name="ciClienteActualizar" required>
-                </div>
-                <div class="form-group">
-                    <label for="sexoClienteActualizar">Sexo:</label>
-                    <input type="text" class="form-control" id="sexoClienteActualizar"
-                        placeholder="Introduce el sexo de la cliente"
-                        name="sexoClienteActualizar" required>
-                </div>
-                <div class="form-group">
-                    <label for="fotoClienteActualizar">Foto:</label>
-                    <input type="text" class="form-control" id="fotoClienteActualizar"
-                        placeholder="Introduce el foto de la cliente"
-                        name="fotoClienteActualizar" required>
-                </div>
-                <div class="form-group">
-                    <label for="direccionClienteActualizar">Direccion:</label>
-                    <input type="text" class="form-control" id="direccionClienteActualizar"
-                        placeholder="Introduce el direccion de la cliente"
-                        name="direccionClienteActualizar" required>
-                </div>
-                <div class="form-group">
-                    <label for="estado_c">Estado registro:</label>
-                    <input type="text" class="form-control" id="estado_c"
-                        placeholder="Introduce el registro actual del cliente"
-                        name="estado_c" required>
-                </div>
-                <div class="form-group">
-                    <label for="latitud">Latitud:</label>
-                    <input type="text" class="form-control" id="latitud"
-                        placeholder="latitud"
-                        name="latitud" required>
-                </div>
-                <div class="form-group">
-                    <label for="longitud">Longitud:</label>
-                    <input type="text" class="form-control" id="longitud"
-                        placeholder="longitud"
-                        name="longitud" required>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" form="formActualizarCliente"
-                class="btn btn-primary">Actualizar
-            </button>
+<!-- Modal para actualizar cliente -->
+
+<!--<div class="modal fade" id="modalActualizarCliente" tabindex="-1" role="dialog" aria-labelledby="modalActualizarClienteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalActualizarClienteLabel">Actualizar Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formActualizarCliente" action="">
+                        <input type="hidden" id="idClienteActualizar" name="idCliente">
+    
+                        <div class="form-group">
+                            <label for="nombreClienteActualizar">Nombre</label>
+                            <input type="text" class="form-control" id="nombreClienteActualizar" name="nombreClienteActualizar" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="apellidoClienteActualizar">Apellido</label>
+                            <input type="text" class="form-control" id="apellidoClienteActualizar" name="apellidoClienteActualizar" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="emailClienteActualizar">Email</label>
+                            <input type="email" class="form-control" id="emailClienteActualizar" name="emailClienteActualizar" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="celularClienteActualizar">Celular</label>
+                            <input type="text" class="form-control" id="celularClienteActualizar" name="celularClienteActualizar" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="ciClienteActualizar">CI</label>
+                            <input type="text" class="form-control" id="ciClienteActualizar" name="ciClienteActualizar" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="sexoClienteActualizar">Sexo</label>
+                            <select class="form-control" id="sexoClienteActualizar" name="sexoClienteActualizar">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="fotoClienteActualizar">Foto</label>
+                            <input type="text" class="form-control" id="fotoClienteActualizar" name="fotoClienteActualizar">
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="direccionClienteActualizar">Dirección</label>
+                            <input type="text" class="form-control" id="direccionClienteActualizar" name="direccionClienteActualizar" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="latitudClienteActualizar">Latitud</label>
+                            <input type="text" class="form-control" id="latitudClienteActualizar" name="latitudClienteActualizar" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="longitudClienteActualizar">Longitud</label>
+                            <input type="text" class="form-control" id="longitudClienteActualizar" name="longitudClienteActualizar" required>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="estado_c">Estado</label>
+                            <input type="text" class="form-control" id="estado_c" name="estado_c" required>
+                        </div>
+                    </div>
+    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" form="formActualizarCliente"
+                                        class="btn btn-primary">Actualizar
+                                    </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-</div>
+</div>-->
+
+
+
+</main>
 
 
 
 </main>
 <!-- fin de contenido -->
-
 <%- include ("abajo") %>

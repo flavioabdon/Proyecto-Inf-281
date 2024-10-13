@@ -3,11 +3,11 @@ const artesanoModel = require('../models/artesano');
 // Controlador para insertar una nueva categoría
 const registrarArtesano = async (req, res) => {
     // Obtiene los datos del formulario
-    const { nombreArtesano, apellidoArtesano, emailArtesano, celularArtesano, ciArtesano, sexoArtesano, fotoArtesano, especialidad, nroComunidad } = req.body;
+    const { nombreArtesano, apellidoArtesano, emailArtesano, celularArtesano, ciArtesano, sexoArtesano, fotoArtesano, especialidadArtesano, nroComunidad } = req.body;
 
     try {
         // Inserta la nueva categoría utilizando el modelo
-        const nuevoArtesano = await artesanoModel.registrarArtesano(nombreArtesano, apellidoArtesano, emailArtesano, celularArtesano, ciArtesano, sexoArtesano, fotoArtesano, especialidad, nroComunidad);
+        const nuevoArtesano = await artesanoModel.registrarArtesano(nombreArtesano, apellidoArtesano, emailArtesano, celularArtesano, ciArtesano, sexoArtesano, fotoArtesano, especialidadArtesano, nroComunidad);
         // Devuelve un mensaje de éxito
 
         res.status(201).json({ message: 'Artesano  creado', artesano: nuevoArtesano });
@@ -38,11 +38,11 @@ const listarArtesanos = async (req, res) => {
 // Controlador para actualizar una categoría
 const actualizarArtesano = async (req, res) => {
     const id_artesano = req.params.id; // El ID viene desde la URL
-    const { nombreArtesano, apellidoArtesano, emailArtesano, celularArtesano, ciArtesano, sexoArtesano, fotoArtesano, estado_c, especialidad, nroComunidad } = req.body; // Datos enviados en el cuerpo
+    const { nombreArtesano, apellidoArtesano, emailArtesano, celularArtesano, ciArtesano, sexoArtesano, fotoArtesano, especialidadArtesano, estadoArtesano } = req.body; // Datos enviados en el cuerpo
     try {
-        const clienteActualizado = await artesanoModel.actualizarArtesano(
+        const artesanoActualizado = await artesanoModel.actualizarArtesano(
             id_artesano,
-            nombreArtesano, apellidoArtesano, emailArtesano, celularArtesano, ciArtesano, sexoArtesano, fotoArtesano, estado_c, especialidad, nroComunidad
+            nombreArtesano, apellidoArtesano, emailArtesano, celularArtesano, ciArtesano, sexoArtesano, fotoArtesano, especialidadArtesano, estadoArtesano
         );
         res.status(200).json({ message: 'Artesano actualizado', artesano: artesanoActualizado });
     } catch (error) {

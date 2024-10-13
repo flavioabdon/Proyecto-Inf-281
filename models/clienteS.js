@@ -46,9 +46,11 @@ const listarClientes = async () => {
 const actualizarCliente = async (id, nombre, apellido, email, nro, ci, sexo, foto, direccion, longitud, latitud, estado) => {
 
     const query = `
-    SELECT * FROM fn_actualizar_cliente($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);
+    SELECT fn_actualizar_cliente($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);
     `;
     const values = [id, nombre, apellido, email, nro, ci, sexo, foto, "ADM", direccion, longitud, latitud, estado];
+    
+    console.log('Valores enviados:', values);
 
     try {
         const [res] = await sequelize.query(query, {
