@@ -62,3 +62,9 @@ Run
 ```plaintext
 usuario@host:~$ node server.js 
 ```
+
+Instalar paquete que permite guardar el path de las imagenes
+```plaintext
+npm install multer 
+```
+
