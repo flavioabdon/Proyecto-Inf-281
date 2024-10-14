@@ -5,6 +5,8 @@ const clienteC = require ('../controllers/clienteController'); //
 //const loginC = require('../controllers/loginController');
 const Usuario = require('../models/Usuario');
 
+const upload = require('../config/multerconfig'); // Importa la configuración de multer
+
 // Ruta para mostrar el index
 router.get('/', (req, res) => {
   //res.render('form');
@@ -18,10 +20,7 @@ router.get('/login-registrar', (req, res) => {
   });
 
 // Ruta para registrarse
-router.post('/formRegistrarCliente',clienteC.registrarCliente);  
-
-
-
+router.post('/formRegistrarCliente', upload.single('imagenCliente'), clienteC.registrarCliente);
 
 
 // Ruta verificar codigo
