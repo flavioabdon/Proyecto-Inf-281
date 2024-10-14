@@ -37,8 +37,8 @@
     </div>
 
     <!-- Nav Item - Clientes -->
-    <li class="nav-item">
-        <a class="nav-link" href="">
+    <li class="nav-item <%= (currentPage === 'adminCliente') ? 'active' : '' %>">
+        <a class="nav-link" href="/adminCliente">
             <i class="fas fa-fw fa-user"></i>
             <span>Clientes</span></a>
     </li>
@@ -70,11 +70,15 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Modulos</span>
         </a>
-        <div id="collapsePages" class="collapse <%= (currentPage !== 'indexAdmin') ? 'show' : '' %>" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapsePages"
+            class="collapse <%= (currentPage !== 'indexAdmin' && currentPage !== 'adminCliente') ? 'show' : '' %>"
+            aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Gestionar:</h6>
-                <a class="collapse-item <%= (currentPage === 'categoria') ? 'active' : '' %>" href="/categoria">Categorías</a>
-                <a class="collapse-item <%= (currentPage === 'almacen') ? 'active' : '' %>"" href="/almacen">Almacenes</a>
+                <a class="collapse-item <%= (currentPage === 'categoria') ? 'active' : '' %>"
+                    href="/categoria">Categorías</a>
+                <a class="collapse-item <%= (currentPage === 'almacen') ? 'active' : '' %>"" href="
+                    /almacen">Almacenes</a>
                 <a class="collapse-item" href="/comunidad">Comunidades</a>
                 <a class="collapse-item" href="/productos">Productos</a>
             </div>

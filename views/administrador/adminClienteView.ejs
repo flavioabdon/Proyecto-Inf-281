@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Usuario Cliente</title>
+
+    <!-- datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
+
+
+
+    <!-- Custom fonts for this template-->
+    <link href="/dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- iconos -->
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+
+    <!-- Custom styles for this template-->
+    <link href="/dashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
+
+    <!-- miCss -->
+
+
+</head>
+
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- sidebar -->
+        <%- include('partials/sidebar') %>
+            <!-- fin sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <!-- topbar -->
+                    <%- include('partials/topbar') %>
+                        <!-- fin de topbar -->
+
+                        <!-- contenido main -->
+                        <main class="mx-5 my-5 contenido-principal">
+
+                            <!-- Card Contenedor -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h4 class="m-0 font-weight-bold text-secondary text-center">Gestión de Clientes</h4>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Botón para abrir el modal -->
+                                    <button class="btn btn-success my-1 mt-4 ml-4" data-toggle="modal"
+                                        data-target="#modalAgregarCliente">Añadir Cliente</button>
+
+                                    <div class="row contenedor-tabla">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive px-4 py-2">
+                                                <table id="tablaCliente" class="table  table-hover responsive nowrap"
+                                                    style="width:100%">
+                                                    <thead class="thead-light text-center">
+                                                        <tr>
+                                                            <th class="">#:&nbsp;</th>
+                                                            <th>ID:&nbsp;</th>
+                                                            <th class="">Nombres:&nbsp;</th>
+                                                            <th class="">Apellidos:&nbsp;</th>
+                                                            <th class="">C.I.:&nbsp;</th>
+                                                            <th class="">Email:&nbsp;</th>
+                                                            <th class="">Celular:&nbsp;</th>
+                                                            <th class="">Dirección:&nbsp;</th>
+                                                            <th class="">Sexo:&nbsp;</th>
+                                                            <th class="">Imagen:&nbsp;</th>
+                                                            <!-- <th class="">Fecha Creacion:&nbsp;</th>
+                                                            <th class="">Fecha Modificacion:&nbsp;</th>
+                                                            <th class="">Usuario Creacion:&nbsp;</th>
+                                                            <th class="">Usuario Modificacion:&nbsp;</th> -->
+                                                            <!-- <th class="">Longitud:&nbsp;</th>
+                                                            <th class="">Latitud:&nbsp;</th> -->
+                                                            <th class="">Estado:&nbsp;</th>
+                                                            <th class="">Acciones:&nbsp;</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Contenido de la tabla -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal para Añadir Categoría -->
+                            <div class="modal fade" id="modalAgregarCliente" tabindex="-1" role="dialog"
+                                aria-labelledby="modalAgregarClienteLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content p-2">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalAgregarClienteLabel">Añadir Cliente</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="formRegistrarClienteC" method="POST" action="">
+                                                <div class="form-group">
+                                                    <label for="nombreCliente">Nombre:</label>
+                                                    <input type="text" class="form-control" id="nombreCliente"
+                                                        placeholder="Introduce el nombre del cliente"
+                                                        name="nombreCliente" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="apellidoCliente">Apellido:</label>
+                                                    <input type="text" class="form-control" id="apellidoCliente"
+                                                        placeholder="Introduce el apellido del cliente"
+                                                        name="apellidoCliente" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="emailcliente">Email:</label>
+                                                    <input type="text" class="form-control" id="emailCliente"
+                                                        placeholder="Introduce el email del cliente" name="emailCliente"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="celularCliente">Celular:</label>
+                                                    <input type="text" class="form-control" id="celularCliente"
+                                                        placeholder="Introduce el celular del cliente"
+                                                        name="celularCliente" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ciCliente">CI:</label>
+                                                    <input type="text" class="form-control" id="ciCliente"
+                                                        placeholder="Introduce el ci del cliente" name="ciCliente"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sexoCliente">Sexo:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-venus-mars"></i></span>
+                                                        <select class="form-select" id="sexoCliente" name="sexoCliente"
+                                                            required>
+                                                            <option value="" disabled selected>Selecciona tu sexo
+                                                            </option>
+                                                            <option value="Masculino">Masculino</option>
+                                                            <option value="Femenino">Femenino</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="fotoCliente">Foto:</label>
+                                                    <input type="text" class="form-control" id="fotoCliente"
+                                                        placeholder="Introduce la foto del cliente" name="fotoCliente"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="direccionCliente">Direccion:</label>
+                                                    <input type="text" class="form-control" id="direccionCliente"
+                                                        placeholder="Introduce la direccion del cliente"
+                                                        name="direccionCliente" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="latitudCliente">Latitud:</label>
+                                                    <input type="text" class="form-control" id="latitudCliente"
+                                                        placeholder="Latitud" name="latitudCliente" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="longitudCliente">Longitud:</label>
+                                                    <input type="text" class="form-control" id="longitudCliente"
+                                                        placeholder="longitud" name="longitudCliente" required>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" form="formRegistrarClienteC"
+                                                class="btn btn-success">Guardar
+                                                Cliente</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Modal para actualizar cliente -->
+
+                            <!--<div class="modal fade" id="modalActualizarCliente" tabindex="-1" role="dialog" aria-labelledby="modalActualizarClienteLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalActualizarClienteLabel">Actualizar Cliente</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formActualizarCliente" action="">
+                                                <input type="hidden" id="idClienteActualizar" name="idCliente">
+                            
+                                                <div class="form-group">
+                                                    <label for="nombreClienteActualizar">Nombre</label>
+                                                    <input type="text" class="form-control" id="nombreClienteActualizar" name="nombreClienteActualizar" required>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="apellidoClienteActualizar">Apellido</label>
+                                                    <input type="text" class="form-control" id="apellidoClienteActualizar" name="apellidoClienteActualizar" required>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="emailClienteActualizar">Email</label>
+                                                    <input type="email" class="form-control" id="emailClienteActualizar" name="emailClienteActualizar" required>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="celularClienteActualizar">Celular</label>
+                                                    <input type="text" class="form-control" id="celularClienteActualizar" name="celularClienteActualizar" required>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="ciClienteActualizar">CI</label>
+                                                    <input type="text" class="form-control" id="ciClienteActualizar" name="ciClienteActualizar" required>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="sexoClienteActualizar">Sexo</label>
+                                                    <select class="form-control" id="sexoClienteActualizar" name="sexoClienteActualizar">
+                                                        <option value="Masculino">Masculino</option>
+                                                        <option value="Femenino">Femenino</option>
+                                                    </select>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="fotoClienteActualizar">Foto</label>
+                                                    <input type="text" class="form-control" id="fotoClienteActualizar" name="fotoClienteActualizar">
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="direccionClienteActualizar">Dirección</label>
+                                                    <input type="text" class="form-control" id="direccionClienteActualizar" name="direccionClienteActualizar" required>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="latitudClienteActualizar">Latitud</label>
+                                                    <input type="text" class="form-control" id="latitudClienteActualizar" name="latitudClienteActualizar" required>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="longitudClienteActualizar">Longitud</label>
+                                                    <input type="text" class="form-control" id="longitudClienteActualizar" name="longitudClienteActualizar" required>
+                                                </div>
+                            
+                                                <div class="form-group">
+                                                    <label for="estado_c">Estado</label>
+                                                    <input type="text" class="form-control" id="estado_c" name="estado_c" required>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" form="formActualizarCliente"
+                                                                class="btn btn-primary">Actualizar
+                                                            </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+
+
+                        </main>
+
+                        <!-- fin de contenido -->
+
+
+                </div>
+                <!-- End of Main Content -->
+
+                <%- include('partials/footer') %>
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <%- include('partials/logout') %>
+
+        <!-- sweetalert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="/dashboard/vendor/jquery/jquery.min.js"></script>
+        <script src="/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="/dashboard/js/sb-admin-2.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="/dashboard/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- datatables -->
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+
+        <!-- mi js -->
+         <script src="/dashboard/jsAdminCliente/crudAdminCliente.js"></script>
+
+</body>
+
+</html>
