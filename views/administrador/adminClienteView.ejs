@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Usuario Cliente</title>
+    <title>Administrar Cliente</title>
 
     <!-- datatables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
@@ -78,12 +78,12 @@
                                                         <tr>
                                                             <th class="">#:&nbsp;</th>
                                                             <th>ID:&nbsp;</th>
+                                                            <th class="">C.I.:&nbsp;</th>
                                                             <th class="">Nombres:&nbsp;</th>
                                                             <th class="">Apellidos:&nbsp;</th>
-                                                            <th class="">C.I.:&nbsp;</th>
                                                             <th class="">Email:&nbsp;</th>
-                                                            <th class="">Celular:&nbsp;</th>
                                                             <th class="">Dirección:&nbsp;</th>
+                                                            <th class="">Celular:&nbsp;</th>
                                                             <th class="">Sexo:&nbsp;</th>
                                                             <th class="">Imagen:&nbsp;</th>
                                                             <!-- <th class="">Fecha Creacion:&nbsp;</th>
@@ -105,185 +105,118 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Modal para Añadir Categoría -->
-                            <div class="modal fade" id="modalAgregarCliente" tabindex="-1" role="dialog"
-                                aria-labelledby="modalAgregarClienteLabel" aria-hidden="true">
+                           
+                            <!-- Modal para actualizar cliente -->
+                            <div class="modal fade" id="modalActualizarCliente" tabindex="-1" role="dialog"
+                                aria-labelledby="modalActualizarClienteLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content p-2">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalAgregarClienteLabel">Añadir Cliente</h5>
+                                            <h5 class="modal-title" id="modalActualizarClienteLabel">Actualizar Cliente
+                                            </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form id="formRegistrarClienteC" method="POST" action="">
-                                                <div class="form-group">
-                                                    <label for="nombreCliente">Nombre:</label>
-                                                    <input type="text" class="form-control" id="nombreCliente"
-                                                        placeholder="Introduce el nombre del cliente"
-                                                        name="nombreCliente" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="apellidoCliente">Apellido:</label>
-                                                    <input type="text" class="form-control" id="apellidoCliente"
-                                                        placeholder="Introduce el apellido del cliente"
-                                                        name="apellidoCliente" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="emailcliente">Email:</label>
-                                                    <input type="text" class="form-control" id="emailCliente"
-                                                        placeholder="Introduce el email del cliente" name="emailCliente"
-                                                        required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="celularCliente">Celular:</label>
-                                                    <input type="text" class="form-control" id="celularCliente"
-                                                        placeholder="Introduce el celular del cliente"
-                                                        name="celularCliente" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="ciCliente">CI:</label>
-                                                    <input type="text" class="form-control" id="ciCliente"
-                                                        placeholder="Introduce el ci del cliente" name="ciCliente"
-                                                        required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="sexoCliente">Sexo:</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text"><i
-                                                                class="fa fa-venus-mars"></i></span>
-                                                        <select class="form-select" id="sexoCliente" name="sexoCliente"
+                                            <form id="formActualizarCliente" action="">
+                                                <input type="hidden" id="idClienteActualizar" name="idCliente">
+
+                                                <!-- Primera fila: CI, Nombre -->
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="ciClienteActualizar">CI</label>
+                                                        <input type="hidden" id="id_usuario" name="id_usuario"> 
+                                                        <input type="text" class="form-control" id="ciClienteActualizar"
+                                                            name="ciClienteActualizar" required>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="nombreClienteActualizar">Nombre</label>
+                                                        <input type="text" class="form-control"
+                                                            id="nombreClienteActualizar" name="nombreClienteActualizar"
                                                             required>
-                                                            <option value="" disabled selected>Selecciona tu sexo
-                                                            </option>
-                                                            <option value="Masculino">Masculino</option>
-                                                            <option value="Femenino">Femenino</option>
-                                                        </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="fotoCliente">Foto:</label>
-                                                    <input type="text" class="form-control" id="fotoCliente"
-                                                        placeholder="Introduce la foto del cliente" name="fotoCliente"
-                                                        required>
+
+                                                <!-- Segunda fila: Apellido, Email -->
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="apellidoClienteActualizar">Apellido</label>
+                                                        <input type="text" class="form-control"
+                                                            id="apellidoClienteActualizar"
+                                                            name="apellidoClienteActualizar" required>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="emailClienteActualizar">Email</label>
+                                                        <input type="email" class="form-control"
+                                                            id="emailClienteActualizar" name="emailClienteActualizar"
+                                                            required>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="direccionCliente">Direccion:</label>
-                                                    <input type="text" class="form-control" id="direccionCliente"
-                                                        placeholder="Introduce la direccion del cliente"
-                                                        name="direccionCliente" required>
+
+                                                <!-- Tercera fila: Dirección, Celular -->
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="direccionClienteActualizar">Dirección</label>
+                                                        <input type="text" class="form-control"
+                                                            id="direccionClienteActualizar"
+                                                            name="direccionClienteActualizar" required>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="celularClienteActualizar">Celular</label>
+                                                        <input type="text" class="form-control"
+                                                            id="celularClienteActualizar"
+                                                            name="celularClienteActualizar" required>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="latitudCliente">Latitud:</label>
-                                                    <input type="text" class="form-control" id="latitudCliente"
-                                                        placeholder="Latitud" name="latitudCliente" required>
+
+                                                <!-- Cuarta fila: Sexo, Estado -->
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="sexoClienteActualizar">Sexo</label>
+                                                        <select class="form-control" id="sexoClienteActualizar"
+                                                            name="sexoClienteActualizar">
+                                                            <option value="M">Masculino</option>
+                                                            <option value="F">Femenino</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="estado_c">Estado</label>
+                                                        <select class="form-control" id="estado_c" name="estado_c"
+                                                            required>
+                                                            <option value="activo">Activo</option>
+                                                            <option value="inactivo">Inactivo</option>
+                                                        </select>
+                                                    </div>
+
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="longitudCliente">Longitud:</label>
-                                                    <input type="text" class="form-control" id="longitudCliente"
-                                                        placeholder="longitud" name="longitudCliente" required>
-                                                </div>
+
+                                                <!-- Quinta fila: Imagen de Perfil -->
+                                                <!-- <div class="form-row">
+                                                    <div class="form-group col-md-12">
+                                                        <label for="imagenCliente" class="labels">Imagen de
+                                                            Perfil</label>
+                                                        <div class="input-group">
+                                                            <input type="file" class="form-control"
+                                                                id="fotoClienteActualizar" name="fotoClienteActualizar"
+                                                                accept="image/*" required>
+                                                        </div>
+                                                        <img id="" src="" alt="Vista previa"
+                                                            style="display: none; max-width: 100%; margin-top: 10px;">
+                                                    </div>
+                                                </div> -->
+
+                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" form="formRegistrarClienteC"
-                                                class="btn btn-success">Guardar
-                                                Cliente</button>
+                                                data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" form="formActualizarCliente"
+                                                class="btn btn-primary">Actualizar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-                            <!-- Modal para actualizar cliente -->
-
-                            <!--<div class="modal fade" id="modalActualizarCliente" tabindex="-1" role="dialog" aria-labelledby="modalActualizarClienteLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalActualizarClienteLabel">Actualizar Cliente</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="formActualizarCliente" action="">
-                                                <input type="hidden" id="idClienteActualizar" name="idCliente">
-                            
-                                                <div class="form-group">
-                                                    <label for="nombreClienteActualizar">Nombre</label>
-                                                    <input type="text" class="form-control" id="nombreClienteActualizar" name="nombreClienteActualizar" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="apellidoClienteActualizar">Apellido</label>
-                                                    <input type="text" class="form-control" id="apellidoClienteActualizar" name="apellidoClienteActualizar" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="emailClienteActualizar">Email</label>
-                                                    <input type="email" class="form-control" id="emailClienteActualizar" name="emailClienteActualizar" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="celularClienteActualizar">Celular</label>
-                                                    <input type="text" class="form-control" id="celularClienteActualizar" name="celularClienteActualizar" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="ciClienteActualizar">CI</label>
-                                                    <input type="text" class="form-control" id="ciClienteActualizar" name="ciClienteActualizar" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="sexoClienteActualizar">Sexo</label>
-                                                    <select class="form-control" id="sexoClienteActualizar" name="sexoClienteActualizar">
-                                                        <option value="Masculino">Masculino</option>
-                                                        <option value="Femenino">Femenino</option>
-                                                    </select>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="fotoClienteActualizar">Foto</label>
-                                                    <input type="text" class="form-control" id="fotoClienteActualizar" name="fotoClienteActualizar">
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="direccionClienteActualizar">Dirección</label>
-                                                    <input type="text" class="form-control" id="direccionClienteActualizar" name="direccionClienteActualizar" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="latitudClienteActualizar">Latitud</label>
-                                                    <input type="text" class="form-control" id="latitudClienteActualizar" name="latitudClienteActualizar" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="longitudClienteActualizar">Longitud</label>
-                                                    <input type="text" class="form-control" id="longitudClienteActualizar" name="longitudClienteActualizar" required>
-                                                </div>
-                            
-                                                <div class="form-group">
-                                                    <label for="estado_c">Estado</label>
-                                                    <input type="text" class="form-control" id="estado_c" name="estado_c" required>
-                                                </div>
-                                            </div>
-                            
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <button type="submit" form="formActualizarCliente"
-                                                                class="btn btn-primary">Actualizar
-                                                            </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
-
-
 
                         </main>
 
@@ -329,7 +262,7 @@
         <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
 
         <!-- mi js -->
-         <script src="/dashboard/jsAdminCliente/crudAdminCliente.js"></script>
+        <script src="/dashboard/jsAdminCliente/crudAdminCliente.js"></script>
 
 </body>
 
