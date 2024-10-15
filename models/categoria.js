@@ -4,7 +4,7 @@ const sequelize = require('../config/database'); // Importa la conexión a la ba
 // Función para insertar una categoría usando la función almacenada en PostgreSQL
 const registrarCategoria = async (nombre, descripcion, icono) => {
     const query = `
-        SELECT * FROM fn_insertar_categoria($1, $2, $3, $4, $5)
+        SELECT * FROM fn_insertar_categoria($1, $2, $3, $4, $5);
     `;
 
     // Valores que se van a insertar en la base de datos
