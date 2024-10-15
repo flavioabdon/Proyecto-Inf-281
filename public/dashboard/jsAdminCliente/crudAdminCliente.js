@@ -20,17 +20,17 @@ async function listarClientes() {
             columns: [
                 { data: 'numero_registro' },
                 { data: 'id_usuario' },
+                { data: 'ci' },
                 { data: 'nombre' },
                 { data: 'apellido' },
-                { data: 'ci' },
                 { data: 'email' },
-                { data: 'numero_contacto' },
                 { data: 'direccion_envio' },
+                { data: 'numero_contacto' },
                 { data: 'sexo' },
                 {
                     data: 'fotoperf_url',
                     render: function (data) {
-                        const imagePath = data.replace(/\\/g, '/'); 
+                        const imagePath = data.replace(/\\/g, '/');
                         return `
                                 <div style="display: flex; align-items: center; justify-content: center;">
                                     <img src="${imagePath}" 
@@ -91,6 +91,10 @@ async function listarClientes() {
                     targets: [1], // Puedes ocultar la columna de ID si es necesario
                     visible: false // Cambia a false si deseas ocultar
                 },
+                {
+                    targets: [0, 2, 6, 7, 8], // Cambia los índices según las columnas que deseas centrar
+                    className: 'text-left' // Añade la clase
+                }
             ]
         });
     } catch (error) {
@@ -223,32 +227,27 @@ async function listarClientes() {
 // });
 
 
-// ACTUALIZAR CATEGORIA
-// Evento para mostrar el modal con los datos de la categoría a actualizar
-/*document.getElementById('tablaCliente').addEventListener('click', function (event) {
+// ACTUALIZAR ADMINCLIENTE
+// Evento para mostrar el modal con los datos del cliente a actualizar
+document.getElementById('tablaCliente').addEventListener('click', function (event) {
     const btnEditar = event.target.closest('.btnEditar');
 
     if (btnEditar) {
         // Obtener la fila (tr) más cercana al botón de editar
         const fila = $(btnEditar).closest('tr');
 
-        // Obtener los datos de la categoría de la fila usando la API del DataTable
         const clienteData = $('#tablaCliente').DataTable().row(fila).data();
 
-        // Comprobar si se obtuvo correctamente la categoría
         if (clienteData) {
-            // Llenar el modal de actualización con los datos de la categoría
-            document.getElementById('idClienteActualizar').value = clienteData.id_usuario;
+            // Llenar el modal de actualización con los datos
+            document.getElementById('id_usuario').value = clienteData.id_usuario;
+            document.getElementById('ciClienteActualizar').value = clienteData.ci;
             document.getElementById('nombreClienteActualizar').value = clienteData.nombre;
             document.getElementById('apellidoClienteActualizar').value = clienteData.apellido;
             document.getElementById('emailClienteActualizar').value = clienteData.email;
-            document.getElementById('celularClienteActualizar').value = clienteData.numero_contacto;
-            document.getElementById('ciClienteActualizar').value = clienteData.ci;
-            document.getElementById('sexoClienteActualizar').value = clienteData.sexo;
-            document.getElementById('fotoClienteActualizar').value = clienteData.fotoperf_url;
             document.getElementById('direccionClienteActualizar').value = clienteData.direccion_envio;
-            document.getElementById('longitudClienteActualizar').value = clienteData.longitud;
-            document.getElementById('latitudClienteActualizar').value = clienteData.latitud;
+            document.getElementById('celularClienteActualizar').value = clienteData.numero_contacto;
+            document.getElementById('sexoClienteActualizar').value = clienteData.sexo;
             document.getElementById('estado_c').value = clienteData.estado_registro;
 
             // Mostrar el modal de actualización
@@ -257,23 +256,21 @@ async function listarClientes() {
             console.error('No se pudo obtener los datos del cliente.');
         }
     }
-});*/
+});
+
 // Evento para actualizar la categoría al enviar el formulario
-/*document.getElementById('formActualizarCliente').addEventListener('submit', function(event) {
+document.getElementById('formActualizarCliente').addEventListener('submit', function (event) {
     event.preventDefault();  // Evita que el formulario se envíe de manera tradicional
 
     // Obtener los valores de los campos del formulario
-    const idCliente = document.getElementById('idClienteActualizar').value;
+    const id_usuario = document.getElementById('id_usuario').value;
+    const ciCliente = document.getElementById('ciClienteActualizar').value;
     const nombreCliente = document.getElementById('nombreClienteActualizar').value;
     const apellidoCliente = document.getElementById('apellidoClienteActualizar').value;
     const emailCliente = document.getElementById('emailClienteActualizar').value;
-    const celularCliente = document.getElementById('celularClienteActualizar').value;
-    const ciCliente = document.getElementById('ciClienteActualizar').value;
-    const sexoCliente = document.getElementById('sexoClienteActualizar').value;
-    const fotoCliente = document.getElementById('fotoClienteActualizar').value;
     const direccionCliente = document.getElementById('direccionClienteActualizar').value;
-    const latitud = document.getElementById('latitudClienteActualizar').value;
-    const longitud = document.getElementById('longitudClienteActualizar').value;
+    const celularCliente = document.getElementById('celularClienteActualizar').value;
+    const sexoCliente = document.getElementById('sexoClienteActualizar').value;
     const estadoCliente = document.getElementById('estado_c').value;
 
     // Crear el objeto JSON con los datos
@@ -284,21 +281,19 @@ async function listarClientes() {
         celularCliente: celularCliente,
         ciCliente: ciCliente,
         sexoCliente: sexoCliente,
-        fotoCliente: fotoCliente,
         direccionCliente: direccionCliente,
-        latitud: latitud,
-        longitud: longitud,
         estadoCliente: estadoCliente
     };
+    //alert(JSON.stringify(clienteData, null, 2)); 
 
-        // Enviar la solicitud PUT con los datos en formato JSON
-        fetch(`/cliente/${idCliente}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(clienteData) // Convertir el objeto a JSON
-        })
+    // Enviar la solicitud PUT con los datos en formato JSON
+    fetch(`/adminCliente/${id_usuario}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(clienteData) // Convertir el objeto a JSON
+    })
 
         .then(response => {
             if (!response.ok) {
@@ -332,7 +327,7 @@ async function listarClientes() {
             });
             console.error('Error al actualizar la categoría:', error);
         });
-});*/
+});
 
 
 document.addEventListener('DOMContentLoaded', listarClientes);
