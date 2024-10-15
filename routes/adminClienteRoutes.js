@@ -8,10 +8,13 @@ router.get('/adminCliente', (req, res) => {
 });
 
 // Ruta para listar clientes
-router.get('/listarAdminClientes', adminClienteController.listarAdminClientes); // Usa el controlador para listar categorías
+router.get('/listarAdminClientes', adminClienteController.listarAdminClientes); // Usa el controlador para listar clientes
 
 // Ruta para actualizar un cliente existente
-router.put('/adminCliente/:id', adminClienteController.actualizarAdminCliente);
+router.put('/actualizarAdminCliente/:id', adminClienteController.actualizarAdminCliente);
+
+//Ruta para eliminar cliente
+router.delete('/eliminarAdminCliente/:id',adminClienteController.eliminarAdminCliente); // Usa el controlador para eliminar un cliente
 
 
 

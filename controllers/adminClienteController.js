@@ -54,10 +54,22 @@ const actualizarAdminCliente = async (req, res) => {
     }
 };
 
+// Controlador para eliminar un cliente
+const eliminarAdminCliente = async (req, res) => {
+    const id_usuario = req.params.id; // El ID viene desde la URL
+    try {
+        await adminClienteModel.eliminarAdminCliente(id_usuario); // Llama al modelo para eliminar la categoría
+        res.status(200).json({ message: 'Cliente eliminado' });
+    } catch (error) {
+        console.error('Error al eliminar al Cliente:', error);
+        res.status(500).json({ message: 'Error al eliminar el Cliente' });
+    }
+};
 
 
 
 module.exports = {
     listarAdminClientes,
     actualizarAdminCliente,
+    eliminarAdminCliente,
 };

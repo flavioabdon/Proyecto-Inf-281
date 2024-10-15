@@ -1,5 +1,5 @@
 
-//LISTAR ADM CLIENTES
+//LISTAR ADMINCLIENTES
 async function listarClientes() {
     try {
         const response = await fetch('/listarAdminClientes'); // Ajusta esta URL según tu backend
@@ -102,130 +102,6 @@ async function listarClientes() {
     }
 }
 
-// REGISTRAR CATEGORÍA
-// document.getElementById('formRegistrarClienteC').addEventListener('submit', function (event) {
-//     event.preventDefault();
-//     const nombreCliente = document.getElementById('nombreCliente').value;
-//     const apellidoCliente = document.getElementById('apellidoCliente').value;
-//     const emailCliente = document.getElementById('emailCliente').value;
-//     const celularCliente = document.getElementById('celularCliente').value;
-//     const ciCliente = document.getElementById('ciCliente').value;
-//     const sexoCliente = document.getElementById('sexoCliente').value;
-//     const fotoCliente = document.getElementById('fotoCliente').value;
-//     const direccionCliente = document.getElementById('direccionCliente').value;
-//     const latitud = document.getElementById('latitudCliente').value;
-//     const longitud = document.getElementById('longitudCliente').value;
-
-//     // Envía los datos al servidor Node.js
-//     fetch('/formRegistrarClienteC', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             nombreCliente: nombreCliente,
-//             apellidoCliente:apellidoCliente,
-//             emailCliente:emailCliente,
-//             celularCliente:celularCliente,
-//             ciCliente:ciCliente,
-//             sexoCliente:sexoCliente,
-//             fotoCliente:fotoCliente,
-//             direccionCliente:direccionCliente,
-//             latitud:latitud,
-//             longitud:longitud
-//         })
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Ocurrió un error al registrar el cliente');
-//             }
-//             return response.json().catch(() => {
-//                 throw new Error('La respuesta no es un JSON válido');
-//             });
-//         })
-//         .then(data => {
-//             // Muestra una alerta de SweetAlert cuando se registra la categoría correctamente
-//             Swal.fire({
-//                 icon: 'success',
-//                 title: '¡Cliente registrado!',
-//                 text: 'El cliente ha sido registrado correctamente',
-//                 confirmButtonText: 'Aceptar'
-//             }).then(() => {
-//                 $('#modalAgregarCliente').modal('hide');
-//             });
-
-//             // Limpiar el formulario después de registrar la categoría
-//             document.getElementById('formRegistrarClienteC').reset();
-
-//             listarClientes(); // Llama a tu función para listar las categorías actualizadas
-//         })
-//         .catch(error => {
-//             // Muestra una alerta de SweetAlert cuando ocurre un error
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Error',
-//                 text: error.message || 'Ocurrió un error al registrar el cliente',
-//                 confirmButtonText: 'Aceptar'
-//             });
-//             console.error('Error al registrar el cliente:', error);
-//         });
-// });
-
-// // ELIMINAR CATEGORÍA
-// document.getElementById('tablaCliente').addEventListener('click', function (event) {
-//     if (event.target.closest('.btnBorrar')) {
-//         // Obtener la fila (tr) más cercana al botón de eliminar
-//         const fila = $(event.target).closest('tr');
-
-//         // Obtener el ID de la categoría de la fila usando DataTable
-//         const clienteId = $('#tablaCliente').DataTable().row(fila).data().id_usuario;
-//         // Mostrar una confirmación de eliminación utilizando SweetAlert
-//         Swal.fire({
-//             title: '¿Estás seguro?',
-//             text: '¿Quieres eliminar esta cliente?',
-//             icon: 'warning',
-//             showCancelButton: true,
-//             confirmButtonText: 'Sí, eliminar',
-//             cancelButtonText: 'Cancelar'
-//         }).then((result) => {
-//             if (result.isConfirmed) {
-//                 // Envía la solicitud de eliminación al servidor Node.js
-//                 fetch(`/eliminarCliente/${clienteId}`, {
-//                     method: 'DELETE'
-//                 })
-//                 .then(response => {
-//                     if (!response.ok) {
-//                         throw new Error('Ocurrió un error al eliminar el cliente');
-//                     }
-//                     return response.json();
-//                 })
-//                 .then(data => {
-//                     // Muestra una alerta de SweetAlert cuando se elimina la categoría correctamente
-//                     Swal.fire({
-//                         icon: 'success',
-//                         title: '¡Cliente eliminado!',
-//                         text: 'El cliente ha  sido eliminado correctamente',
-//                         confirmButtonText: 'Aceptar'
-//                     });
-
-//                     // Actualiza la tabla de categorías
-//                     listarClientes(); // Llama a tu función para listar las categorías actualizadas
-//                 })
-//                 .catch(error => {
-//                     // Muestra una alerta de SweetAlert cuando ocurre un error
-//                     Swal.fire({
-//                         icon: 'error',
-//                         title: 'Error',
-//                         text: error.message || 'Ocurrió un error al eliminar al cliente',
-//                         confirmButtonText: 'Aceptar'
-//                     });
-//                     console.error('Error al eliminar el cliente:', error);
-//                 });
-//             }
-//         });
-//     }
-// });
-
 
 // ACTUALIZAR ADMINCLIENTE
 // Evento para mostrar el modal con los datos del cliente a actualizar
@@ -287,7 +163,7 @@ document.getElementById('formActualizarCliente').addEventListener('submit', func
     //alert(JSON.stringify(clienteData, null, 2)); 
 
     // Enviar la solicitud PUT con los datos en formato JSON
-    fetch(`/adminCliente/${id_usuario}`, {
+    fetch(`/actualizarAdminCliente/${id_usuario}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -328,6 +204,65 @@ document.getElementById('formActualizarCliente').addEventListener('submit', func
             console.error('Error al actualizar la categoría:', error);
         });
 });
+//-------------FIN ACTUALIZAR-------------
+
+
+// ELIMINAR CLIENTE
+document.getElementById('tablaCliente').addEventListener('click', function (event) {
+    if (event.target.closest('.btnBorrar')) {
+        // Obtener la fila (tr) más cercana al botón de eliminar
+        const fila = $(event.target).closest('tr');
+
+        // Obtener el ID del usuario de la fila usando DataTable
+        const id_usuario = $('#tablaCliente').DataTable().row(fila).data().id_usuario;
+
+        // Mostrar una confirmación de eliminación utilizando SweetAlert
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Quieres eliminar a este Cliente?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Envía la solicitud de eliminación al servidor Node.js
+                fetch(`/eliminarAdminCliente/${id_usuario}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Ocurrió un error al eliminar al Cliente');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Muestra una alerta de SweetAlert cuando se elimina la categoría correctamente
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Cliente eliminado!',
+                            text: 'El Cliente ha sido eliminada correctamente',
+                            confirmButtonText: 'Aceptar'
+                        });
+
+                        // Actualiza la tabla de categorías
+                        listarClientes(); // Llama a tu función para listar las categorías actualizadas
+                    })
+                    .catch(error => {
+                        // Muestra una alerta de SweetAlert cuando ocurre un error
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error.message || 'Ocurrió un error al eliminar al Cliente',
+                            confirmButtonText: 'Aceptar'
+                        });
+                        console.error('Error al eliminar al Cliente:', error);
+                    });
+            }
+        });
+    }
+});
+
 
 
 document.addEventListener('DOMContentLoaded', listarClientes);
