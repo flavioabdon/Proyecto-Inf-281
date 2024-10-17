@@ -7,14 +7,14 @@
 CREATE OR REPLACE FUNCTION fn_adm_insertar_artesano(
     nombreArtesano VARCHAR(30),
 	apellidoArtesano VARCHAR(50),
+	ciArtesano VARCHAR(15),
 	emailArtesano VARCHAR(30),
 	nroArtesano VARCHAR(12),
-	ciArtesano VARCHAR(15),
-	sexoArtesano VARCHAR(20),
-	fotoArtesano VARCHAR(200),
-    usuario VARCHAR(20),
 	especialidadArtesano VARCHAR(200),
-	v_id_comunidad INTEGER
+	sexoArtesano VARCHAR(20),
+	v_id_comunidad INTEGER,
+	fotoArtesano VARCHAR(200),
+    usuario VARCHAR(20)
 ) 
 RETURNS TABLE (
     id_usuario INT,
@@ -115,11 +115,18 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
---pruebita
-select md5('lupe123')
-select public.fn_adm_insertar_artesano('Hulk','Hogan','lalaho@gmail.com','74135694'
-,'17129036','Masculino','http://example.com/foto.jpg',
-'ADM','Costuras',1);
+SELECT * FROM fn_adm_insertar_artesano(
+    'Juan',            -- nombreArtesano
+    'Pérez',           -- apellidoArtesano
+    '1234567',         -- ciArtesano
+    'juan@example.com',-- emailArtesano
+    '7654321',         -- nroArtesano (celular)
+    'Cerámica',        -- especialidadArtesano
+    'Masculino',       -- sexoArtesano
+    1,                 -- v_id_comunidad (ID de la comunidad)
+    'foto.jpg',        -- fotoArtesano (URL de la foto)
+    'admin'            -- usuario (Usuario que realiza la inserción)
+);
 
 
 --------------------------------------------------------------------------
@@ -178,99 +185,91 @@ select * from fn_listar_artesanos()
 -- Actividad:                                                           --
 -- Funcion que actualiza un artesano                             --
 ------------------------------------------------------------------
+--------------------------------------------------------------------------
+-- Creado: Christian Medrano    Fecha: 16/10/2024                           --
+-- Actividad:                                                           --
+-- Funcion actualizar artesano agregado actualizar idcomunidad e id_usuario en tablas(usuario,artesadno)--
+------------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION fn_actualizar_artesano(
-    id_usuario_C INT,
-    nombreArtesano VARCHAR(30),
-	apellidoArtesano VARCHAR(50),
-	emailArtesano VARCHAR(30),
-	nroArtesano VARCHAR(12),
-	ciArtesano VARCHAR(15),
-	sexoArtesano VARCHAR(20),
-	fotoArtesano VARCHAR(200),
-    usuario VARCHAR(20),
-	espArtesano VARCHAR(50),
-	estado_c VARCHAR(15)
-)
-RETURNS TABLE(
-    id_usuario INT,
-	codigo_usuario VARCHAR(20),
-	nombre VARCHAR(30),
-	apellido VARCHAR(100),
-	email VARCHAR(30),
-	numero_contacto VARCHAR(12),
-	contraseña VARCHAR(255),
-	ci VARCHAR(15),
-	sexo VARCHAR(20),
-	fotoperf_url VARCHAR(200),
-	fecha_creacion TIMESTAMP WITH TIME ZONE,
-	fecha_modificacion TIMESTAMP WITH TIME ZONE,
-	usuario_creacion VARCHAR(20),
-	usuario_modificacion VARCHAR(20),
-	estado_registro VARCHAR(15),
-	rol VARCHAR(20),
-	especialidad_artesano VARCHAR(50),
-	id_comunidad INT
+    p_id_usuario INTEGER,
+    p_nombre VARCHAR(30),
+    p_apellido VARCHAR(50),
+    p_ci VARCHAR(15),
+    p_email VARCHAR(30),
+    p_numero_contacto VARCHAR(12),
+    p_especialidad VARCHAR(50),
+    p_sexo VARCHAR(20),
+    p_id_comunidad INTEGER,
+    p_estado VARCHAR(15)
+) RETURNS TABLE (
+    id_usuario INTEGER,
+    nombre VARCHAR(30),
+    apellido VARCHAR(50),
+    ci VARCHAR(15),
+    email VARCHAR(30),
+    numero_contacto VARCHAR(12),
+    especialidad_Artesano VARCHAR(50),
+    sexo VARCHAR(20),
+    id_comunidad INTEGER,
+    estado_registro VARCHAR(15)
 ) AS $$
 BEGIN
-	-- Actualizar la tabla usuario
-	UPDATE public.usuario u
-	SET 
-		nombre = nombreArtesano,
-		apellido = apellidoArtesano,
-		email = emailArtesano,
-		numero_contacto = nroArtesano,
-		ci = ciArtesano,
-		sexo = sexoArtesano,
-		fotoperf_url = fotoArtesano,
-		fecha_modificacion = NOW(),
-		usuario_modificacion = usuario,
-		estado_registro = estado_c
-	WHERE u.id_usuario = id_usuario_C;  -- Corrección en el WHERE
+    -- Actualizar los datos en la tabla USUARIO
+    UPDATE public.USUARIO u
+    SET
+        nombre = p_nombre,
+        apellido = p_apellido,
+        ci = p_ci,
+        email = p_email,
+        numero_contacto = p_numero_contacto,
+        sexo = p_sexo,
+        fecha_modificacion = CURRENT_TIMESTAMP,
+        estado_registro = p_estado
+    WHERE u.id_usuario = p_id_usuario;
 
-	-- Actualizar la tabla artesano
-	UPDATE public.artesano a
-	SET 
-		fecha_modificacion = NOW(),
-		usuario_modificacion = usuario,
-		estado_registro = estado_c,
-		especialidad_artesano = espArtesano
-	WHERE a.id_usuario = id_usuario_C;  -- Corrección en el WHERE
+    -- Actualizar los datos en la tabla ARTESANO
+    UPDATE public.ARTESANO a
+    SET
+        especialidad_Artesano = p_especialidad,
+        id_comunidad = p_id_comunidad,
+        fecha_modificacion = CURRENT_TIMESTAMP,
+		estado_registro = p_estado
+    WHERE a.id_usuario = p_id_usuario;
 
-	-- Devolver los datos actualizados
-	RETURN QUERY 
-	SELECT 
-		u.id_usuario,
-		u.codigo_usuario,
-		u.nombre,
-		u.apellido,
-		u.email,
-		u.numero_contacto,
-		u."contraseña",
-		u.ci,
-		u.sexo,
-		u.fotoperf_url,
-		u.fecha_creacion,
-		u.fecha_modificacion,
-		u.usuario_creacion,
-		u.usuario_modificacion,
-		u.estado_registro,
-		u.rol,
-		a.especialidad_artesano,
-		a.id_comunidad
-	FROM public.usuario u
-	JOIN public.artesano a ON u.id_usuario = a.id_usuario
-	WHERE u.id_usuario = id_usuario_C;
-
+    -- Devolver los datos actualizados
+    RETURN QUERY
+    SELECT
+        u.id_usuario,
+        u.nombre,
+        u.apellido,
+        u.ci,
+        u.email,
+        u.numero_contacto,
+        a.especialidad_Artesano,
+        u.sexo,
+        a.id_comunidad,
+        u.estado_registro
+    FROM public.USUARIO u
+    INNER JOIN public.ARTESANO a ON u.id_usuario = a.id_usuario
+    WHERE u.id_usuario = p_id_usuario;
 END;
 $$ LANGUAGE plpgsql;
 
 
---pruebita
-select fn_actualizar_artesano(7,'Hulk','Hogan','lalaho@gmail.com','74135694',
-'17129036','Masculino','http://example.com/foto.jpg',
-'ADM','Costuras','pendiente')
-select * from artesano
+-- sentencia de apoyo
+SELECT * FROM fn_actualizar_artesano(
+    1,                -- ID del usuario (artesano)
+    'Juan',           -- Nombre
+    'Pérez',          -- Apellido
+    '12345678',       -- CI
+    'juan.perez@gmail.com', -- Email
+    '789654123',      -- Número de contacto
+    'Escultura',      -- Especialidad
+    'M',      -- Sexo
+    5,                -- ID de la comunidad
+    'activo'          -- Estado de registro
+);
 
 --------------------------------------------------------------------------
 -- Creado: Daniel Tapia    Fecha: 04/10/2024                           --
