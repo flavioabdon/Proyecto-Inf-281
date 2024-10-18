@@ -115,6 +115,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- sentencia de apoyo
 SELECT * FROM fn_adm_insertar_artesano(
     'Juan',            -- nombreArtesano
     'Pérez',           -- apellidoArtesano

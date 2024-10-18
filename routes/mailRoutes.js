@@ -49,9 +49,9 @@ router.post('/formIniciarSesion', async (req, res) => {
       console.log(user.dataValues.rol)
       const area = user.dataValues.rol
       if(area ==='Administrador'){
-        res.render('dashboard/clienteView');
+        res.redirect('/indexAdmin');
       }else{
-        res.render('dashboard/clienteView');
+        res.redirect('/indexAdmin');
       }
       
       //res.json(user);

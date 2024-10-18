@@ -1,7 +1,7 @@
 // configuracion usuario y contraseña gmail
 const config = {
-    user: 'cmedranok@fcpn.edu.bo',
-    pass: '4288316lp'
+    user: 'xxxxx@fcpn.edu.bo',
+    pass: 'xxxxxxx'
   };
   
   module.exports = config;

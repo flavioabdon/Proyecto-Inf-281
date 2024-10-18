@@ -3,7 +3,7 @@
 // LISTAR ARTESANOS
 async function listarArtesanos() {
     try {
-        const response = await fetch('/listarArtesanos'); // Cambia la ruta según corresponda
+        const response = await fetch('/listarAdminArtesanos'); // Cambia la ruta según corresponda
         if (!response.ok) {
             throw new Error('No se pudieron cargar los datos de los artesanos');
         }
@@ -396,7 +396,7 @@ document.getElementById('tablaArtesano').addEventListener('click', function (eve
         }).then((result) => {
             if (result.isConfirmed) {
                 // Envía la solicitud de eliminación al servidor Node.js
-                fetch(`/eliminarArtesano/${artesanoId}`, {
+                fetch(`/eliminarAdminArtesano/${artesanoId}`, {
                     method: 'DELETE'
                 })
                 .then(response => {

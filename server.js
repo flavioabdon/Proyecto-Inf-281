@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+// rutas
 const mailRoutes = require('./routes/mailRoutes');
+
 const categoriaRoutes = require('./routes/categoriaRoutes');
 const comunidadRoutes = require('./routes/comunidadRoutes');
 const almacenRoutes = require('./routes/almacenRoutes');
-const admRoutes = require('./routes/admRoutes');
 const indexAdminRoutes = require('./routes/indexAdminRoutes');
 const adminClienteRoutes = require('./routes/adminClienteRoutes');
 const adminArtesanoRoutes = require('./routes/adminArtesanoRoutes');
@@ -32,11 +33,12 @@ app.use('/', mailRoutes);
 app.use('/', categoriaRoutes);
 app.use('/', almacenRoutes);
 app.use('/', comunidadRoutes);
+
 app.use('/', indexAdminRoutes);
 app.use('/', adminClienteRoutes);
 app.use('/', adminArtesanoRoutes);
 app.use('/', adminDeliveryRoutes);
-app.use('/', admRoutes);
+
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
