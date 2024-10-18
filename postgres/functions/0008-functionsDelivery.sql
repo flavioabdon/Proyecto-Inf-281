@@ -5,16 +5,16 @@
 ------------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION fn_adm_insertar_delivery(
-    nombreDelivery VARCHAR(30),
+	nombreDelivery VARCHAR(30),
 	apellidoDelivery VARCHAR(50),
+	ciDelivery VARCHAR(15),
 	emailDelivery VARCHAR(30),
 	nroDelivery VARCHAR(12),
-	ciDelivery VARCHAR(15),
+	vehiculoDelivery VARCHAR(50),
+	matriculaDelivery  VARCHAR(10),
 	sexoDelivery VARCHAR(20),
 	fotoDelivery VARCHAR(200),
-    usuario VARCHAR(20),
-	vehiculoDelivery VARCHAR(50),
-	matriculaDelivery  VARCHAR(10)
+    usuario VARCHAR(20)
 ) 
 RETURNS TABLE (
     id_usuario INT,
@@ -114,12 +114,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
---pruebita
-select md5('lupe123')
-select public.fn_adm_insertar_delivery('Mario','Bros','lanintenda@gmail.com','74965694',
-'171201329','Masculino','http://example.com/foto.jpg',
-'ADM','moto','xyz666');
-select * from usuario
+-- sentencia de apoyo
+SELECT * FROM fn_adm_insertar_delivery(
+    'Carlos',                        -- nombreDelivery
+    'Sánchez',                       -- apellidoDelivery
+    '87654321',                      -- ciDelivery
+    'carlos.sanchez@example.com',   -- emailDelivery
+    '987654321',                    -- nroDelivery
+    'Bicicleta',                    -- vehiculoDelivery
+    'BIC123',                       -- matriculaDelivery
+    'Masculino',                    -- sexoDelivery
+    'http://example.com/foto.jpg', -- fotoDelivery
+    'admin'                         -- usuario
+);
+
 
 
 --------------------------------------------------------------------------
@@ -128,7 +136,7 @@ select * from usuario
 -- Funcion que lista los deliverys                             --
 ------------------------------------------------------------------
 
-CREATE OR REPLACE FUNCTION fn_listar_deliverys()
+CREATE OR REPLACE FUNCTION fn_listar_deliveries()
 RETURNS TABLE (
 	numero_registro BIGINT,
     id_usuario INT,
@@ -171,7 +179,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 --pruebita
-select fn_listar_deliverys()
+select * from fn_listar_deliveries();
+
 
 
 --------------------------------------------------------------------------
@@ -180,109 +189,97 @@ select fn_listar_deliverys()
 -- Funcion que actualiza un delivery                            --
 ------------------------------------------------------------------
 
+--------------------------------------------------------------------------
+-- Creado: Christian Medrano    Fecha: 17/10/2024                           --
+-- Actividad:                                                           --
+-- Correcion a la funcion actualizar                          --
+------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION fn_actualizar_delivery(
-    id_usuario_C INT,
-    nombreDelivery VARCHAR(30),
-	apellidoDelivery VARCHAR(50),
-	emailDelivery VARCHAR(30),
-	nroDelivery VARCHAR(12),
-	ciDelivery VARCHAR(15),
-	sexoDelivery VARCHAR(20),
-	fotoDelivery VARCHAR(200),
-    usuario VARCHAR(20),
-	estado_c VARCHAR(15),
-	vehiculoDelivery VARCHAR(50),
-	matriculaDelivery VARCHAR(10)
-)
-RETURNS TABLE(
-    id_usuario INT,
-	codigo_usuario VARCHAR(20),
-	nombre VARCHAR(30),
-	apellido VARCHAR(100),
-	email VARCHAR(30),
-	numero_contacto VARCHAR(12),
-	contraseña VARCHAR(255),
-	ci VARCHAR(15),
-	sexo VARCHAR(20),
-	fotoperf_url VARCHAR(200),
-	fecha_creacion TIMESTAMP WITH TIME ZONE,
-	fecha_modificacion TIMESTAMP WITH TIME ZONE,
-	usuario_creacion VARCHAR(20),
-	usuario_modificacion VARCHAR(20),
-	estado_registro VARCHAR(15),
-	tipo_vehiculo VARCHAR(50),
-	matricula_vehiculo VARCHAR(10)
+    p_id_usuario INTEGER,
+    p_nombre VARCHAR(30),
+    p_apellido VARCHAR(50),
+    p_ci VARCHAR(15),
+    p_email VARCHAR(30),
+    p_numero_contacto VARCHAR(12),
+    p_tipo_vehiculo VARCHAR(50),
+    p_matricula_vehiculo VARCHAR(10),
+    p_sexo VARCHAR(20),
+    p_estado VARCHAR(15)
+) RETURNS TABLE (
+    id_usuario INTEGER,
+    nombre VARCHAR(30),
+    apellido VARCHAR(50),
+    ci VARCHAR(15),
+    email VARCHAR(30),
+    numero_contacto VARCHAR(12),
+    tipo_vehiculo VARCHAR(50),
+    matricula_vehiculo VARCHAR(10),
+    sexo VARCHAR(20),
+    estado_registro VARCHAR(15)
 ) AS $$
 BEGIN
-	-- Actualizar la tabla usuario
-	UPDATE public.usuario u
-	SET 
-		nombre = nombreDelivery,
-		apellido = apellidoDelivery,
-		email = emailDelivery,
-		numero_contacto = nroDelivery,
-		ci = ciDelivery,
-		sexo = sexoDelivery,
-		fotoperf_url = fotoDelivery,
-		fecha_modificacion = NOW(),
-		usuario_modificacion = usuario,
-		estado_registro = estado_c
-	WHERE u.id_usuario = id_usuario_C;
+    -- Actualizar los datos en la tabla USUARIO
+    UPDATE public.USUARIO u
+    SET
+        nombre = p_nombre,
+        apellido = p_apellido,
+        ci = p_ci,
+        email = p_email,
+        numero_Contacto = p_numero_contacto,
+        sexo = p_sexo,
+        fecha_modificacion = CURRENT_TIMESTAMP,
+        estado_registro = p_estado
+    WHERE u.id_usuario = p_id_usuario;
 
-	-- Actualizar la tabla delivery
-	UPDATE public.delivery d
-	SET 
-		fecha_modificacion = NOW(),
-		usuario_modificacion = usuario,
-		estado_registro = estado_c,
-		tipo_vehiculo = vehiculoDelivery,
-		matricula_vehiculo = matriculaDelivery
-	WHERE d.id_usuario = id_usuario_C;
+    -- Actualizar los datos en la tabla DELIVERY
+    UPDATE public.DELIVERY d
+    SET
+        tipo_vehiculo = p_tipo_vehiculo,
+        matricula_vehiculo = p_matricula_vehiculo,
+        fecha_modificacion = CURRENT_TIMESTAMP,
+        estado_registro = p_estado
+    WHERE d.id_usuario = p_id_usuario;
 
-	-- Devolver los datos actualizados
-	RETURN QUERY 
-	SELECT 
-		u.id_usuario,
-		u.codigo_usuario,
-		u.nombre,
-		u.apellido,
-		u.email,
-		u.numero_contacto,
-		u."contraseña",
-		u.ci,
-		u.sexo,
-		u.fotoperf_url,
-		u.fecha_creacion,
-		u.fecha_modificacion,
-		u.usuario_creacion,
-		u.usuario_modificacion,
-		u.estado_registro,
-		d.tipo_vehiculo,
-		d.matricula_vehiculo
-	FROM public.usuario u
-	JOIN public.delivery d ON u.id_usuario = d.id_usuario
-	WHERE u.id_usuario = id_usuario_C;
-
-EXCEPTION
-	-- Manejo de errores
-	WHEN OTHERS THEN
-		RAISE EXCEPTION 'Error actualizando el delivery con id_usuario %: %', id_usuario_C, SQLERRM;
+    -- Devolver los datos actualizados
+    RETURN QUERY
+    SELECT
+        u.id_usuario,
+        u.nombre,
+        u.apellido,
+        u.ci,
+        u.email,
+        u.numero_contacto,
+        d.tipo_vehiculo,
+        d.matricula_vehiculo,
+        u.sexo,
+        u.estado_registro
+    FROM public.USUARIO u
+    INNER JOIN public.DELIVERY d ON u.id_usuario = d.id_usuario
+    WHERE u.id_usuario = p_id_usuario;
 END;
 $$ LANGUAGE plpgsql;
 
+-- sentencia de apoyo
+SELECT * FROM fn_actualizar_delivery(
+    21,                             -- p_id_usuario
+    'Juan',                        -- p_nombre
+    'Pérez',                       -- p_apellido
+    '123456789',                   -- p_ci
+    'juan@example.com',     -- p_email
+    '987654321',                  -- p_numero_contacto
+    'Motocicleta',                -- p_tipo_vehiculo
+    '1234AB',                     -- p_matricula_vehiculo
+    'M',                  -- p_sexo
+    'activo'                      -- p_estado
+);
 
---pruebita
-select fn_actualizar_delivery(8,'Mario','Bros','lanintenda@gmail.com','74965694',
-'171201329','Masculino','http://example.com/foto.jpg',
-'ADM','pendiente','moto','xyz666');
-select * from usuario
-select * from delivery
+
 
 
 --------------------------------------------------------------------------
 -- Creado: Daniel Tapia    Fecha: 04/10/2024                           --
 -- Actividad:                                                           --
--- Funcion que actualiza un delivery                            --
+-- Funcion que elimina un delivery                            --
 ------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION fn_eliminar_delivery(p_id_delivery INT)
 RETURNS VOID AS $$
