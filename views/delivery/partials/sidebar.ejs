@@ -1,0 +1,54 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/indexDelivery">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-shipping-fast"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Delivery</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Inicio -->
+    <li class="nav-item <%= (currentPage === 'indexDelivery') ? 'active' : '' %>">
+        <a class="nav-link" href="/indexDelivery">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Gestion
+    </div>
+
+    <!-- Nav Item - Pedidos -->
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-receipt"></i>
+            <span>Pedidos</span></a>
+    </li>
+    
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
+<!-- End of Sidebar -->
