@@ -84,8 +84,8 @@ async function listarCategorias() {
                     visible: false // Cambia a false si deseas ocultar
                 },
                 {
-                    targets: [0, 4, 5, 6], // Cambia los índices según las columnas que deseas centrar
-                    className: 'text-center' // Añade la clase para centrar
+                    targets: [0], // Cambia los índices según las columnas que deseas centrar
+                    className: 'text-left' // Añade la clase para centrar
                 }
             ]
         });
