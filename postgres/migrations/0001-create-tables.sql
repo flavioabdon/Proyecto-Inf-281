@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS public.PAGO_TRANSACCION (
 
 CREATE TABLE IF NOT EXISTS public.ALMACEN (
     id_almacen SERIAL PRIMARY KEY,
-    cod_Almacen VARCHAR(20) NOT NULL,	--sera generado a partir del id_usuario, nombre o ci
+    nombre_almacen VARCHAR(50) NOT NULL,	
     ubicacion_geoRef_Alm geometry(Point, 4326) DEFAULT ST_SetSRID(ST_MakePoint(-68.1193, -16.5000), 4326), --requiere postgis añadido
     direccion_almacen VARCHAR(200) NOT NULL,
     capacidad_unid INTEGER NOT NULL,

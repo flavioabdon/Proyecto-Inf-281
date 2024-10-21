@@ -3,9 +3,8 @@
 -- Actividad:                                                           --
 -- Funcion que inserta un nuevo almacen                                 --
 ------------------------------------------------------------------
-
 CREATE OR REPLACE FUNCTION fn_insertar_almacen(
-    v_cod_Almacen VARCHAR(20),
+    v_nombre_almacen VARCHAR(20),
     v_direccion_almacen VARCHAR(200),
     v_capacidad_unid INTEGER,
     v_usuario_creacion VARCHAR(20),
@@ -13,7 +12,7 @@ CREATE OR REPLACE FUNCTION fn_insertar_almacen(
 ) 
 RETURNS TABLE (
     id_almacen INT,
-    cod_Almacen VARCHAR(20),
+    nombre_almacen VARCHAR(20),
     ubicacion_geoRef_Alm geometry(Point, 4326),
     direccion_almacen VARCHAR(200),
     capacidad_unid INTEGER,
@@ -25,14 +24,14 @@ RETURNS TABLE (
 BEGIN
     RETURN QUERY
     INSERT INTO public.ALMACEN (
-        cod_Almacen,
+        nombre_almacen,
         direccion_almacen, 
         capacidad_unid, 
         usuario_creacion, 
         estado_registro
     )
     VALUES (
-        v_cod_Almacen, 
+        v_nombre_almacen, 
         v_direccion_almacen, 
         v_capacidad_unid, 
         v_usuario_creacion, 
@@ -40,7 +39,7 @@ BEGIN
     )
     RETURNING 
         public.ALMACEN.id_almacen,
-        public.ALMACEN.cod_Almacen, 
+        public.ALMACEN.nombre_almacen, 
         public.ALMACEN.ubicacion_geoRef_Alm, 
         public.ALMACEN.direccion_almacen, 
         public.ALMACEN.capacidad_unid,
@@ -72,7 +71,7 @@ CREATE OR REPLACE FUNCTION fn_listar_almacenes()
 RETURNS TABLE (
     numero_registro BIGINT,
     id_almacen INT,
-    cod_Almacen VARCHAR(20),
+    nombre_almacen VARCHAR(20),
     direccion_almacen VARCHAR(200),
     capacidad_unid INTEGER,
     estado_registro VARCHAR(15)
@@ -82,7 +81,7 @@ BEGIN
     SELECT 
         ROW_NUMBER() OVER (ORDER BY a.id_almacen ASC) AS numero_registro,
         a.id_almacen,
-        a.cod_Almacen,
+        a.nombre_almacen,
         a.direccion_almacen,
         a.capacidad_unid,
         a.estado_registro
@@ -103,13 +102,13 @@ SELECT * FROM fn_listar_almacenes();
 
 CREATE OR REPLACE FUNCTION fn_actualizar_almacen(
     v_id_almacen INT,
-    v_cod_Almacen VARCHAR(20),
+    v_nombre_almacen VARCHAR(20),
     v_direccion_almacen VARCHAR(200),
     v_capacidad_unid INTEGER
 )
 RETURNS TABLE(
     id_almacen INT, 
-    cod_Almacen VARCHAR(20),
+    nombre_almacen VARCHAR(20),
     direccion_almacen VARCHAR(200),
     capacidad_unid INTEGER
 ) AS $$
@@ -117,13 +116,13 @@ BEGIN
     RETURN QUERY
     UPDATE public.ALMACEN
     SET 
-        cod_Almacen = v_cod_Almacen,  
-        direccion_almacen = v_cod_Almacen,
+        nombre_almacen = v_nombre_almacen,  
+        direccion_almacen = v_direccion_almacen,
         capacidad_unid = v_capacidad_unid
     WHERE almacen.id_almacen = v_id_almacen
     RETURNING 
         almacen.id_almacen, 
-        almacen.cod_Almacen, 
+        almacen.nombre_almacen, 
         almacen.direccion_almacen, 
         almacen.capacidad_unid; 
 END;
