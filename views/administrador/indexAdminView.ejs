@@ -11,7 +11,7 @@
     <title>indexAdmin</title>
 
     <!-- datatables -->
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" /> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
 
@@ -60,7 +60,7 @@
                         <main class="container contenido-principal d-flex justify-content-center align-items-center"
                             style="height: 80%;">
                             <h1 class="text-center">
-                                ¡Te damos la Bienvenida!
+                                ¡Te damos la Bienvenida! <span id="nombreApellidoUsuario"></span>
                             </h1>
                         </main>
                         <!-- fin de contenido -->
@@ -103,7 +103,10 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
-
+    
+    <!-- mi js -->
+     <!-- js que obtiene datos del usuario guardado en el sesion storage -->
+    <script src="/dashboard/jsDatosUsuario/datosInicio.js"></script>
 </body>
 
 </html>

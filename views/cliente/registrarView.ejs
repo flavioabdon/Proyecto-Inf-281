@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
 
     <!-- styles -->
+    <link rel="stylesheet" href="/moduloDifusion/css/sweetAlert.css">
     <link rel="stylesheet" href="/moduloDifusion/css/nav-footer.css">
     <link rel="stylesheet" href="/moduloDifusion/css/registrarUsuario.css">
     <link rel="stylesheet" href="/moduloDifusion/css/iniciarSesion.css">
@@ -84,14 +85,16 @@
 
                                 <div class="input-box">
                                     <i class="fas fa-key l-icon"></i>
-                                    <form action="/formIniciarSesion" method="post" id="formIniciarSesion">
+                                    <form action="/auth/formIniciarSesion" id="formIniciarSesion">
                                         <div class="input-field">
-                                            <input type="text" class="input" id="usuario" name="usuario" required="" autocomplete="off">
-                                            <label for="email">Email</label>
+                                            <input type="email" class="input" id="emailUsuario" name="emailUsuario"
+                                                required="" autocomplete="off">
+                                            <label for="emailUsuario">Email</label>
                                         </div>
                                         <div class="input-field">
-                                            <input type="password" class="input" id="password" name="password" required="">
-                                            <label for="pass">Contraseña </label>
+                                            <input type="password" class="input" id="password" name="password"
+                                                required="">
+                                            <label for="password">Contraseña </label>
                                         </div>
                                         <div class="input-field">
 
@@ -139,14 +142,16 @@
                                         <h4 class="text">Registrarse</h4>
                                     </div>
 
-                                    <form action="/formRegistrarCliente" method="post" id="formRegistrarCliente" enctype="multipart/form-data">
+                                    <form action="/formRegistrarCliente" method="post" id="formRegistrarCliente"
+                                        enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="nombreCliente" class="labels">Nombres</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i class="fa fa-user"></i></span>
                                                     <input type="text" class="form-control" id="nombreCliente"
-                                                        name="nombreCliente" placeholder="Ingresa tus nombres" value="" required>
+                                                        name="nombreCliente" placeholder="Ingresa tus nombres" value=""
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -186,7 +191,8 @@
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                                                     <input type="email" class="form-control" id="emailCliente"
-                                                        name="emailCliente" placeholder="Ingresa tu email" value="" required>
+                                                        name="emailCliente" placeholder="Ingresa tu email" value=""
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -206,7 +212,8 @@
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i
                                                             class="fa fa-venus-mars"></i></span>
-                                                    <select class="form-select" id="sexoCliente" name="sexoCliente" required>
+                                                    <select class="form-select" id="sexoCliente" name="sexoCliente"
+                                                        required>
                                                         <option value="" disabled selected>Selecciona tu sexo</option>
                                                         <option value="M">Masculino</option>
                                                         <option value="F">Femenino</option>
@@ -231,9 +238,9 @@
                                                     <span class="input-group-text"><i class="fa fa-lock"></i></span>
                                                     <input type="password" class="form-control" id="contrasenaCliente"
                                                         name="contrasenaCliente"
-                                                        placeholder="Contraseña (Mín. 8 caracteres, al menos 1 mayúscula y 1 número)" 
-                                                        pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$" 
-                                                        title="La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula y un número." 
+                                                        placeholder="Contraseña (Mín. 8 caracteres, al menos 1 mayúscula y 1 número)"
+                                                        pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$"
+                                                        title="La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula y un número."
                                                         required>
                                                 </div>
                                             </div>
@@ -283,13 +290,19 @@
     </a>
 
 
-    <!-- Script de Bootstrap solo si necesitas algún componente JS -->
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Script de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script>
+
+    <!-- mi js -->
     <script src="/moduloDifusion/js/index.js"></script>
     <script src="/moduloDifusion/js/imagen-perfil.js"></script>
     <script src="/moduloDifusion/js/validar-contrasena.js"></script>
+    <script src="/moduloDifusion/jsIniciarSesion/retornarUsuarioSiExiste.js"></script>
 
 </body>
 
