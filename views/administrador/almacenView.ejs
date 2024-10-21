@@ -11,7 +11,7 @@
     <title>Almacen</title>
 
     <!-- datatables -->
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" /> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
 
@@ -63,24 +63,24 @@
                             <!-- Card Contenedor -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h4 class="m-0 font-weight-bold text-secondary text-center">Gestion de Almacenes</h4>
+                                    <h4 class="m-0 font-weight-bold text-secondary text-center">Gestion de Almacenes
+                                    </h4>
                                 </div>
                                 <div class="card-body">
                                     <!-- Botón para abrir el modal -->
                                     <button class="btn btn-success my-1 mt-4 ml-4" data-toggle="modal"
-                                        data-target="#modalAgregarAlmacen">Añadir Almacen</button>
+                                        data-target="#modalAgregarAlmacen">Añadir Almacén</button>
 
                                     <div class="row contenedor-tabla">
                                         <div class="col-lg-12">
                                             <div class="table-responsive px-4 py-2">
-                                                <table id="tablaAlmacen"
-                                                    class="table table-hover responsive nowrap"
+                                                <table id="tablaAlmacen" class="table table-hover responsive nowrap"
                                                     style="width:100%">
-                                                    <thead class="text-light text-center">
+                                                    <thead class="thead-light text-center">
                                                         <tr>
-                                                            <th class="text-center">#:&nbsp;</th>
+                                                            <th class="">#:&nbsp;</th>
                                                             <th>ID:&nbsp;</th>
-                                                            <th class="">Codigo de Almacen:&nbsp;</th>
+                                                            <th class="">Nombre:&nbsp;</th>
                                                             <th class="">Direccion:&nbsp;</th>
                                                             <th class="">Capacidad:&nbsp;</th>
                                                             <th class="">Estado:&nbsp;</th>
@@ -103,7 +103,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content p-2">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalAgregarAlmacenLabel">Añadir Almacen</h5>
+                                            <h5 class="modal-title" id="modalAgregarAlmacenLabel">Añadir Almacén</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -111,47 +111,80 @@
                                         <div class="modal-body">
                                             <form id="formRegistrarAlmacen" method="POST" action="">
                                                 <div class="form-group">
-                                                    <label for="codigoAlmacen">Codigo:</label>
-                                                    <!--nombreCategoria / codigoAlmacen-->
-                                                    <input type="text" class="form-control" id="codAlmacen"
-                                                        placeholder="Introduce el codigo del Almacen"
-                                                        name="codigoAlmacen" required>
+                                                    <label for="nombreAlmacen">Nombre del Almacén:</label>
+                                                    <input type="text" class="form-control" id="nombreAlmacen"
+                                                        placeholder="Introduce el nombre del almacén"
+                                                        name="nombreAlmacen" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="direccionAlmacen">Direccion:</label>
-                                                    <!--descripcionCategoria / direccionAlmacen-->
+                                                    <label for="capacidadAlmacen">Capacidad (unidades):</label>
+                                                    <input type="number" class="form-control" id="capacidadAlmacen"
+                                                        placeholder="Introduce la capacidad del almacén"
+                                                        name="capacidadAlmacen" min="1" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="direccionAlmacen">Dirección:</label>
                                                     <textarea class="form-control" id="direccionAlmacen" rows="3"
                                                         placeholder="Introduce una dirección" name="direccionAlmacen"
                                                         required></textarea>
                                                 </div>
+
+                                                <!-- Bloque añadido para ubicación -->
                                                 <div class="form-group">
-                                                    <label for="capacidadAlmacen">Capacidad:</label>
-                                                    <!--iconoCategoria / capacidadAlmacen-->
-                                                    <input type="text" class="form-control" id="capacidadAlmacen"
-                                                        placeholder="Introduce la capacidad del Almacen"
-                                                        name="capacidadAlmacen" required>
+                                                    <label for="ubicacionAlmacen" class="labels">Ubicación</label>
+                                                    <div class="input-group">
+                                                        <button type="button" class="btn btn-outline-primary"
+                                                            id="abrirMapa">
+                                                            <i class="fa fa-map"></i> Abrir Google Maps
+                                                        </button>
+                                                    </div>
                                                 </div>
+                                                <!-- Fin del bloque añadido -->
+
                                             </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Cerrar</button>
                                             <button type="submit" form="formRegistrarAlmacen"
-                                                class="btn btn-success">Guardar
-                                                Almacen</button>
+                                                class="btn btn-success">Guardar Almacén</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Segundo Modal con Google Maps -->
+                            <div class="modal fade" id="segundoModal" tabindex="-1" role="dialog"
+                                aria-labelledby="segundoModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="segundoModalLabel">Ubicación en Google Maps</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Reemplaza la URL del mapa con la ubicación deseada -->
+                                            <iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d108149.74007316536!2d-68.17363229776905!3d-16.500849290268757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sbo!4v1729041934336!5m2!1ses!2sbo"
+                                                width="100%" height="450" style="border:0;" allowfullscreen=""
+                                                loading="lazy">
+                                            </iframe>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <!-- Modal para Actualizar Categoría -->
+
+                            <!-- Modal para Actualizar Almacen -->
                             <div class="modal fade" id="modalActualizarAlmacen" tabindex="-1" role="dialog"
                                 aria-labelledby="modalActualizarAlmacenLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content p-2">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalActualizarAlmacenLabel">Actualizar Almacen
+                                            <h5 class="modal-title" id="modalActualizarAlmacenLabel">Actualizar Almacén
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -159,41 +192,42 @@
                                         </div>
                                         <div class="modal-body">
                                             <form id="formActualizarAlmacen" action="">
+                                                <!-- Campo oculto para el ID del almacén -->
                                                 <input type="hidden" id="idAlmacenActualizar"
                                                     name="idAlmacenActualizar">
-                                                <input type="text" id="codAlmacenActualizar"
-                                                    name="codAlmacenActualizar">
-                                                <!-- Campo oculto para el ID del almacen -->
+
+                                                <!-- Nombre del almacén -->
                                                 <div class="form-group">
-                                                    <label for="codigoAlmacenActualizar">Nombre:</label>
-                                                    <!--codigoAlmacenActualizar / codigoAlmacenActualizar-->
-                                                    <input type="text" class="form-control" id="codigoAlmacenActualizar"
-                                                        placeholder="Introduce el nombre de la categoría"
-                                                        name="codigoAlmacenActualizar" required>
+                                                    <label for="nombreAlmacenActualizar">Nombre del Almacén:</label>
+                                                    <input type="text" class="form-control" id="nombreAlmacenActualizar"
+                                                        placeholder="Introduce el nombre del almacén"
+                                                        name="nombreAlmacenActualizar" required>
                                                 </div>
+                                                <!-- Capacidad del almacén -->
+                                                <div class="form-group mb-0">
+                                                    <label for="capacidadAlmacenActualizar">Capacidad
+                                                        (unidades):</label>
+                                                    <input type="number" class="form-control"
+                                                        id="capacidadAlmacenActualizar"
+                                                        placeholder="Introduce la capacidad del almacén"
+                                                        name="capacidadAlmacenActualizar" min="1" required>
+                                                </div>
+                                                <!-- Dirección del almacén -->
                                                 <div class="form-group">
-                                                    <label for="direccionAlmacenActualizar">dirección:</label>
-                                                    <!--descripcionCategoriaActualizar / direccionAlmacenActualizar-->
+                                                    <label for="direccionAlmacenActualizar">Dirección:</label>
                                                     <textarea class="form-control" id="direccionAlmacenActualizar"
-                                                        rows="3" placeholder="Introduce una direccion"
+                                                        rows="3" placeholder="Introduce la dirección"
                                                         name="direccionAlmacenActualizar" required></textarea>
                                                 </div>
-                                                <div class="form-group mb-0">
-                                                    <label for="capacidadAlmacenActualizar">Capacidad:</label>
-                                                    <!--iconoCategoriaActualizar / capacidadAlmacenActualizar-->
-                                                    <input type="text" class="form-control"
-                                                        id="capacidadAlmacenActualizar"
-                                                        placeholder="Introduce la capacidad del Almacen"
-                                                        name="capacidadAlmacenActualizar" required>
-                                                </div>
+
+
                                             </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Cerrar</button>
                                             <button type="submit" form="formActualizarAlmacen"
-                                                class="btn btn-primary">Actualizar
-                                            </button>
+                                                class="btn btn-primary">Actualizar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -245,6 +279,7 @@
         <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
 
         <!-- mi js -->
+        <script src="/dashboard/jsAlmacen/modalMapa.js"></script>
         <script src="/dashboard/jsAlmacen/crudAlmacen.js"></script>
 
 

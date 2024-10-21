@@ -1,9 +1,9 @@
-//LISTAR ALMACENES
-async function listarAlmacenes() { // listarCategorias ---> listarAlmacenes
+//LISTAR
+async function listarAlmacenes() { // listarAlmacenes
     try {
         const response = await fetch('/listarAlmacenes'); //ruta de view
         if (!response.ok) {
-            throw new Error('No se pudieron cargar los datos de las categorías');
+            throw new Error('No se pudieron cargar los datos de la lista de almacenes');
         }
 
         const almacenes = await response.json(); // Convierte la respuesta a JSON
@@ -19,13 +19,18 @@ async function listarAlmacenes() { // listarCategorias ---> listarAlmacenes
             columns: [
                 { data: 'numero_registro' },
                 { data: 'id_almacen' },
-                { data: 'cod_almacen' },
+                { data: 'nombre_almacen' },
                 { data: 'direccion_almacen' },
-                { data: 'capacidad_unid'},
+                {
+                    data: 'capacidad_unid',
+                    render: function (data) {
+                        return `<span class="badge badge-pill badge-info">${data}</span>`;
+                    }
+                },
                 {
                     data: 'estado_registro',
                     render: function (data) {
-                        return data === 'Activo'
+                        return data === 'activo'
                             ? '<span class="badge badge-success">Activo</span>' // Badge verde
                             : '<span class="badge badge-danger">Inactivo</span>'; // Badge rojo
                     }
@@ -75,24 +80,24 @@ async function listarAlmacenes() { // listarCategorias ---> listarAlmacenes
                     visible: false // Cambia a false si deseas ocultar
                 },
                 {
-                    targets: [0, 4, 5, 6], // Cambia los índices según las columnas que deseas centrar
-                    className: 'text-center' // Añade la clase para centrar
+                    targets: [0, 4], // Cambia los índices según las columnas que deseas centrar
+                    className: 'text-left' // Añade la clase para centrar
                 }
             ]
         });
     } catch (error) {
-        console.error('Error al cargar las categorías:', error); // Manejo de errores
+        console.error('Error al cargar los almacenes:', error); // Manejo de errores
     }
 }
 
-// REGISTRAR ALMACEN
+// REGISTRAR 
 document.getElementById('formRegistrarAlmacen').addEventListener('submit', function (event) {
     event.preventDefault();
-    //alert("Hola RUDOLHP");
+   
 
-    const codAlmacen = document.getElementById('codAlmacen').value;  // nombreCategoria ---> codAlmacen
-    const direccionAlmacen = document.getElementById('direccionAlmacen').value;   // descripcionCategoria ---> direccionAlmacen
-    const capacidadAlmacen = document.getElementById('capacidadAlmacen').value;     // iconoCategoria ---> capacidadAlmacen
+    const nombreAlmacen = document.getElementById('nombreAlmacen').value;  
+    const direccionAlmacen = document.getElementById('direccionAlmacen').value;  
+    const capacidadAlmacen = document.getElementById('capacidadAlmacen').value;   
 
     // Envía los datos al servidor Node.js
     fetch('/formRegistrarAlmacen', {
@@ -101,7 +106,7 @@ document.getElementById('formRegistrarAlmacen').addEventListener('submit', funct
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            codAlmacen: codAlmacen,
+            nombreAlmacen: nombreAlmacen,
             direccionAlmacen: direccionAlmacen,
             capacidadAlmacen: capacidadAlmacen
         })
@@ -117,7 +122,7 @@ document.getElementById('formRegistrarAlmacen').addEventListener('submit', funct
             Swal.fire({
                 icon: 'success',
                 title: 'Almacen registrado!',
-                text: 'El almacen ha sido registrada correctamente',
+                text: 'El almacen ha sido registrado correctamente',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
                 $('#modalAgregarAlmacen').modal('hide');
@@ -140,11 +145,11 @@ document.getElementById('formRegistrarAlmacen').addEventListener('submit', funct
         });
 });
 
-// ACTUALIZAR ALMACEN
+// ----------------ACTUALIZAR ------------
 // Evento para mostrar el modal con los datos deL almacen a actualizar
 document.getElementById('tablaAlmacen').addEventListener('click', function (event) {
     const btnEditar = event.target.closest('.btnEditar');
-    //alert("holaaaaaa");
+   
     if (btnEditar) {
         // Obtener la fila (tr) más cercana al botón de editar
         const fila = $(btnEditar).closest('tr');
@@ -156,8 +161,7 @@ document.getElementById('tablaAlmacen').addEventListener('click', function (even
         if (almacenData) {
             // Llenar el modal de actualización con los datos de la categoría
             document.getElementById('idAlmacenActualizar').value = almacenData.id_almacen;
-            document.getElementById('codAlmacenActualizar').value = almacenData.cod_almacen;
-            console.log(almacenData.cod_Almacen);
+            document.getElementById('nombreAlmacenActualizar').value = almacenData.nombre_almacen;
             document.getElementById('direccionAlmacenActualizar').value = almacenData.direccion_almacen;
             document.getElementById('capacidadAlmacenActualizar').value = almacenData.capacidad_unid;
 
@@ -174,20 +178,20 @@ document.getElementById('formActualizarAlmacen').addEventListener('submit', func
     event.preventDefault();
 
     const idAlmacen = document.getElementById('idAlmacenActualizar').value;
-    const codAlmacen = document.getElementById('codAlmacenActualizar').value;
+    const nombreAlmacen = document.getElementById('nombreAlmacenActualizar').value;
     const direccionAlmacen = document.getElementById('direccionAlmacenActualizar').value;
     const capacidadAlmacen = document.getElementById('capacidadAlmacenActualizar').value;
 
-   
+
 
     // Realizar la petición para actualizar el almacen
-    fetch(`/almacen/${idAlmacen}`, {
+    fetch(`/actualizarAlmacen/${idAlmacen}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            codAlmacen: codAlmacen,
+            nombreAlmacen: nombreAlmacen,
             direccionAlmacen: direccionAlmacen,
             capacidadAlmacen: capacidadAlmacen
         })
@@ -203,7 +207,7 @@ document.getElementById('formActualizarAlmacen').addEventListener('submit', func
             Swal.fire({
                 icon: 'success',
                 title: '¡Almacen actualizado!',
-                text: 'El almacen ha sido actualizada correctamente.',
+                text: 'El almacen ha sido actualizado correctamente.',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
                 $('#modalActualizarAlmacen').modal('hide'); // Cerrar el modal
@@ -225,19 +229,21 @@ document.getElementById('formActualizarAlmacen').addEventListener('submit', func
             console.error('Error al actualizar el almacen:', error);
         });
 });
+// -----------------FIN ACTUALIZAR--------------
 
-// ELIMINAR CATEGORÍA
+
+// ELIMINAR 
 document.getElementById('tablaAlmacen').addEventListener('click', function (event) {
     if (event.target.closest('.btnBorrar')) {
         // Obtener la fila (tr) más cercana al botón de eliminar
         const fila = $(event.target).closest('tr');
 
-        // Obtener el ID de la categoría de la fila usando DataTable
+        // Obtener el ID a de la fila usando DataTable
         const almacenId = $('#tablaAlmacen').DataTable().row(fila).data().id_almacen;
         // Mostrar una confirmación de eliminación utilizando SweetAlert
         Swal.fire({
             title: '¿Estás seguro?',
-            text: '¿Quieres eliminar esta categoría?',
+            text: '¿Quieres eliminar este almacen?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
@@ -248,34 +254,34 @@ document.getElementById('tablaAlmacen').addEventListener('click', function (even
                 fetch(`/eliminarAlmacen/${almacenId}`, {
                     method: 'DELETE'
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Ocurrió un error al eliminar la categoría');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Muestra una alerta de SweetAlert cuando se elimina el almacen correctamente
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Almacen eliminado!',
-                        text: 'El almacen ha sido eliminada correctamente',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Ocurrió un error al eliminar el almacen');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Muestra una alerta de SweetAlert cuando se elimina el almacen correctamente
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Almacen eliminado!',
+                            text: 'El almacen ha sido eliminado correctamente',
+                            confirmButtonText: 'Aceptar'
+                        });
 
-                    // Actualiza la tabla de almacenes
-                    listarAlmacenes(); // Llama a tu función para listar los almacenes actualizados
-                })
-                .catch(error => {
-                    // Muestra una alerta de SweetAlert cuando ocurre un error
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error.message || 'Ocurrió un error al eliminar el almacen',
-                        confirmButtonText: 'Aceptar'
+                        // Actualiza la tabla de almacenes
+                        listarAlmacenes(); // Llama a tu función para listar los almacenes actualizados
+                    })
+                    .catch(error => {
+                        // Muestra una alerta de SweetAlert cuando ocurre un error
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error.message || 'Ocurrió un error al eliminar el almacen',
+                            confirmButtonText: 'Aceptar'
+                        });
+                        console.error('Error al eliminar el almacen:', error);
                     });
-                    console.error('Error al eliminar el almacen:', error);
-                });
             }
         });
     }
@@ -285,3 +291,4 @@ document.getElementById('tablaAlmacen').addEventListener('click', function (even
 // Llama a la función al cargar la página
 document.addEventListener('DOMContentLoaded', listarAlmacenes);
 
+    

@@ -1,13 +1,13 @@
 const almacenModel = require('../models/almacen');
 
-// Controlador para insertar un nuevo Almacen
+// registrar
 const registrarAlmacen = async (req, res) => {
     // Obtiene los datos del formulario
-    const { codAlmacen, direccionAlmacen, capacidadAlmacen } = req.body;
+    const { nombreAlmacen, direccionAlmacen, capacidadAlmacen } = req.body;
 
     try {
-        // Inserta el nuevo almacen utilizando el modelo
-        const nuevoAlmacen = await almacenModel.registrarAlmacen(codAlmacen, direccionAlmacen, capacidadAlmacen);
+        // Inserta el nuevo almacen 
+        const nuevoAlmacen = await almacenModel.registrarAlmacen(nombreAlmacen, direccionAlmacen, capacidadAlmacen);
         // Devuelve un mensaje de éxito
 
         res.status(201).json({ message: 'Almacen creado', almacen: nuevoAlmacen });
@@ -19,7 +19,7 @@ const registrarAlmacen = async (req, res) => {
     }
 };
 
-// listar todos los almacenes
+// listar
 const listarAlmacenes = async (req, res) => {
     try {
         // Llama al modelo para obtener los almacenes
@@ -33,15 +33,15 @@ const listarAlmacenes = async (req, res) => {
     }
 };
 
-// Controlador para actualizar un Almacen
+// Controlador para actualizar
 const actualizarAlmacen = async (req, res) => {
     const id_almacen = req.params.id; // El ID viene desde la URL
-    const { codAlmacen, direccionAlmacen, capacidadAlmacen } = req.body; // Datos enviados en el cuerpo
+    const { nombreAlmacen, direccionAlmacen, capacidadAlmacen } = req.body; // Datos enviados en el cuerpo
 
     try {
         const almacenActualizada = await almacenModel.actualizarAlmacen(
             id_almacen,
-            codAlmacen,
+            nombreAlmacen,
             direccionAlmacen,
             capacidadAlmacen
         );
@@ -52,11 +52,11 @@ const actualizarAlmacen = async (req, res) => {
     }
 };
 
-// Controlador para eliminar una categoría
+// Controlador para eliminar
 const eliminarAlmacen = async (req, res) => {
     const id_almacen = req.params.id; // El ID viene desde la URL
     try {
-        await almacenModel.eliminarAlmacen(id_almacen); // Llama al modelo para eliminar la categoría
+        await almacenModel.eliminarAlmacen(id_almacen); // Llama al modelo para eliminar
         res.status(200).json({ message: 'Almacen eliminado' });
     } catch (error) {
         console.error('Error al eliminar el almacen:', error);
