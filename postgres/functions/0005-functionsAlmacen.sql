@@ -53,11 +53,12 @@ $$ LANGUAGE plpgsql;
 
 -- Sentencias de apoyo SQL
 SELECT * FROM fn_insertar_almacen(
-    'Almacen002',               -- cod_Almacen
+    'Almacen de Rudolph',               -- nombre_Almacen
     'Z/Principal C/Uno N/2222',    -- direccion_almacen
      1000,                         -- capacidad_unid
-    'Activo',                   -- estado
-    'Administrador'              -- usuario
+    'Administrador',              -- usuario
+    'Activo'                   -- estado
+    
 );
 
 
