@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -23,8 +23,8 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- iconos -->
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <!-- iconos para categoria-->
+    <!-- <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" /> -->
 
 
     <!-- Custom styles for this template-->
@@ -63,10 +63,11 @@
                             <!-- Card Contenedor -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h4 class="m-0 font-weight-bold text-secondary text-center">Gestion de Almacenes
+                                    <h4 class="m-0 font-weight-bold text-secondary text-center">Gestion de Almacenes 🏢
                                     </h4>
                                 </div>
                                 <div class="card-body">
+
                                     <!-- Botón para abrir el modal -->
                                     <button class="btn btn-success my-1 mt-4 ml-4" data-toggle="modal"
                                         data-target="#modalAgregarAlmacen">Añadir Almacén</button>
@@ -76,11 +77,12 @@
                                             <div class="table-responsive px-4 py-2">
                                                 <table id="tablaAlmacen" class="table table-hover responsive nowrap"
                                                     style="width:100%">
+                                                    <!--Encabezados de la tabla-->
                                                     <thead class="thead-light text-center">
                                                         <tr>
                                                             <th class="">#:&nbsp;</th>
                                                             <th>ID:&nbsp;</th>
-                                                            <th class="">Nombre:&nbsp;</th>
+                                                            <th class="">Nombre Almacen:&nbsp;</th>
                                                             <th class="">Direccion:&nbsp;</th>
                                                             <th class="">Capacidad:&nbsp;</th>
                                                             <th class="">Estado:&nbsp;</th>
@@ -88,7 +90,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <!-- Contenido de la tabla -->
+                                                        <!-- Contenido de la tabla obtenido dinamicamente del crudAlmacen-->
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -97,24 +99,30 @@
                                 </div>
                             </div>
 
-                            <!-- Modal para Añadir Almacen -->
+                            <!-- modalAgregarAlmacen: para Añadir Almacen -->
                             <div class="modal fade" id="modalAgregarAlmacen" tabindex="-1" role="dialog"
                                 aria-labelledby="modalAgregarAlmacenLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
+
+                                    <!--Aquí comienza el contenido real del modal, que contiene el encabezado, el cuerpo y el pie-->
                                     <div class="modal-content p-2">
-                                        <div class="modal-header">
+
+                                        <div class="modal-header"><!--Encabezado del Modal-->
                                             <h5 class="modal-title" id="modalAgregarAlmacenLabel">Añadir Almacén</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
+                                                <!--Usa el símbolo &times; (que es una "X") como ícono para cerrar. -->
                                             </button>
                                         </div>
-                                        <div class="modal-body">
+
+                                        <div class="modal-body"><!--Cuerpo del Modal-->
                                             <form id="formRegistrarAlmacen" method="POST" action="">
+                                                <!--El formulario tiene el id="formRegistrarAlmacen", lo que permite referenciarlo y manipularlo a través de JavaScript.-->
                                                 <div class="form-group">
                                                     <label for="nombreAlmacen">Nombre del Almacén:</label>
                                                     <input type="text" class="form-control" id="nombreAlmacen"
                                                         placeholder="Introduce el nombre del almacén"
-                                                        name="nombreAlmacen" required>
+                                                        name="nombreAlmacen" required> <!--name="nombreAlmacen": Este atributo define el nombre del campo cuando el formulario se envía.-->
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="capacidadAlmacen">Capacidad (unidades):</label>
@@ -183,6 +191,7 @@
                                 aria-labelledby="modalActualizarAlmacenLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content p-2">
+
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="modalActualizarAlmacenLabel">Actualizar Almacén
                                             </h5>
@@ -190,6 +199,7 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        
                                         <div class="modal-body">
                                             <form id="formActualizarAlmacen" action="">
                                                 <!-- Campo oculto para el ID del almacén -->
