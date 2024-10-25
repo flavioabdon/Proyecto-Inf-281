@@ -14,9 +14,10 @@ router.post('/formRegistrarAlmacen', almacenController.registrarAlmacen); // Usa
 router.get('/listarAlmacenes', almacenController.listarAlmacenes); // Usa el controlador para listar almacenes
 
 // Ruta para actualizar un almacén existente
-router.put('/actualizarAlmacen/:id', almacenController.actualizarAlmacen); // Actualizar almacén
+router.put('/actualizarAlmacen/:id', almacenController.actualizarAlmacen); // usa el controlador para actualizar almacén
 
 // Ruta para eliminar un almacén
 router.delete('/eliminarAlmacen/:id', almacenController.eliminarAlmacen); // Usa el controlador para eliminar un almacén
 
+//exporta el router para que pueda ser utilizado en server.js
 module.exports = router;

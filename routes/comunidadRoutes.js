@@ -2,26 +2,21 @@ const express = require('express');
 const router = express.Router();
 const comunidadController = require('../controllers/comunidadController');
 
-// Ruta para la vista de almacenes
+// Ruta para la vista de Comunidades
 router.get('/comunidad', (req, res) => {
-    res.render('administrador/comunidadView'); // Renderiza la vista 'almacenView.ejs'
+    res.render('administrador/comunidadView',{ currentPage: "comunidad" }); // Renderiza la vista 'comunidadView.ejs'
 });
 
+//Ruta para registrar una nueva Comunidad
+router.post('/formRegistrarComunidad', comunidadController.registrarComunidad); // Usa el controlador para insertar comunidades
 
+//Ruta para listar Comunidades
+router.get('/listarComunidades', comunidadController.listarComunidades); // Usa el controlador para listar Comunidades
 
-router.get('/listarComunidades', comunidadController.listarComunidades); // Usa el controlador para listar almacenes
+//Ruta para actualizar una Comunidad existente
+router.put('/actualizarComunidad/:id', comunidadController.actualizarComunidad); // Actualizar Comunidad
 
-
-// // Ruta para registrar un nuevo almacén
-// router.post('/formRegistrarAlmacen', almacenController.registrarAlmacen); // Usa el controlador para insertar
-
-// // Ruta para listar almacenes
-// router.get('/listarAlmacenes', almacenController.listarAlmacenes); // Usa el controlador para listar almacenes
-
-// // Ruta para actualizar un almacén existente
-// router.put('/almacen/:id', almacenController.actualizarAlmacen); // Actualizar almacén
-
-// // Ruta para eliminar un almacén
-// router.delete('/eliminarAlmacen/:id', almacenController.eliminarAlmacen); // Usa el controlador para eliminar un almacén
+//Ruta para eliminar una Comunidad
+router.delete('/eliminarComunidad/:id', comunidadController.eliminarComunidad); // Usa el controlador para eliminar una Comunidad
 
 module.exports = router;
