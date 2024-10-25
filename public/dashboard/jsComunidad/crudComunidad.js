@@ -1,27 +1,29 @@
-//LISTAR ALMACENES
+//LISTAR
 async function listarComunidades() { // listarComunidades
     try {
         const response = await fetch('/listarComunidades'); //ruta de view
         if (!response.ok) {
-            throw new Error('No se pudieron cargar los datos de las categorías');
+            throw new Error('No se pudieron cargar los datos de la lista de Comunidades');
         }
 
-        const almacenes = await response.json(); // Convierte la respuesta a JSON
+        const comunidades = await response.json(); // Convierte la respuesta a JSON
 
         // Limpiar la tabla antes de actualizar
-        $('#tablaAlmacen').DataTable().clear().destroy();
+        $('#tablaComunidad').DataTable().clear().destroy();
 
         // Inicializar DataTables con los datos actualizados
-        $('#tablaAlmacen').DataTable({
+        $('#tablaComunidad').DataTable({
             responsive: true,
             autoWidth: true,
-            data: almacenes,
+            data: comunidades,
             columns: [
                 { data: 'numero_registro' },
-                { data: 'id_almacen' },
-                { data: 'cod_almacen' },
-                { data: 'direccion_almacen' },
-                { data: 'capacidad_unid'},
+                { data: 'id_comunidad' },
+                { data: 'departamento' },
+                { data: 'provincia' },
+                { data: 'municipio' },
+                { data: 'nombrecom' },
+                { data: 'ubicacion_georef_com' },
                 {
                     data: 'estado_registro',
                     render: function (data) {
@@ -75,126 +77,152 @@ async function listarComunidades() { // listarComunidades
                     visible: false // Cambia a false si deseas ocultar
                 },
                 {
-                    targets: [0, 4, 5, 6], // Cambia los índices según las columnas que deseas centrar
-                    className: 'text-center' // Añade la clase para centrar
+                    targets: [0, 4], // Cambia los índices según las columnas que deseas centrar
+                    className: 'text-left' // Añade la clase para centrar
                 }
             ]
         });
     } catch (error) {
-        console.error('Error al cargar las categorías:', error); // Manejo de errores
+        console.error('Error al cargar las Comunidades:', error); // Manejo de errores
     }
 }
 
-// REGISTRAR ALMACEN
-document.getElementById('formRegistrarAlmacen').addEventListener('submit', function (event) {
+// REGISTRAR 
+document.getElementById('formRegistrarComunidad').addEventListener('submit', function (event) {
     event.preventDefault();
-    //alert("Hola RUDOLHP");
 
-    const codAlmacen = document.getElementById('codAlmacen').value;  // nombreCategoria ---> codAlmacen
-    const direccionAlmacen = document.getElementById('direccionAlmacen').value;   // descripcionCategoria ---> direccionAlmacen
-    const capacidadAlmacen = document.getElementById('capacidadAlmacen').value;     // iconoCategoria ---> capacidadAlmacen
+    
+    const departamento = document.getElementById('departamento').value;  
+    const provincia = document.getElementById('provincia').value;  
+    const municipio = document.getElementById('municipio').value;
+    const nombrecom = document.getElementById('nombrecom').value; 
+    const longitud = document.getElementById('longitud').value; 
+    const latitud = document.getElementById('latitud').value; 
+    
+    // Cambiar el formato de ubicación geográfica de "12.34 56.78" a "12.34, 56.78"
+   // ubicacion_georef_com = ubicacion_georef_com.split(' ').join(',');
 
+    console.log("Datos a registrar:", {
+        departamento,
+        provincia,
+        municipio,
+        nombrecom,
+        longitud,
+        latitud
+    }); // Asegúrate de que 'datos' contiene lo correcto
+    
     // Envía los datos al servidor Node.js
-    fetch('/formRegistrarAlmacen', {
+    fetch('/formRegistrarComunidad', {          //ruta de view
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            codAlmacen: codAlmacen,
-            direccionAlmacen: direccionAlmacen,
-            capacidadAlmacen: capacidadAlmacen
+            departamento: departamento,
+            provincia: provincia,
+            municipio: municipio,
+            nombrecom: nombrecom,
+            longitud: longitud,
+            latitud: latitud
         })
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ocurrió un error al registrar el almacen');
+                throw new Error('Ocurrió un error al registrar el comunidad');
             }
             return response.json();
         })
         .then(data => {
-            // Muestra una alerta de SweetAlert cuando se registra el almacen correctamente
+            // Muestra una alerta de SweetAlert cuando se registra la comunidad correctamente
             Swal.fire({
                 icon: 'success',
-                title: 'Almacen registrado!',
-                text: 'El almacen ha sido registrada correctamente',
+                title: 'Comunidad registrada!',
+                text: 'La Comunidad ha sido registrada correctamente',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
-                $('#modalAgregarAlmacen').modal('hide');
+                $('#modalAgregarComunidad').modal('hide');
             });
 
             // Limpiar el formulario después de registrar la categoría
-            document.getElementById('formRegistrarAlmacen').reset();
+            document.getElementById('formRegistrarComunidad').reset();
 
-            listarAlmacenes(); // Llama a tu función para listar las categorías actualizadas
+            listarComunidades(); // Llama a tu función para listar las categorías actualizadas
         })
         .catch(error => {
             // Muestra una alerta de SweetAlert cuando ocurre un error
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.message || 'Ocurrió un error al registrar el almacen',
+                text: error.message || 'Ocurrió un error al registrar la comunidad',
                 confirmButtonText: 'Aceptar'
             });
-            console.error('Error al registrar el almacen:', error);
+            console.error('Error al registrar la comunidad:', error);
         });
 });
 
-// ACTUALIZAR ALMACEN
-// Evento para mostrar el modal con los datos deL almacen a actualizar
-document.getElementById('tablaAlmacen').addEventListener('click', function (event) {
+// ----------------ACTUALIZAR ------------
+// Evento para mostrar el modal con los datos de la comunidad a actualizar
+document.getElementById('tablaComunidad').addEventListener('click', function (event) {
     const btnEditar = event.target.closest('.btnEditar');
-    //alert("holaaaaaa");
+   
     if (btnEditar) {
         // Obtener la fila (tr) más cercana al botón de editar
         const fila = $(btnEditar).closest('tr');
 
-        // Obtener los datos del almacen de la fila usando la API del DataTable
-        const almacenData = $('#tablaAlmacen').DataTable().row(fila).data();
+        // Obtener los datos de la comunidad de la fila usando la API del DataTable
+        const comunidadData = $('#tablaComunidad').DataTable().row(fila).data();
 
-        // Comprobar si se obtuvo correctamente el almacen
-        if (almacenData) {
-            // Llenar el modal de actualización con los datos de la categoría
-            document.getElementById('idAlmacenActualizar').value = almacenData.id_almacen;
-            document.getElementById('codAlmacenActualizar').value = almacenData.cod_almacen;
-            console.log(almacenData.cod_Almacen);
-            document.getElementById('direccionAlmacenActualizar').value = almacenData.direccion_almacen;
-            document.getElementById('capacidadAlmacenActualizar').value = almacenData.capacidad_unid;
-
+        // Comprobar si se obtuvo correctamente la comunidad
+        if (comunidadData) {
+            // Llenar el modal de actualización con los datos de la comunidad
+            document.getElementById('idComunidadActualizar').value = comunidadData.id_comunidad;
+            document.getElementById('DepartamentoActualizar').value = comunidadData.departamento;
+            document.getElementById('provinciaActualizar').value = comunidadData.provincia;
+            document.getElementById('municipioActualizar').value = comunidadData.municipio;
+            document.getElementById('nombreComActualizar').value = comunidadData.nombrecom;
+            document.getElementById('longitudActualizar').value = comunidadData.longitud;
+            document.getElementById('latitudActualizar').value = comunidadData.latitud;
+            document.getElementById('ubicacion_geoRef_ComActualizar').value = comunidadData.ubicacion_georef_com;
             // Mostrar el modal de actualización
-            $('#modalActualizarAlmacen').modal('show');
+            $('#modalActualizarComunidad').modal('show');
         } else {
-            console.error('No se pudo obtener los datos del almacen.');
+            console.error('No se pudo obtener los datos de la comunidad.');
         }
     }
 });
 
-// Evento para actualizar el almacen al enviar el formulario
-document.getElementById('formActualizarAlmacen').addEventListener('submit', function (event) {
+// Evento para actualizar la comunidad al enviar el formulario
+document.getElementById('formActualizarComunidad').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const idAlmacen = document.getElementById('idAlmacenActualizar').value;
-    const codAlmacen = document.getElementById('codAlmacenActualizar').value;
-    const direccionAlmacen = document.getElementById('direccionAlmacenActualizar').value;
-    const capacidadAlmacen = document.getElementById('capacidadAlmacenActualizar').value;
+    const id_comunidad = document.getElementById('idComunidadActualizar').value;
+    const departamento = document.getElementById('DepartamentoActualizar').value;
+    const provincia = document.getElementById('provinciaActualizar').value;
+    const municipio = document.getElementById('municipioActualizar').value;
+    const nombrecom = document.getElementById('nombreComActualizar').value;
+    const longitud = document.getElementById('longitudActualizar').value;
+    const latitud = document.getElementById('latitudActualizar').value;
+   // const ubicacion_geoRef_Com = document.getElementById('ubicacion_geoRef_ComActualizar').value;
 
-   
 
-    // Realizar la petición para actualizar el almacen
-    fetch(`/almacen/${idAlmacen}`, {
+    // Realizar la petición para actualizar la comunidad
+    fetch(`/actualizarComunidad/${id_comunidad}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            codAlmacen: codAlmacen,
-            direccionAlmacen: direccionAlmacen,
-            capacidadAlmacen: capacidadAlmacen
+            departamento: departamento,
+            provincia: provincia,
+            municipio: municipio,
+            nombrecom: nombrecom,
+            longitud: longitud,
+            latitud: latitud
         })
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ocurrió un error al actualizar el almacen');
+                throw new Error('Ocurrió un error al actualizar la comunidad');
             }
             return response.json();
         })
@@ -202,42 +230,44 @@ document.getElementById('formActualizarAlmacen').addEventListener('submit', func
             // Mostrar una alerta de éxito con SweetAlert
             Swal.fire({
                 icon: 'success',
-                title: '¡Almacen actualizado!',
-                text: 'El almacen ha sido actualizada correctamente.',
+                title: '¡ Comunidad actualizada!',
+                text: 'La Comunidad ha sido actualizado correctamente.',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
-                $('#modalActualizarAlmacen').modal('hide'); // Cerrar el modal
+                $('#modalActualizarComunidad').modal('hide'); // Cerrar el modal
             });
 
             // Limpiar el formulario después de la actualización
-            document.getElementById('formActualizarAlmacen').reset();
+            document.getElementById('formActualizarComunidad').reset();
 
-            listarAlmacenes(); // Actualizar la lista de almacenes
+            listarComunidades(); // Actualizar la lista de comunidades
         })
         .catch(error => {
             // Mostrar una alerta de error con SweetAlert
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.message || 'Ocurrió un error al actualizar el almacen',
+                text: error.message || 'Ocurrió un error al actualizar la comunidad',
                 confirmButtonText: 'Aceptar'
             });
-            console.error('Error al actualizar el almacen:', error);
+            console.error('Error al actualizar la comunidad:', error);
         });
 });
+// -----------------FIN ACTUALIZAR--------------
 
-// ELIMINAR CATEGORÍA
-document.getElementById('tablaAlmacen').addEventListener('click', function (event) {
+
+// ELIMINAR 
+document.getElementById('tablaComunidad').addEventListener('click', function (event) {
     if (event.target.closest('.btnBorrar')) {
         // Obtener la fila (tr) más cercana al botón de eliminar
         const fila = $(event.target).closest('tr');
 
-        // Obtener el ID de la categoría de la fila usando DataTable
-        const almacenId = $('#tablaAlmacen').DataTable().row(fila).data().id_almacen;
+        // Obtener el ID a de la fila usando DataTable
+        const comunidadId = $('#tablaComunidad').DataTable().row(fila).data().id_comunidad;
         // Mostrar una confirmación de eliminación utilizando SweetAlert
         Swal.fire({
             title: '¿Estás seguro?',
-            text: '¿Quieres eliminar esta categoría?',
+            text: '¿Quieres eliminar esta Comunidad?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
@@ -245,37 +275,37 @@ document.getElementById('tablaAlmacen').addEventListener('click', function (even
         }).then((result) => {
             if (result.isConfirmed) {
                 // Envía la solicitud de eliminación al servidor Node.js
-                fetch(`/eliminarAlmacen/${almacenId}`, {
+                fetch(`/eliminarComunidad/${comunidadId}`, {
                     method: 'DELETE'
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Ocurrió un error al eliminar la categoría');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Muestra una alerta de SweetAlert cuando se elimina el almacen correctamente
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Almacen eliminado!',
-                        text: 'El almacen ha sido eliminada correctamente',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Ocurrió un error al eliminar la comunidad');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Muestra una alerta de SweetAlert cuando se elimina la comunidad correctamente
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡ Comunidad eliminada!',
+                            text: 'La Comunidad ha sido eliminada correctamente',
+                            confirmButtonText: 'Aceptar'
+                        });
 
-                    // Actualiza la tabla de almacenes
-                    listarAlmacenes(); // Llama a tu función para listar los almacenes actualizados
-                })
-                .catch(error => {
-                    // Muestra una alerta de SweetAlert cuando ocurre un error
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error.message || 'Ocurrió un error al eliminar el almacen',
-                        confirmButtonText: 'Aceptar'
+                        // Actualiza la tabla de comunidades
+                        listarComunidades(); // Llama a tu función para listar las comunidades actualizados
+                    })
+                    .catch(error => {
+                        // Muestra una alerta de SweetAlert cuando ocurre un error
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error.message || 'Ocurrió un error al eliminar la comunidad',
+                            confirmButtonText: 'Aceptar'
+                        });
+                        console.error('Error al eliminar la comunidad:', error);
                     });
-                    console.error('Error al eliminar el almacen:', error);
-                });
             }
         });
     }
@@ -283,5 +313,63 @@ document.getElementById('tablaAlmacen').addEventListener('click', function (even
 
 
 // Llama a la función al cargar la página
-document.addEventListener('DOMContentLoaded', listarAlmacenes);
+document.addEventListener('DOMContentLoaded', listarComunidades);
 
+
+
+
+async function iniciarMapa(){
+    // Verifica si el navegador soporta la geolocalización
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            // Obtenemos la latitud y longitud del usuario
+            var latitud = position.coords.latitude;
+            var longitud = position.coords.longitude;
+
+            // Creamos el objeto de coordenadas con la ubicación actual
+            var coordenadas = {
+                lng: longitud,
+                lat: latitud
+            };
+
+            // Llamamos a la función para generar el mapa con las coordenadas actuales
+            generarMapa(coordenadas);
+        }, function(error) {
+            // En caso de error, podrías manejarlo mostrando un mensaje o usar coordenadas por defecto
+            console.error("Error al obtener la ubicación: ", error);
+            
+            // Opcional: Usar coordenadas por defecto en caso de error
+            var coordenadasDefecto = {
+                lng: -68.13123068164457, // Ejemplo de longitud por defecto
+                lat: -16.49976308893619  // Ejemplo de latitud por defecto
+            };
+            generarMapa(coordenadasDefecto);
+        });
+    } else {
+        // Si el navegador no soporta geolocalización, usar coordenadas por defecto
+        console.error("Geolocalización no soportada por este navegador.");
+        var coordenadasDefecto = {
+            lng: -68.13123068164457,
+            lat: -16.49976308893619
+        };
+        generarMapa(coordenadasDefecto);
+    }
+}
+document.addEventListener('DOMContentLoaded', iniciarMapa);
+
+async function generarMapa(coordenadas){
+        var mapa = new google.maps.Map(document.getElementById('mapa'),{
+            zoom: 18,
+            center: new google.maps.LatLng(coordenadas.lat, coordenadas.lng)
+        });
+        marcador = new google.maps.Marker({
+            map: mapa,
+            draggable: true,
+            position: new google.maps.LatLng(coordenadas.lat, coordenadas.lng)
+        });
+        marcador.addListener('dragend',function(event){
+            document.getElementById("latitud").value=this.getPosition().lat();
+            document.getElementById("longitud").value=this.getPosition().lng();
+        })
+}
+document.addEventListener('DOMContentLoaded', generarMapa);
