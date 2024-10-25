@@ -107,8 +107,8 @@ document.getElementById('formRegistrarAlmacen').addEventListener('submit', funct
         },
         body: JSON.stringify({
             nombreAlmacen: nombreAlmacen,
-            direccionAlmacen: direccionAlmacen,
-            capacidadAlmacen: capacidadAlmacen
+            capacidadAlmacen: capacidadAlmacen,
+            direccionAlmacen: direccionAlmacen
         })
     })
         .then(response => {
@@ -159,7 +159,7 @@ document.getElementById('tablaAlmacen').addEventListener('click', function (even
 
         // Comprobar si se obtuvo correctamente el almacen
         if (almacenData) {
-            // Llenar el modal de actualización con los datos de la categoría
+            // Llenar el modal de actualización con los datos del almacen
             document.getElementById('idAlmacenActualizar').value = almacenData.id_almacen;
             document.getElementById('nombreAlmacenActualizar').value = almacenData.nombre_almacen;
             document.getElementById('direccionAlmacenActualizar').value = almacenData.direccion_almacen;
