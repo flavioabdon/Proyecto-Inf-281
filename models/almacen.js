@@ -8,7 +8,7 @@ const registrarAlmacen = async (nombre, direccion, capacidad) => {
     `;
 
     // Valores que se van a insertar en la base de datos
-    const values = [nombre, direccion, capacidad, "admin", "activo"];
+    const values = [nombre, direccion, capacidad, "Administrador", "Activo"];
 
     try {
         // Ejecuta la consulta que llama a la función almacenada y espera el resultado
@@ -16,7 +16,7 @@ const registrarAlmacen = async (nombre, direccion, capacidad) => {
             bind: values, // Vincula los valores con la consulta
             type: sequelize.QueryTypes.SELECT // Tipo de consulta SELECT ya que devuelve datos
         });
-        return res; // Devuelve el almacen insertada
+        return res; // Devuelve el almacen insertado
     } catch (error) {
         console.error('Error al registrar almacen:', error); // Manejo de errores más claro
         throw error; // Lanza el error para que sea manejado en el controlador
@@ -58,7 +58,7 @@ const actualizarAlmacen = async (id_almacen, nombre, direccion, capacidad) => {
             bind: values,
             type: sequelize.QueryTypes.SELECT
         });
-        return res; // Devuelve el almacen actualizada
+        return res; // Devuelve el almacen actualizado
     } catch (error) {
         console.error('Error al actualizar el almacen:', error);
         throw error;
@@ -79,7 +79,7 @@ const eliminarAlmacen = async (id_almacen) => {
             bind: values,
             type: sequelize.QueryTypes.SELECT
         });
-        //console.log(`Categoría con ID ${id_almacen} eliminada exitosamente.`);
+        //console.log(`Almacen con ID ${id_almacen} eliminado exitosamente.`);
     } catch (error) {
         console.error('Error al eliminar el almacen:', error);
         throw error;
@@ -88,7 +88,7 @@ const eliminarAlmacen = async (id_almacen) => {
 
 module.exports = {
     registrarAlmacen, // Exporta la función para usarla en otras partes de la aplicación
-    listarAlmacenes, // Exporta la función para listar categorías
-    actualizarAlmacen,
-    eliminarAlmacen,
+    listarAlmacenes, // Exporta la función para listar almacenes
+    actualizarAlmacen, // Exporta la función para actualizar almacenes
+    eliminarAlmacen,    //Exporta la funcion para eliminar almacen
 };
