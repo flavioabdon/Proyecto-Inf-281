@@ -18,6 +18,13 @@
 --   CLIENTE y DELIVERY                                     		    --
 ------------------------------------------------------------------
 
+--------------------------------------------------------------------------
+-- Creado: Flavio Condori    Fecha: 25/10/2024                           --
+-- Actividad: Solucion Error: Llave foranea y primary key son el mismo campo                                                           --
+-- En la tabla   --
+-- cliente, delivery                                                    --
+------------------------------------------------------------------
+
 
 --crear la base de datos con codificacion UTF8 para caracteres especiales en español
 CREATE DATABASE bd281_GIT WITH ENCODING 'UTF8';
@@ -26,6 +33,7 @@ CREATE DATABASE bd281_GIT WITH ENCODING 'UTF8';
 SELECT datname, pg_encoding_to_char(encoding)
 FROM pg_database
 WHERE datname = 'bd281_GIT';
+
 
 --Setear zona horaria del servidor
 SET TIME ZONE 'America/La_Paz';
@@ -122,7 +130,8 @@ CREATE TABLE IF NOT EXISTS public.ARTESANO (
 );
 
 CREATE TABLE IF NOT EXISTS public.CLIENTE (
-    id_usuario SERIAL PRIMARY KEY,
+    id_cliente SERIAL PRIMARY KEY,
+    id_usuario INTEGER,
     --codigo_Usuario VARCHAR(20) NOT NULL,
     direccion_Envio VARCHAR(200),
     ubicacion_geoRef_Cli geometry(Point, 4326) DEFAULT ST_SetSRID(ST_MakePoint(-68.1193, -16.5000), 4326),
@@ -199,7 +208,7 @@ CREATE TABLE IF NOT EXISTS public.PEDIDO (
     distancia DECIMAL(10, 2),            
     id_usuario INTEGER NOT NULL,	--referencia al usuario CLIENTE
     CONSTRAINT fk_pedido_cliente FOREIGN KEY (id_usuario)
-        REFERENCES public.CLIENTE (id_usuario)
+        REFERENCES public.CLIENTE (id_cliente)
         ON UPDATE CASCADE
         ON DELETE CASCADE, 
     fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,		--
@@ -245,7 +254,7 @@ CREATE TABLE IF NOT EXISTS public.PAGO_TRANSACCION (
     id_usuario INTEGER NOT NULL,	--referencia al usuario CLIENTE
     id_pedido INTEGER NOT NULL,
     CONSTRAINT fk_pagoTransaccion_cliente FOREIGN KEY (id_usuario)
-        REFERENCES public.CLIENTE (id_usuario)
+        REFERENCES public.CLIENTE (id_cliente)
         ON UPDATE CASCADE
         ON DELETE CASCADE, 
     CONSTRAINT fk_pagoTransaccion_pedido FOREIGN KEY (id_pedido)
@@ -339,8 +348,3 @@ CREATE TABLE IF NOT EXISTS public.IMAGEN_PRODUCTO (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
-
-
-
-
