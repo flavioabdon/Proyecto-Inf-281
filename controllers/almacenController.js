@@ -8,8 +8,8 @@ const registrarAlmacen = async (req, res) => {
     try {
         // Inserta el nuevo almacen 
         const nuevoAlmacen = await almacenModel.registrarAlmacen(nombreAlmacen, direccionAlmacen, capacidadAlmacen);
+        
         // Devuelve un mensaje de éxito
-
         res.status(201).json({ message: 'Almacen creado', almacen: nuevoAlmacen });
 
     } catch (error) {

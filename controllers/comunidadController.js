@@ -3,17 +3,28 @@ const comunidadModel = require('../models/comunidad');
 // Controlador para insertar una nueva Comunidad
 const registrarComunidad = async (req, res) => {
     // Obtiene los datos del formulario
-    const { v_Departamento, v_provincia, v_Municipio, v_nombreCom, v_ubicacion_geoRef_Com } = req.body;
+    const { departamento, provincia, municipio, nombrecom, longitud, latitud} = req.body;
 
+    // Validación de datos requeridos
+    /*if (!v_departamento || !v_provincia || !v_municipio || !v_nombrecom || !v_longitud || !v_latitud) {
+        return res.status(400).json({ message: 'Todos los campos son requeridos' });
+    }*/
+
+    // Validación del formato de ubicación geográfica (latitud y longitud)
+    // const geoRefPattern = /^-?\d+\.\d+ -?\d+\.\d+$/; // Patrón regex para verificar el formato
+    // if (!geoRefPattern.test(v_ubicacion_geoRef_Com)) {
+    //     return res.status(400).json({ message: 'El formato de ubicación geográfica es inválido. Debe ser "latitud longitud"' });
+    // }
+    
     try {
-        // Inserta el nuevo comunidad utilizando el modelo
-        const nuevaComunidad = await comunidadModel.registrarComunidad(v_Departamento, v_provincia, v_Municipio, v_nombreCom, v_ubicacion_geoRef_Com);
+        // Inserta la nueva comunidad utilizando el modelo
+        const nuevaComunidad = await comunidadModel.registrarComunidad(departamento, provincia, municipio, nombrecom, longitud, latitud);
         
         // Devuelve un mensaje de éxito
         res.status(201).json({ message: 'Comunidad creada', comunidad: nuevaComunidad });
 
     } catch (error) {
-        console.error('Error al crear el comunidad:', error);
+        console.error('Error al crear la comunidad:', error);
         // Devuelve un mensaje de error
         res.status(500).json({ message: 'Error al crear la comunidad' });
     }
@@ -36,16 +47,22 @@ const listarComunidades = async (req, res) => {
 // Controlador para actualizar una Comunidad
 const actualizarComunidad = async (req, res) => {
     const id_comunidad = req.params.id; // El ID viene desde la URL
-    const {Departamento, provincia, Municipio, nombreCom, ubicacion_geoRef_Com } = req.body; // Datos enviados en el cuerpo
+    const {departamento, provincia, municipio, nombrecom, longitud, latitud } = req.body; // Datos enviados en el cuerpo
+
+    // Validación de datos requeridos
+    if (!departamento || !provincia || !municipio || !nombrecom || !longitud || !latitud) {
+        return res.status(400).json({ message: 'Todos los campos son requeridos' });
+    }
 
     try {
         const comunidadActualizada = await comunidadModel.actualizarComunidad(
             id_comunidad,
-            Departamento,
+            departamento,
             provincia,
-            Municipio,
-            nombreCom,
-            ubicacion_geoRef_Com
+            municipio,
+            nombrecom,
+            longitud,
+            latitud
         );
         res.status(200).json({ message: 'Comunidad actualizada', comunidad: comunidadActualizada });
     } catch (error) {
