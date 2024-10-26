@@ -3,6 +3,7 @@
 -- Actividad:                                                           --
 -- Funcion que adiciona un cliente                               --
 ------------------------------------------------------------------
+--devuelve v_id_usuario y v_id_cliente en lugar de id_usuario y id_cliente
 CREATE OR REPLACE FUNCTION fn_adm_insertar_cliente(
     nombreCliente VARCHAR(30),
 	apellidoCliente VARCHAR(50),
@@ -17,7 +18,8 @@ CREATE OR REPLACE FUNCTION fn_adm_insertar_cliente(
 	latitud VARCHAR(50)
 ) 
 RETURNS TABLE (
-    id_usuario INT,
+    v_id_usuario INT,
+	v_id_cliente INT,
 	codigo_usuario VARCHAR(20),
 	nombre VARCHAR(30),
 	apellido VARCHAR(100),
@@ -89,12 +91,13 @@ BEGIN
 		c_ubicacion_geoRef_Cli, 
 		NOW(), NOW(), 
 		usuario, usuario, 
-		'activo');
-
+		'activo')
+	RETURNING id_cliente INTO v_id_cliente;
 	-- Devolver los datos insertados
 	RETURN QUERY 
 	SELECT 
 		u.id_usuario,  -- Especificar siempre la tabla para evitar ambigüedad
+		c.id_cliente,
 		u.codigo_usuario,
 		u.nombre,
 		u.apellido,
@@ -124,8 +127,6 @@ select md5('lupe123')
 select public.fn_adm_insertar_cliente('Lupe','Molina','lalala@gmail.com','74135694',
 '10289036','Femenino','http://example.com/foto.jpg',
 'ADM','Calle Ejemplo 123','-68.1193','-16.5000');
-
-
 --------------------------------------------------------------------------
 -- Creado: Daniel Tapia    Fecha: 03/10/2024                           --
 -- Actividad:                                                           --
@@ -180,9 +181,6 @@ END;
 $$ LANGUAGE plpgsql;
 --pruebita
 select fn_listar_clientes()
-
-
-
 --------------------------------------------------------------------------
 -- Creado: Daniel Tapia    Fecha: 03/10/2024                           --
 -- Actividad:                                                           --
@@ -207,7 +205,8 @@ CREATE OR REPLACE FUNCTION fn_actualizar_cliente(
     estado_c VARCHAR(15)
 )
 RETURNS TABLE(
-    id_usuario INT,
+    v_id_usuario INT,
+	v_id_cliente INT,
     codigo_usuario VARCHAR(20),
     nombre VARCHAR(30),
     apellido VARCHAR(100),
@@ -252,6 +251,7 @@ BEGIN
     RETURN QUERY 
     SELECT 
         u.id_usuario,
+		c.id_cliente,
         u.codigo_usuario,
         u.nombre,
         u.apellido,
@@ -277,9 +277,9 @@ END;
 $$ LANGUAGE plpgsql;
 
 SELECT * FROM fn_actualizar_cliente(
-    1,                          -- id_usuario_C (ID del cliente que se actualizará)
+    5,                          -- id_usuario_C (ID del cliente que se actualizará)
     '12345678',                 -- ciCliente (Carnet de Identidad del cliente)
-    'Juan',                     -- nombreCliente (Nuevo nombre del cliente)
+    'Juana',                     -- nombreCliente (Nuevo nombre del cliente)
     'Pérez',                    -- apellidoCliente (Nuevo apellido del cliente)
     'juan.perez@example.com',    -- emailCliente (Nuevo email del cliente)
     'Calle Falsa 123',          -- direccionCliente (Nueva dirección del cliente)
@@ -287,19 +287,18 @@ SELECT * FROM fn_actualizar_cliente(
     'M',                        -- sexoCliente (Nuevo sexo del cliente, 'M' o 'F')
     'activo'                    -- estado_c (Estado del registro, por ejemplo 'activo' o 'inactivo')
 );
-
-
-
+select * from usuario
 --------------------------------------------------------------------------
 -- Creado: Daniel Tapia    Fecha: 03/10/2024                           --
 -- Actividad:                                                           --
 -- Funcion que eliminar un cliente                               --
 ------------------------------------------------------------------
 
-CREATE OR REPLACE FUNCTION fn_eliminar_cliente(p_id_cliente INT)
+CREATE OR REPLACE FUNCTION fn_eliminar_cliente(p_id_usuario INT)
 RETURNS VOID AS $$
 BEGIN
-    DELETE FROM cliente c WHERE c.id_usuario = p_id_cliente;
-	DELETE FROM usuario u WHERE u.id_usuario = p_id_cliente;  
+    DELETE FROM cliente c WHERE c.id_usuario = p_id_usuario;
+	DELETE FROM usuario u WHERE u.id_usuario = p_id_usuario;  
 END;
 $$ LANGUAGE plpgsql;
+--pruebita

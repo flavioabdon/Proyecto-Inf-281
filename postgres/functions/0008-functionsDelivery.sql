@@ -3,7 +3,7 @@
 -- Actividad:                                                           --
 -- Funcion que agrega un delivery                             --
 ------------------------------------------------------------------
-
+--devuelve v_id_usuario y v_id_delivery en lugar de id_usuario y id_delivery
 CREATE OR REPLACE FUNCTION fn_adm_insertar_delivery(
 	nombreDelivery VARCHAR(30),
 	apellidoDelivery VARCHAR(50),
@@ -17,7 +17,8 @@ CREATE OR REPLACE FUNCTION fn_adm_insertar_delivery(
     usuario VARCHAR(20)
 ) 
 RETURNS TABLE (
-    id_usuario INT,
+    v_id_usuario INT,
+	v_id_delivery INT,
 	codigo_usuario VARCHAR(20),
 	nombre VARCHAR(30),
 	apellido VARCHAR(100),
@@ -86,11 +87,13 @@ BEGIN
 	matriculaDelivery, 
 	NOW(), NOW(), 
 	usuario, usuario, 
-	'activo');
+	'activo')
+	RETURNING id_delivery INTO v_id_delivery;
 	-- Devolver los datos insertados
 	RETURN QUERY 
 	SELECT 
 		u.id_usuario,  -- Especificar siempre la tabla para evitar ambigüedad
+		d.id_delivery,
 		u.codigo_usuario,
 		u.nombre,
 		u.apellido,
@@ -127,7 +130,6 @@ SELECT * FROM fn_adm_insertar_delivery(
     'http://example.com/foto.jpg', -- fotoDelivery
     'admin'                         -- usuario
 );
-
 
 
 --------------------------------------------------------------------------
@@ -206,7 +208,8 @@ CREATE OR REPLACE FUNCTION fn_actualizar_delivery(
     p_sexo VARCHAR(20),
     p_estado VARCHAR(15)
 ) RETURNS TABLE (
-    id_usuario INTEGER,
+    v_id_usuario INT,
+	v_id_delivery INT,
     nombre VARCHAR(30),
     apellido VARCHAR(50),
     ci VARCHAR(15),
@@ -244,6 +247,7 @@ BEGIN
     RETURN QUERY
     SELECT
         u.id_usuario,
+		d.id_delivery,
         u.nombre,
         u.apellido,
         u.ci,
@@ -261,7 +265,7 @@ $$ LANGUAGE plpgsql;
 
 -- sentencia de apoyo
 SELECT * FROM fn_actualizar_delivery(
-    21,                             -- p_id_usuario
+    6,                             -- p_id_usuario
     'Juan',                        -- p_nombre
     'Pérez',                       -- p_apellido
     '123456789',                   -- p_ci
@@ -275,17 +279,16 @@ SELECT * FROM fn_actualizar_delivery(
 
 
 
-
 --------------------------------------------------------------------------
 -- Creado: Daniel Tapia    Fecha: 04/10/2024                           --
 -- Actividad:                                                           --
 -- Funcion que elimina un delivery                            --
 ------------------------------------------------------------------
-CREATE OR REPLACE FUNCTION fn_eliminar_delivery(p_id_delivery INT)
+CREATE OR REPLACE FUNCTION fn_eliminar_delivery(p_id_usuario INT)
 RETURNS VOID AS $$
 BEGIN
-    DELETE FROM delivery d WHERE d.id_usuario = p_id_delivery;
-	DELETE FROM usuario u WHERE u.id_usuario = p_id_delivery;  
+    DELETE FROM delivery d WHERE d.id_usuario = p_id_usuario;
+	DELETE FROM usuario u WHERE u.id_usuario = p_id_usuario;  
 END;
 $$ LANGUAGE plpgsql;
 

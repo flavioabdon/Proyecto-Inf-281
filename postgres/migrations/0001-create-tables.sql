@@ -19,25 +19,21 @@
 ------------------------------------------------------------------
 
 --------------------------------------------------------------------------
--- Creado: Flavio Condori    Fecha: 25/10/2024                           --
--- Actividad: Solucion Error: Llave foranea y primary key son el mismo campo                                                           --
--- En la tabla   --
--- cliente, delivery                                                    --
+-- Modificado: Daniel Tapia    Fecha: 25/10/2024                           --
+-- Actividad:                                                           --
+-- Modificacion de tablas cliente, artesano y delivery añadiendo sus id						--
+-- Modificacion de tablas productoArtesanal, pago_transaccion, envio, pedido, eventos_noticias
+-- y red_social modificando id_usuario a su id correspondiente
 ------------------------------------------------------------------
-
-
+--en las dos entradas iniciales modificar el nombre "postgres2" si van a reemplazar su base de datos actual o crearan otra aparte
 --crear la base de datos con codificacion UTF8 para caracteres especiales en español
-CREATE DATABASE bd281_GIT WITH ENCODING 'UTF8';
-
+CREATE DATABASE postgres2 WITH ENCODING 'UTF8';
 --Verificar la codificacion UTF8
 SELECT datname, pg_encoding_to_char(encoding)
 FROM pg_database
-WHERE datname = 'bd281_GIT';
-
-
+WHERE datname = 'postgres2';
 --Setear zona horaria del servidor
 SET TIME ZONE 'America/La_Paz';
-
 --crear las tablas
 CREATE TABLE public.MENSAJES(
     id_mensajes SERIAL PRIMARY KEY,  -- ID autoincrementable y clave primaria
@@ -47,8 +43,6 @@ CREATE TABLE public.MENSAJES(
     fecha_creacion TIMESTAMPTZ ,  -- Fecha de creación con valor por defecto
     fecha_modificacion TIMESTAMPTZ  -- Fecha de modificación con valor por defecto
 );
-
-
 CREATE TABLE IF NOT EXISTS public.USUARIO (
     id_usuario SERIAL PRIMARY KEY,
     codigo_Usuario character varying(20) UNIQUE NOT NULL,  --sera generado a partir del nombre-apellido o ci del usuario
@@ -67,7 +61,6 @@ CREATE TABLE IF NOT EXISTS public.USUARIO (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
 CREATE TABLE IF NOT EXISTS public.PERMISO (
     id_permiso SERIAL PRIMARY KEY,
     rol character varying(20) NOT NULL,   -- Rol al que se asigna el permiso: 'ADMINISTRADOR', 'ARTESANO', 'CLIENTE', 'DELIVERY'
@@ -75,9 +68,7 @@ CREATE TABLE IF NOT EXISTS public.PERMISO (
     accion character varying(50) NOT NULL,   -- Ejemplo: 'ver', 'editar', 'borrar'
     UNIQUE (rol, recurso, accion)            -- Asegura que no se repitan combinaciones
 );
-
 CREATE EXTENSION postgis;	-- es necesario añadir la extension postgis en el postgresql y luego ejecutar esta linea 
-
 CREATE TABLE IF NOT EXISTS public.COMUNIDAD (
     id_comunidad SERIAL PRIMARY KEY,
     --codigo_comunidad character varying(20) UNIQUE NOT NULL, 
@@ -92,12 +83,12 @@ CREATE TABLE IF NOT EXISTS public.COMUNIDAD (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.ADMINISTRADOR (
-    id_usuario SERIAL PRIMARY KEY,
-    --codigo_Usuario VARCHAR(20) NOT NULL UNIQUE,  -- sera generado a partir del nombre-apellido o ci del usuario
+    id_administrador SERIAL PRIMARY KEY,
+    id_usuario INTEGER NOT NULL, 
     descripcion_Admin VARCHAR(100),
-    nivel_acceso INTEGER,                         -- Puedes añadir un campo para definir el nivel de acceso
+    nivel_acceso INTEGER,            
     CONSTRAINT fk_administrador_usuario FOREIGN KEY (id_usuario)
         REFERENCES public.USUARIO (id_usuario)
         ON UPDATE CASCADE
@@ -108,31 +99,33 @@ CREATE TABLE IF NOT EXISTS public.ADMINISTRADOR (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.ARTESANO (
-    id_usuario SERIAL PRIMARY KEY,
-    --codigo_Usuario VARCHAR(20) NOT NULL,
+    id_artesano SERIAL PRIMARY KEY,
+    id_usuario INTEGER NOT NULL, 
     especialidad_Artesano VARCHAR(50),
     id_comunidad INTEGER NOT NULL,
+    
     CONSTRAINT fk_artesano_usuario FOREIGN KEY (id_usuario)
         REFERENCES public.USUARIO (id_usuario)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
+        
     CONSTRAINT fk_artesano_comunidad FOREIGN KEY (id_comunidad)
         REFERENCES public.COMUNIDAD (id_comunidad)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
+        
     fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     fecha_modificacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     usuario_creacion character varying(20),
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.CLIENTE (
     id_cliente SERIAL PRIMARY KEY,
-    id_usuario INTEGER,
-    --codigo_Usuario VARCHAR(20) NOT NULL,
+	id_usuario INTEGER NOT NULL,
     direccion_Envio VARCHAR(200),
     ubicacion_geoRef_Cli geometry(Point, 4326) DEFAULT ST_SetSRID(ST_MakePoint(-68.1193, -16.5000), 4326),
     CONSTRAINT fk_cliente_usuario FOREIGN KEY (id_usuario)
@@ -145,14 +138,14 @@ CREATE TABLE IF NOT EXISTS public.CLIENTE (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.DELIVERY (
-    id_usuario SERIAL PRIMARY KEY,
-    --codigo_Usuario VARCHAR(20) NOT NULL,
+    id_delivery SERIAL PRIMARY KEY,
+	id_usuario INTEGER NOT NULL,
     tipo_vehiculo VARCHAR(50),
     matricula_vehiculo VARCHAR(10),	--**AÑADIR UBICACION GEO REF
     CONSTRAINT fk_delivery_usuario FOREIGN KEY (id_usuario)
-        REFERENCES public.usuario (id_usuario)
+        REFERENCES public.USUARIO (id_usuario)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -161,16 +154,15 @@ CREATE TABLE IF NOT EXISTS public.DELIVERY (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.RED_SOCIAL (
     id_redSocial SERIAL PRIMARY KEY,
     nombre VARCHAR(50),
     urlPerfil character varying(200),
     tipoDeRedSocial character varying(50),
-    id_usuario INTEGER NOT NULL,	--referencia al usuario ARTESANO
-    CONSTRAINT fk_redSocial_artesano FOREIGN KEY (id_usuario)
-        REFERENCES public.ARTESANO (id_usuario)
+    id_artesano INTEGER NOT NULL,	--referencia al usuario ARTESANO
+    CONSTRAINT fk_redSocial_artesano FOREIGN KEY (id_artesano)
+        REFERENCES public.ARTESANO (id_artesano)
         ON UPDATE CASCADE
         ON DELETE CASCADE, 
     fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,		--En el diagramaER esta como fechaReg
@@ -179,17 +171,16 @@ CREATE TABLE IF NOT EXISTS public.RED_SOCIAL (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.EVENTOS_NOTICIAS (
     id_evento SERIAL PRIMARY KEY,
     fecha_Ini TIMESTAMP WITH TIME ZONE NOT NULL,
     fecha_Fin TIMESTAMP WITH TIME ZONE NOT null,
     contenido TEXT,  				 -- Para la descripción larga del evento
     url_Imag_Evento VARCHAR(255), 	 -- Almacenar la ruta o URL de la imagen
-    id_usuario INTEGER NOT NULL,	 --referencia al usuario ARTESANO
-    CONSTRAINT fk_eventosNoticias_artesano FOREIGN KEY (id_usuario)
-        REFERENCES public.ARTESANO (id_usuario)
+    id_artesano INTEGER NOT NULL,	 --referencia al usuario ARTESANO
+    CONSTRAINT fk_eventosNoticias_artesano FOREIGN KEY (id_artesano)
+        REFERENCES public.ARTESANO (id_artesano)
         ON UPDATE CASCADE
         ON DELETE CASCADE, 
     fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,		
@@ -198,16 +189,15 @@ CREATE TABLE IF NOT EXISTS public.EVENTOS_NOTICIAS (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.PEDIDO (
     id_pedido SERIAL PRIMARY KEY,				--** nroPedido
     direccion_Envio VARCHAR(255) NOT NULL,
     costo_Pedido DECIMAL(10, 2) NOT NULL,
     costo_envio DECIMAL(10, 2) NOT NULL,
     distancia DECIMAL(10, 2),            
-    id_usuario INTEGER NOT NULL,	--referencia al usuario CLIENTE
-    CONSTRAINT fk_pedido_cliente FOREIGN KEY (id_usuario)
+    id_cliente INTEGER NOT NULL,	--referencia al usuario CLIENTE
+    CONSTRAINT fk_pedido_cliente FOREIGN KEY (id_cliente)
         REFERENCES public.CLIENTE (id_cliente)
         ON UPDATE CASCADE
         ON DELETE CASCADE, 
@@ -217,18 +207,17 @@ CREATE TABLE IF NOT EXISTS public.PEDIDO (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.ENVIO (
     id_envio SERIAL PRIMARY KEY,
     num_tracking VARCHAR(50) NOT NULL,		--generado RR123456789BO
     estado VARCHAR(50) NOT NULL,	--(en almacen, recibido por delivery, en camino, entregado, ...).
     fecha_estado TIMESTAMP WITH TIME ZONE NOT NULL,
     tipo_envio VARCHAR(30) NOT NULL,	--(urgente, estándar, express).
-    id_usuario INTEGER NOT NULL,	--referencia al usuario DELIVERY
+    id_delivery INTEGER NOT NULL,	--referencia al usuario DELIVERY
     id_pedido INTEGER NOT NULL,		--referencia al tabla PEDIDO
-    CONSTRAINT fk_envio_delivery FOREIGN KEY (id_usuario)
-        REFERENCES public.DELIVERY (id_usuario)
+    CONSTRAINT fk_envio_delivery FOREIGN KEY (id_delivery)
+        REFERENCES public.DELIVERY (id_delivery)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     CONSTRAINT fk_envio_pedido FOREIGN KEY (id_pedido)
@@ -241,8 +230,7 @@ CREATE TABLE IF NOT EXISTS public.ENVIO (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.PAGO_TRANSACCION (
 	id_pago SERIAL PRIMARY KEY,
     codigo_Pago VARCHAR(50) NOT NULL,
@@ -251,9 +239,9 @@ CREATE TABLE IF NOT EXISTS public.PAGO_TRANSACCION (
     --fecha_Pago TIMESTAMP WITH TIME ZONE default  CURRENT_TIMESTAMP, 
     monto DECIMAL(10, 2) NOT NULL,          -- Monto total del pago
     referencia VARCHAR(50),                  -- Referencia externa ej: (PAY_12345, VISA_123456, ...)
-    id_usuario INTEGER NOT NULL,	--referencia al usuario CLIENTE
+    id_cliente INTEGER NOT NULL,	--referencia al usuario CLIENTE
     id_pedido INTEGER NOT NULL,
-    CONSTRAINT fk_pagoTransaccion_cliente FOREIGN KEY (id_usuario)
+    CONSTRAINT fk_pagoTransaccion_cliente FOREIGN KEY (id_cliente)
         REFERENCES public.CLIENTE (id_cliente)
         ON UPDATE CASCADE
         ON DELETE CASCADE, 
@@ -267,7 +255,6 @@ CREATE TABLE IF NOT EXISTS public.PAGO_TRANSACCION (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
 CREATE TABLE IF NOT EXISTS public.ALMACEN (
     id_almacen SERIAL PRIMARY KEY,
     nombre_almacen VARCHAR(50) NOT NULL,	
@@ -280,7 +267,6 @@ CREATE TABLE IF NOT EXISTS public.ALMACEN (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
 CREATE TABLE IF NOT EXISTS public.CATEGORIA (
     id_categoria SERIAL PRIMARY KEY,
     url_icon_Categoria VARCHAR(255), 	 -- Almacenar la ruta o URL del icono
@@ -292,7 +278,7 @@ CREATE TABLE IF NOT EXISTS public.CATEGORIA (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
+--modificado
 CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     id_Prod SERIAL PRIMARY KEY,
     nombre_Prod VARCHAR(100) not NULL,
@@ -305,12 +291,12 @@ CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     peso_kg DECIMAL(10, 2) NOT NULL,
     stock INTEGER not null,
     informacion_Adicional VARCHAR(100) not NULL, 	--Ej (Talla, Color, Material, ...)
-    id_usuario INTEGER NOT NULL,	--referencia al usuario ARTESANO
+    id_artesano INTEGER NOT NULL,	--referencia al usuario ARTESANO
     id_pedido INTEGER NOT NULL,	
     id_almacen INTEGER NOT NULL,
     id_categoria INTEGER NOT NULL,
-    CONSTRAINT fk_productoArtesanal_artesano FOREIGN KEY (id_usuario)
-        REFERENCES public.ARTESANO (id_usuario)
+    CONSTRAINT fk_productoArtesanal_artesano FOREIGN KEY (id_artesano)
+        REFERENCES public.ARTESANO (id_artesano)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     CONSTRAINT fk_productoArtesanal_pedido FOREIGN KEY (id_pedido)
@@ -331,7 +317,7 @@ CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
+--alternativo (sigue sin tener uso)
 CREATE TABLE IF NOT EXISTS public.IMAGEN_PRODUCTO (
     id_ImagenProd SERIAL PRIMARY KEY,
     url_Imag_Prod VARCHAR(255) not null, 	 -- Almacenar la ruta o URL de la imagen
