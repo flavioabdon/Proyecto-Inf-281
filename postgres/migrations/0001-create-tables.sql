@@ -27,6 +27,12 @@
 ------------------------------------------------------------------
 --en las dos entradas iniciales modificar el nombre "postgres2" si van a reemplazar su base de datos actual o crearan otra aparte
 --crear la base de datos con codificacion UTF8 para caracteres especiales en español
+
+--------------------------------------------------------------------------
+-- Creado: Flavio Condori    Fecha: 29/9/2024 	                        --
+-- Actividad:                                                           --
+-- Se elimino el campo id_pedido en la tabla productos_artesanal	--	 	                                  --
+--------------------------------------------------------------------------
 CREATE DATABASE postgres2 WITH ENCODING 'UTF8';
 --Verificar la codificacion UTF8
 SELECT datname, pg_encoding_to_char(encoding)
@@ -291,16 +297,11 @@ CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     peso_kg DECIMAL(10, 2) NOT NULL,
     stock INTEGER not null,
     informacion_Adicional VARCHAR(100) not NULL, 	--Ej (Talla, Color, Material, ...)
-    id_artesano INTEGER NOT NULL,	--referencia al usuario ARTESANO
-    id_pedido INTEGER NOT NULL,	
+    id_usuario INTEGER NOT NULL,	--referencia al usuario ARTESANO	
     id_almacen INTEGER NOT NULL,
     id_categoria INTEGER NOT NULL,
-    CONSTRAINT fk_productoArtesanal_artesano FOREIGN KEY (id_artesano)
+    CONSTRAINT fk_productoArtesanal_artesano FOREIGN KEY (id_usuario)
         REFERENCES public.ARTESANO (id_artesano)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    CONSTRAINT fk_productoArtesanal_pedido FOREIGN KEY (id_pedido)
-        REFERENCES public.PEDIDO (id_pedido)					--**REVISAR
         ON UPDATE CASCADE
         ON DELETE CASCADE, 
     CONSTRAINT fk_productoArtesanal_almacen FOREIGN KEY (id_almacen)
@@ -317,6 +318,7 @@ CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
+
 --alternativo (sigue sin tener uso)
 CREATE TABLE IF NOT EXISTS public.IMAGEN_PRODUCTO (
     id_ImagenProd SERIAL PRIMARY KEY,
