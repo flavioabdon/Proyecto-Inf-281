@@ -41,6 +41,8 @@ WHERE datname = 'postgres2';
 --Setear zona horaria del servidor
 SET TIME ZONE 'America/La_Paz';
 --crear las tablas
+CREATE EXTENSION postgis;	-- es necesario añadir la extension postgis en el postgresql y luego ejecutar esta linea 
+--
 CREATE TABLE public.MENSAJES(
     id_mensajes SERIAL PRIMARY KEY,  -- ID autoincrementable y clave primaria
     "to" VARCHAR(255) NOT NULL,      -- Campo para el destinatario
@@ -74,7 +76,6 @@ CREATE TABLE IF NOT EXISTS public.PERMISO (
     accion character varying(50) NOT NULL,   -- Ejemplo: 'ver', 'editar', 'borrar'
     UNIQUE (rol, recurso, accion)            -- Asegura que no se repitan combinaciones
 );
-CREATE EXTENSION postgis;	-- es necesario añadir la extension postgis en el postgresql y luego ejecutar esta linea 
 CREATE TABLE IF NOT EXISTS public.COMUNIDAD (
     id_comunidad SERIAL PRIMARY KEY,
     --codigo_comunidad character varying(20) UNIQUE NOT NULL, 
@@ -297,13 +298,18 @@ CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     peso_kg DECIMAL(10, 2) NOT NULL,
     stock INTEGER not null,
     informacion_Adicional VARCHAR(100) not NULL, 	--Ej (Talla, Color, Material, ...)
-    id_usuario INTEGER NOT NULL,	--referencia al usuario ARTESANO	
+    id_artesano INTEGER NOT NULL,	--referencia al usuario ARTESANO
+    --id_pedido INTEGER NOT NULL,	
     id_almacen INTEGER NOT NULL,
     id_categoria INTEGER NOT NULL,
-    CONSTRAINT fk_productoArtesanal_artesano FOREIGN KEY (id_usuario)
+    CONSTRAINT fk_productoArtesanal_artesano FOREIGN KEY (id_artesano)
         REFERENCES public.ARTESANO (id_artesano)
         ON UPDATE CASCADE
-        ON DELETE CASCADE, 
+        ON DELETE CASCADE,
+    --CONSTRAINT fk_productoArtesanal_pedido FOREIGN KEY (id_pedido)
+    --    REFERENCES public.PEDIDO (id_pedido)					--**REVISAR
+    --    ON UPDATE CASCADE
+    --    ON DELETE CASCADE, 
     CONSTRAINT fk_productoArtesanal_almacen FOREIGN KEY (id_almacen)
         REFERENCES public.ALMACEN (id_almacen)
         ON UPDATE CASCADE
@@ -318,7 +324,6 @@ CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
-
 --alternativo (sigue sin tener uso)
 CREATE TABLE IF NOT EXISTS public.IMAGEN_PRODUCTO (
     id_ImagenProd SERIAL PRIMARY KEY,
