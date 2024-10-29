@@ -24,6 +24,8 @@ const indexArtesanoRoutes = require('./routes/indexArtesanoRoutes');
 //Delivery
 const indexDeliveryRoutes = require('./routes/indexDeliveryRoutes');
 
+//Productos
+const productoRoutes = require('./routes/productoRoutes');
 
 const app = express();
 
@@ -65,7 +67,8 @@ app.use('/', indexArtesanoRoutes);
 //delivery
 app.use('/', indexDeliveryRoutes);
 
-
+//productos
+app.use('/', productoRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
