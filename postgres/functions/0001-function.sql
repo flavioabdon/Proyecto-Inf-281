@@ -20,7 +20,7 @@ DECLARE
     v_direccion_envio VARCHAR(100);
     v_ubicacion_geoRef_Cli geometry(Point, 4326);
 
-    v_id_usuario VARCHAR (20);
+    v_id_usuario NUMERIC;
 
     v_nombre VARCHAR(30);
     v_apellido VARCHAR(50);
@@ -53,7 +53,7 @@ BEGIN
     VALUES (v_codigo_usuario, v_nombre, v_apellido, v_email, v_numero_contacto,md5(v_contraseña), v_ci, v_sexo, v_fotoPerf_url, CURRENT_TIMESTAMP, 'sistema', 'pendiente','Cliente');
 
     --recuperar el id del usuraio
-    select u.id_usuario as v_id_usuario from usuario u order by fecha_creacion desc limit 1;
+    select u.id_usuario INTO v_id_usuario from usuario u order by fecha_creacion desc limit 1;
 
     -- Insertar el nuevo cliente en la tabla cliente
     INSERT INTO public.cliente(id_usuario, direccion_Envio, ubicacion_geoRef_Cli, fecha_creacion, usuario_creacion, estado_registro)
