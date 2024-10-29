@@ -7,15 +7,20 @@
 -- Modificado: Ruddy Cruz    Fecha: 27/9/2024                           --
 -- Actividad:                                                           --
 -- Se añadio la variable y el campo rol con valor por default a Cliente--
--- Hash md5 a la contraseña para coincidir con la BD 					--
-                                  		                                --
+-- Hash md5 a la contraseña para coincidir con la BD 					--                 		                                --
 ------------------------------------------------------------------
+--------------------------------------------------------------------------
+-- Creado: Flavio Condori    Fecha: 29/10/2024                           --
+-- Actividad:                                                           --
+-- Se corrigio la funcion segun la estructura de la base de datos  
 CREATE OR REPLACE FUNCTION public.fn_insertar_usuario_cliente(data JSONB)
 RETURNS JSONB AS $$
 DECLARE
     v_codigo_usuario VARCHAR(20);
     v_direccion_envio VARCHAR(100);
     v_ubicacion_geoRef_Cli geometry(Point, 4326);
+
+    v_id_usuario VARCHAR (20);
 
     v_nombre VARCHAR(30);
     v_apellido VARCHAR(50);
@@ -47,9 +52,12 @@ BEGIN
     INSERT INTO public.usuario(codigo_Usuario, nombre, apellido, email, numero_Contacto, contraseña, ci, sexo, fotoPerf_url, fecha_creacion, usuario_creacion, estado_registro, rol)
     VALUES (v_codigo_usuario, v_nombre, v_apellido, v_email, v_numero_contacto,md5(v_contraseña), v_ci, v_sexo, v_fotoPerf_url, CURRENT_TIMESTAMP, 'sistema', 'pendiente','Cliente');
 
+    --recuperar el id del usuraio
+    select u.id_usuario as v_id_usuario from usuario u order by fecha_creacion desc limit 1;
+
     -- Insertar el nuevo cliente en la tabla cliente
-    INSERT INTO public.cliente(direccion_Envio, ubicacion_geoRef_Cli, fecha_creacion, usuario_creacion, estado_registro)
-    VALUES (v_direccion_envio, v_ubicacion_geoRef_Cli, CURRENT_TIMESTAMP, 'sistema', 'pendiente');
+    INSERT INTO public.cliente(id_usuario, direccion_Envio, ubicacion_geoRef_Cli, fecha_creacion, usuario_creacion, estado_registro)
+    VALUES (v_id_usuario,v_direccion_envio, v_ubicacion_geoRef_Cli, CURRENT_TIMESTAMP, 'sistema', 'pendiente');
 
     -- Devolver un JSON de éxito
     RETURN jsonb_build_object('estado','exitoso','mensaje', 'Usuario registrado exitosamente');
