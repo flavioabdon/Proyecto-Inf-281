@@ -8,7 +8,7 @@ const registrarComunidad = async (departamento, provincia, municipio, nombrecom,
     `;
 
     // Valores que se van a insertar en la base de datos
-    const values = [departamento, provincia, municipio, nombrecom, longitud, latitud, "Administrador", "Activo"];
+    const values = [departamento, provincia, municipio, nombrecom, longitud, latitud, "Admin", "activo"];
 
     try {
         // Ejecuta la consulta que llama a la función almacenada y espera el resultado

@@ -27,7 +27,7 @@ async function listarComunidades() { // listarComunidades
                 {
                     data: 'estado_registro',
                     render: function (data) {
-                        return data === 'Activo'
+                        return data === 'activo'
                             ? '<span class="badge badge-success">Activo</span>' // Badge verde
                             : '<span class="badge badge-danger">Inactivo</span>'; // Badge rojo
                     }
