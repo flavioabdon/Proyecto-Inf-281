@@ -1,13 +1,13 @@
-const productoM= require('../models/adminProducto');
+const productoM = require('../models/adminProducto');
 
 //
 exports.mostrarProductos = async (req, res) => {
-  const {  } = req.body;
+  const { } = req.body;
   res.render('administrador/productoView', { currentPage: "Productos" });
 };
 //
 exports.listarProductos = async (req, res) => {
-  const {  } = req.body;
+  const { } = req.body;
   try {
     // Consultar en la base de datos usando la función de PostgreSQL
     const result = await productoM.listarProductos();
@@ -21,7 +21,7 @@ exports.listarProductos = async (req, res) => {
 };
 //
 exports.listarProdCategorias = async (req, res) => {
-  const {  } = req.body;
+  const { } = req.body;
   try {
     // Consultar en la base de datos usando la función de PostgreSQL
     const result = await productoM.listarProdCategorias();
@@ -35,7 +35,7 @@ exports.listarProdCategorias = async (req, res) => {
 };
 //
 exports.listarProdAlmacenes = async (req, res) => {
-  const {  } = req.body;
+  const { } = req.body;
   try {
     // Consultar en la base de datos usando la función de PostgreSQL
     const result = await productoM.listarProdAlmacenes();
@@ -49,7 +49,7 @@ exports.listarProdAlmacenes = async (req, res) => {
 };
 //
 exports.listarProdArtesanos = async (req, res) => {
-  const {  } = req.body;
+  const { } = req.body;
   try {
     // Consultar en la base de datos usando la función de PostgreSQL
     const result = await productoM.listarProdArtesanos();
@@ -63,37 +63,41 @@ exports.listarProdArtesanos = async (req, res) => {
 };
 //
 exports.insertarProducto = async (req, res) => {
-  const { 
-    nombre_Prod, 
+  const ruta_imagen = req.file ? req.file.path : null; // Obtener el path del archivo
+
+  const {
+    nombre_Prod,
     descripcion_Prod,
-    precio, 
-    descuento_porcent, 
-    ruta_imagen, 
-    politica_de_Envio, 
-    peso_kg, 
-    stock, 
-    informacion_Adicional, 
+    precio,
+    descuento_porcent,
+    politica_de_Envio,
+    peso_kg,
+    stock,
+    informacion_Adicional,
     id_usuario,
-    id_pedido, 
-    id_almacen, 
+    id_almacen,
     id_categoria
-   } = req.body;
-   try {
+  } = req.body;
+  console.log('ruta imagen: ', ruta_imagen);
+  console.log('body: ', req.body);
+  try {
     // Consultar en la base de datos usando la función de PostgreSQL
-    const result = await productoM.insertarProducto({nombre_Prod, 
+    const result = await productoM.insertarProducto({
+      nombre_Prod,
       descripcion_Prod,
-      precio, 
-      descuento_porcent, 
-      ruta_imagen, 
-      politica_de_Envio, 
-      peso_kg, 
-      stock, 
-      informacion_Adicional, 
+      precio,
+      descuento_porcent,
+      ruta_imagen,
+      politica_de_Envio,
+      peso_kg,
+      stock,
+      informacion_Adicional,
       id_usuario,
-      id_pedido, 
-      id_almacen, 
-      id_categoria }
+      id_almacen,
+      id_categoria
+    }
     );
+    console.log("resultado", result);
     // Mostrar el JSON respuesta de postgres
     res.json(result);
 
@@ -104,38 +108,40 @@ exports.insertarProducto = async (req, res) => {
 };
 //
 exports.actualizarProducto = async (req, res) => {
-  const { 
+  const {
     id_Prod,
-    nombre_Prod, 
+    nombre_Prod,
     descripcion_Prod,
-    precio, 
-    descuento_porcent, 
-    ruta_imagen, 
-    politica_de_Envio, 
-    peso_kg, 
-    stock, 
-    informacion_Adicional, 
+    precio,
+    descuento_porcent,
+    ruta_imagen,
+    politica_de_Envio,
+    peso_kg,
+    stock,
+    informacion_Adicional,
     id_usuario,
-    id_pedido, 
-    id_almacen, 
+    id_pedido,
+    id_almacen,
     id_categoria
-   } = req.body;
-   try {
+  } = req.body;
+  try {
     // Consultar en la base de datos usando la función de PostgreSQL
-    const result = await productoM.modificarProducto({nombre_Prod, 
+    const result = await productoM.modificarProducto({
+      nombre_Prod,
       id_Prod,
       descripcion_Prod,
-      precio, 
-      descuento_porcent, 
-      ruta_imagen, 
-      politica_de_Envio, 
-      peso_kg, 
-      stock, 
-      informacion_Adicional, 
+      precio,
+      descuento_porcent,
+      ruta_imagen,
+      politica_de_Envio,
+      peso_kg,
+      stock,
+      informacion_Adicional,
       id_usuario,
-      id_pedido, 
-      id_almacen, 
-      id_categoria }
+      id_pedido,
+      id_almacen,
+      id_categoria
+    }
     );
     // Mostrar el JSON respuesta de postgres
     res.json(result);
@@ -147,13 +153,14 @@ exports.actualizarProducto = async (req, res) => {
 };
 //
 exports.eliminarProducto = async (req, res) => {
-  const { 
+  const {
     id_Prod
-   } = req.body;
-   try {
+  } = req.body;
+  try {
     // Consultar en la base de datos usando la función de PostgreSQL
     const result = await productoM.eliminarProducto({
-      id_Prod }
+      id_Prod
+    }
     );
     // Mostrar el JSON respuesta de postgres
     res.json(result);
@@ -165,13 +172,14 @@ exports.eliminarProducto = async (req, res) => {
 };
 //
 exports.mostrarProductoId = async (req, res) => {
-  const { 
+  const {
     id_Prod
-   } = req.body;
-   try {
+  } = req.body;
+  try {
     // Consultar en la base de datos usando la función de PostgreSQL
     const result = await productoM.mostrarProductoId({
-      id_Prod }
+      id_Prod
+    }
     );
     // Mostrar el JSON respuesta de postgres
     res.json(result);
