@@ -65,127 +65,123 @@ exports.listarProdArtesanos = async (req, res) => {
 exports.insertarProducto = async (req, res) => {
   const ruta_imagen = req.file ? req.file.path : null; // Obtener el path del archivo
 
-  const {
-    nombre_Prod,
-    descripcion_Prod,
-    precio,
-    descuento_porcent,
-    politica_de_Envio,
-    peso_kg,
-    stock,
-    informacion_Adicional,
-    id_usuario,
-    id_almacen,
-    id_categoria
-  } = req.body;
-  console.log('ruta imagen: ', ruta_imagen);
-  console.log('body: ', req.body);
+  // Transformar req.body a un objeto normal si es necesario
+  const body = Object.assign({}, req.body);
+
+  // Construir el objeto JSON con las propiedades esperadas
+  const productoData = {
+    nombre_Prod: body.nombreProd,
+    descripcion_Prod: body.descripcionProd,
+    precio: body.precioProd,
+    descuento_porcent: body.descuentoProd,
+    ruta_imagen: ruta_imagen,
+    politica_de_Envio: body.politicaEnvio,
+    peso_kg: body.pesoProd,
+    stock: body.stockProd,
+    informacion_Adicional: body.informacionAdicional,
+    id_usuario: body.idUsuario,
+    id_almacen: body.idAlmacen,
+    id_categoria: body.idCategoria
+  };
+
+  console.log('Producto data:', productoData);
+
   try {
-    // Consultar en la base de datos usando la función de PostgreSQL
-    const result = await productoM.insertarProducto({
-      nombre_Prod,
-      descripcion_Prod,
-      precio,
-      descuento_porcent,
-      ruta_imagen,
-      politica_de_Envio,
-      peso_kg,
-      stock,
-      informacion_Adicional,
-      id_usuario,
-      id_almacen,
-      id_categoria
-    }
-    );
+    // Consultar en la base de datos usando el JSON productoData
+    const result = await productoM.insertarProducto(productoData);
     console.log("resultado", result);
     // Mostrar el JSON respuesta de postgres
     res.json(result);
 
   } catch (error) {
     console.error('Error:', error);
-    //res.status(500).render('cliente/validacionView', { result: { status: 'error', message: 'Error al enviar el correo.' } });
+    //res.status(500).json({ status: 'error', message: 'Error al insertar el producto.' });
   }
 };
 //
 exports.actualizarProducto = async (req, res) => {
-  const {
-    id_Prod,
-    nombre_Prod,
-    descripcion_Prod,
-    precio,
-    descuento_porcent,
-    ruta_imagen,
-    politica_de_Envio,
-    peso_kg,
-    stock,
-    informacion_Adicional,
-    id_usuario,
-    id_pedido,
-    id_almacen,
-    id_categoria
-  } = req.body;
+  const ruta_imagen = req.file ? req.file.path : null; // Obtener el path del archivo si hay uno nuevo
+
+  // Convertir req.body a un objeto regular en caso de ser necesario
+  const body = Object.assign({}, req.body);
+
+  // Crear un objeto JSON con los datos del producto
+  const productoData = {
+    id_Prod: body.idProd,
+    nombre_Prod: body.nombreProd,
+    descripcion_Prod: body.descripcionProd,
+    precio: body.precioProd,
+    descuento_porcent: body.descuentoProd,
+    ruta_imagen: ruta_imagen, // Actualizar la ruta de imagen solo si existe un archivo
+    politica_de_Envio: body.politicaEnvio,
+    peso_kg: body.pesoProd,
+    stock: body.stockProd,
+    informacion_Adicional: body.informacionAdicional,
+    id_usuario: body.idUsuario,
+    id_almacen: body.idAlmacen,
+    id_categoria: body.idCategoria
+  };
+
+  console.log('Producto data (actualización):', productoData);
+
   try {
-    // Consultar en la base de datos usando la función de PostgreSQL
-    const result = await productoM.modificarProducto({
-      nombre_Prod,
-      id_Prod,
-      descripcion_Prod,
-      precio,
-      descuento_porcent,
-      ruta_imagen,
-      politica_de_Envio,
-      peso_kg,
-      stock,
-      informacion_Adicional,
-      id_usuario,
-      id_pedido,
-      id_almacen,
-      id_categoria
-    }
-    );
-    // Mostrar el JSON respuesta de postgres
+    // Llamada al modelo para actualizar el producto con el JSON
+    const result = await productoM.modificarProducto(productoData);
+    console.log("resultado", result);
+    // Enviar el resultado como respuesta JSON
     res.json(result);
 
   } catch (error) {
     console.error('Error:', error);
-    //res.status(500).render('cliente/validacionView', { result: { status: 'error', message: 'Error al enviar el correo.' } });
+    res.status(500).json({ status: 'error', message: 'Error al actualizar el producto.' });
   }
 };
+
 //
 exports.eliminarProducto = async (req, res) => {
-  const {
-    id_Prod
-  } = req.body;
+  // Convertir req.body a un objeto regular en caso de ser necesario
+  const body = Object.assign({}, req.body);
+
+  // Crear un objeto JSON con el ID del producto a eliminar
+  const productoData = {
+    id_Prod: body.idProd
+  };
+
+  console.log('Producto data (eliminación):', productoData);
+
   try {
-    // Consultar en la base de datos usando la función de PostgreSQL
-    const result = await productoM.eliminarProducto({
-      id_Prod
-    }
-    );
-    // Mostrar el JSON respuesta de postgres
+    // Llamada al modelo para eliminar el producto con el JSON
+    const result = await productoM.eliminarProducto(productoData);
+    console.log("resultado", result);
+    // Enviar el resultado como respuesta JSON
     res.json(result);
 
   } catch (error) {
     console.error('Error:', error);
-    //res.status(500).render('cliente/validacionView', { result: { status: 'error', message: 'Error al enviar el correo.' } });
+    //res.status(500).json({ status: 'error', message: 'Error al eliminar el producto.' });
   }
 };
 //
 exports.mostrarProductoId = async (req, res) => {
-  const {
-    id_Prod
-  } = req.body;
+  // Convertir req.body a un objeto regular en caso de ser necesario
+  const body = Object.assign({}, req.body);
+
+  // Crear un objeto JSON con el ID del producto
+  const productoData = {
+    id_Prod: body.idProd
+  };
+
+  console.log('Producto data (mostrar por ID):', productoData);
+
   try {
-    // Consultar en la base de datos usando la función de PostgreSQL
-    const result = await productoM.mostrarProductoId({
-      id_Prod
-    }
-    );
-    // Mostrar el JSON respuesta de postgres
+    // Llamada al modelo para mostrar el producto por ID
+    const result = await productoM.mostrarProductoId(productoData);
+    console.log("resultado", result);
+    // Enviar el resultado como respuesta JSON
     res.json(result);
 
   } catch (error) {
     console.error('Error:', error);
-    //res.status(500).render('cliente/validacionView', { result: { status: 'error', message: 'Error al enviar el correo.' } });
+    //res.status(500).json({ status: 'error', message: 'Error al mostrar el producto.' });
   }
 };
