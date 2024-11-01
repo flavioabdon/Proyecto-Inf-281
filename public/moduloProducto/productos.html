@@ -10,6 +10,8 @@
 
   <!-- styles css -->
   <link rel="stylesheet" href="css/styles.css" />
+  <!--Generador PDF-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 
 <body>
@@ -99,10 +101,10 @@
       <div class="cart-items"></div>
       <!-- footer -->
       <footer>
-        <h3 class="cart-total text-slanted " id="totalPrecioCarrito">
+        <h3 class="cart-total text-slanted" id="totalPrecioCarrito">
           total : Bs 12.99
         </h3>
-        <button class="cart-checkout btn">Comprar</button>
+        <button class="cart-checkout btn" id="buyButton">Comprar</button>
       </footer>
     </aside>
   </div>
@@ -132,12 +134,314 @@
     <!-- products -->
     <div class="products-container"></div>
   </section>
+  
+  <!-- Modal 1: Datos personales -->
+  <div class="modal-overlay" id="modalOverlay1">
+    <div class="modal">
+      <h3>Datos personales</h3>
+      <form id="completeForm">
+        <label for="nombreCliente"
+            class="labels">Nombres</label>
+            <div class="input-group">
+                <span class="input-group-text"><i
+                class="fa fa-user"></i></span>
+                <input type="text" class="form-control"
+                id="nombreCliente" name="nombreCliente"
+                placeholder="Ingresa los nombres" required>
+            </div>
+            <label for="apellidoCliente"
+            class="labels">Apellidos</label>
+        <div class="input-group">
+        <span class="input-group-text"><i
+            class="fa fa-user-tag"></i></span>
+        <input type="text" class="form-control"
+            id="apellidoCliente" name="apellidoCliente"
+            placeholder="ingresa los apellidos" required>
+        </div>
+        <label for="ciCliente" class="labels">C.I.</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i
+                            class="fa fa-id-card"></i></span>
+                    <input type="text" class="form-control"
+                        id="ciCliente" name="ciCliente"
+                        placeholder="Ingresa el C.I." required>
+                </div>
+        <button type="button" class="btn" id="nextButton1">Siguiente</button>
+      </form>
+      <button class="modal-close" id="modalClose1">&times;</button>
+    </div>
+  </div>
+
+  <!-- Modal 2: Dirección -->
+  <div class="modal-overlay" id="modalOverlay2">
+    <div class="modal">
+      <h3>Dirección de Envío</h3>
+      <form id="completeForm">
+        <label for="direccionCliente"
+                class="labels">Direccion</label>
+            <div class="input-group">
+                <span class="input-group-text"><i
+                    class="fa fa-briefcase"></i></span>
+                <input type="text" class="form-control"
+                    id="direccionCliente"
+                    name="direccionCliente"
+                    placeholder="Direccion del cliente"
+                    required>
+            </div>
+        
+        <label for="ciudadCliente">Ciudad:</label>
+        <input type="text" id="ciudadCliente" required>
+
+        <button type="button" class="btn" id="nextButton2">Siguiente</button>
+      </form>
+      <button class="modal-close" id="modalClose2">&times;</button>
+    </div>
+  </div>
+
+  <!-- Modal 3: Tipo de Envío -->
+  <div class="modal-overlay" id="modalOverlay3">
+    <div class="modal">
+      <h3>Tipo de Envío</h3>
+      <form id="completeForm">
+        <label for="costoPedido"
+                class="labels">Costo del pedido</label>
+            <div class="input-group">
+                <span class="input-group-text"><i
+                        class="fa fa-user"></i></span>
+                <input type="number" class="form-control"
+                    id="costoPedido" oninput="calcular()" name="costoPedido"
+                    placeholder="Costo actual del pedido" required>
+            </div>
+            <select id="tipoEnvio" onchange="calcular()">
+              <option value="directo">Recojo directo</option>
+              <option value="delivery">Envio con Delivery</option>
+            </select>
+            <div>
+              <label for="costoTotal">Costo total:</label>
+              <input type="text" id="costoTotal" readonly>
+            </div>
+        <button type="button" class="btn" id="nextButton3">Siguiente</button>
+      </form>
+      <button class="modal-close" id="modalClose3">&times;</button>
+    </div>
+  </div>
+
+  <!-- Modal 4: Tipo de Pago -->
+  <div class="modal-overlay" id="modalOverlay4">
+    <div class="modal">
+      <h3>Tipo de Pago</h3>
+      <form id="completeForm">
+        <label for="tipoPago">Seleccione el tipo de pago:</label>
+        <select id="tipoPago" required>
+          <option value="">Seleccione una opción</option>
+          <option value="credito">Tarjeta de Crédito</option>
+          <option value="debito">Tarjeta de Débito</option>
+        </select>
+        <input type="text" id="tarjeta" name="tarjeta" placeholder="Número de tarjeta" required><br><br>
+        <input type="text" id="expiracion" name="expiracion" placeholder="Fecha de expiración" required><br><br>
+        <input type="text" id="cvv" name="cvv" placeholder="Código CVV" required><br><br>
+        <button type="button" onclick="generarQR()">Generar Pago</button>
+            <div id="qrcode"></div>
+        <button type="button" id="pdfButton" class="button primary hidden">Generar Reporte</button>
+        <button type="submit" class="btn">Finalizar</button>
+      </form>
+      <button class="modal-close" id="modalClose4">&times;</button>
+    </div>
+  </div>
   <!-- page loading -->
   <div class="page-loading">
     <h2>Cargando...</h2>
   </div>
   <script type="module" src="./src/pages/products.js"></script>
-  <script src="/moduloDifusion/jsIniciarSesion/extraerdatosCliente.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Referencias a los botones y formularios de cada ventana
+      const buyButton = document.getElementById('buyButton');
+      
+      const modalOverlay1 = document.getElementById('modalOverlay1');
+      const modalClose1 = document.getElementById('modalClose1');
+      const nextButton1 = document.getElementById('nextButton1');
+
+      const modalOverlay2 = document.getElementById('modalOverlay2');
+      const modalClose2 = document.getElementById('modalClose2');
+      const nextButton2 = document.getElementById('nextButton2');
+
+      const modalOverlay3 = document.getElementById('modalOverlay3');
+      const modalClose3 = document.getElementById('modalClose3');
+      const nextButton3 = document.getElementById('nextButton3');
+
+      const modalOverlay4 = document.getElementById('modalOverlay4');
+      const modalClose4 = document.getElementById('modalClose4');
+      const completeForm = document.getElementById('completeForm');
+
+      const totalPrecioCarrito = document.getElementById("totalPrecioCarrito").textContent;
+      
+      const datosUsuario = usuarioGuardado;
+      // Mostrar la primera ventana modal al hacer clic en "Comprar"
+      buyButton.addEventListener('click', () => {
+        modalOverlay1.style.display = 'flex';
+        const usuarioGuardado = JSON.parse(sessionStorage.getItem('usuario'));
+        if(usuarioGuardado){
+            document.getElementById('nombreCliente').value = usuarioGuardado.nombre;
+            document.getElementById('apellidoCliente').value = usuarioGuardado.apellido;
+            //document.getElementById('direccionCliente').value = usuarioGuardado.direccion;
+            document.getElementById('ciCliente').value = usuarioGuardado.ci;
+            //para el carrito
+            const numeroExtraido = parseFloat(totalPrecioCarrito.match(/[\d.]+/)[0]);
+            document.getElementById("costoPedido").value = numeroExtraido;
+        }
+      });
+
+      // Cerrar cada modal al hacer clic en el botón de cerrar
+      modalClose1.addEventListener('click', () => { modalOverlay1.style.display = 'none'; });
+      modalClose2.addEventListener('click', () => { modalOverlay2.style.display = 'none'; });
+      modalClose3.addEventListener('click', () => { modalOverlay3.style.display = 'none'; });
+      modalClose4.addEventListener('click', () => { modalOverlay4.style.display = 'none'; });
+
+      // Transición de la primera a la segunda ventana (Datos de Usuario -> Dirección)
+      nextButton1.addEventListener('click', () => {
+        const nombreCliente = document.getElementById('nombreCliente').value;
+        const apellidoCliente = document.getElementById('apellidoCliente').value;
+
+        if (nombreCliente && apellidoCliente) {
+          modalOverlay1.style.display = 'none';
+          modalOverlay2.style.display = 'flex';
+        } else {
+          alert('Por favor, complete todos los campos.');
+        }
+      });
+
+      // Transición de la segunda a la tercera ventana (Dirección -> Tipo de Envío)
+      nextButton2.addEventListener('click', () => {
+        const direccionCliente = document.getElementById('direccionCliente').value;
+        const ciudadCliente = document.getElementById('ciudadCliente').value;
+
+        if (direccionCliente && ciudadCliente) {
+          modalOverlay2.style.display = 'none';
+          modalOverlay3.style.display = 'flex';
+        } else {
+          alert('Por favor, complete todos los campos de dirección.');
+        }
+      });
+
+      // Transición de la tercera a la cuarta ventana (Tipo de Envío -> Tipo de Pago)
+      nextButton3.addEventListener('click', () => {
+        const tipoEnvio = document.getElementById('tipoEnvio').value;
+
+        if (tipoEnvio) {
+          modalOverlay3.style.display = 'none';
+          modalOverlay4.style.display = 'flex';
+        } else {
+          alert('Por favor, seleccione un tipo de envío.');
+        }
+      });
+
+      // Enviar el formulario completo desde la última ventana modal (Tipo de Pago)
+      completeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const tipoPago = document.getElementById('tipoPago').value;
+
+        if (tipoPago) {
+          const nombreCliente = document.getElementById('nombreCliente').value;
+          const apellidoCliente = document.getElementById('apellidoCliente').value;
+          const direccionCliente = document.getElementById('direccionCliente').value;
+          const ciudadCliente = document.getElementById('ciudadCliente').value;
+          const tipoEnvio = document.getElementById('tipoEnvio').value;
+
+          alert(`Compra confirmada a nombre de ${nombreCliente} ${apellidoCliente}.\nDirección: ${direccionCliente}, ${ciudadCliente}.\nEnvío: ${tipoEnvio}.\nPago: ${tipoPago}.`);
+          modalOverlay4.style.display = 'none';
+          
+          // Aquí podrías añadir el código para enviar los datos al servidor o guardarlos
+        } else {
+          alert('Por favor, seleccione un tipo de pago.');
+        }
+      });
+    });
+  </script>
+  <script>
+    function calcular() {
+        const numero1 = parseFloat(document.getElementById('costoPedido').value);
+        const numero2 = 50; //costo extra del delivery
+
+        const operacion = document.getElementById('tipoEnvio').value;
+        let resultado;
+
+        if (operacion === 'directo') {
+            resultado = numero1;
+        } else if (operacion === 'delivery') {
+            resultado = numero1 + numero2;
+        } else {
+            resultado = 0;
+        }
+        document.getElementById('costoTotal').value = resultado;
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    function generarQR() {
+    // Obtenemos los valores de los campos de entrada del formulario
+    const nombre = document.getElementById("nombreCliente").value;
+    const apellido = document.getElementById("apellidoCliente").value;
+    const ci = document.getElementById("ciCliente").value;
+    const direccion = document.getElementById("direccionCliente").value;
+    const costoPedido = document.getElementById("costoPedido").value;
+    const tipoEnvio = document.getElementById("tipoEnvio").value === 'directo' ? "Recojo directo" : "Delivery";
+    const costoTotal = document.getElementById("costoTotal").value;
+
+    // Creamos un mensaje con todos los datos obtenidos
+    const mensaje = `Compra exitosa - ${nombre} ${apellido} - Total: ${costoTotal}`;
+
+    // Seleccionamos el contenedor del QR y limpiamos antes de generar uno nuevo
+    const qrcodeContainer = document.getElementById('qrcode');
+    qrcodeContainer.innerHTML = ""; // Limpiar contenedor
+
+    // Generamos el código QR con el mensaje dinámico
+    new QRCode(qrcodeContainer, mensaje);
+    // Mostrar el botón de "Generar PDF" después de finalizar la compra
+    document.getElementById("pdfButton").classList.remove("hidden");
+}
+</script>
+<script>
+  document.getElementById('pdfButton').addEventListener('click', generarPDF);
+
+  function generarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const nombre = document.getElementById("nombreCliente").value;
+    const apellido = document.getElementById("apellidoCliente").value;
+    const ci = document.getElementById("ciCliente").value;
+    const direccion = document.getElementById("direccionCliente").value;
+    const tipoEnvio = document.getElementById("tipoEnvio").value;
+    const costoTotal = document.getElementById("costoTotal").value;
+    const ciudad = document.getElementById("ciudadCliente").value;
+    const tipoPago = document.getElementById("tipoPago").value;
+    const tarjeta = document.getElementById("tarjeta").value;
+    const expiracion = document.getElementById("expiracion").value;
+    const cvv = document.getElementById("cvv").value;
+
+
+    // Obtener la fecha actual
+    const fechaActual = new Date().toLocaleDateString();
+
+    doc.text(`Reporte de venta`, 10, 10);
+    doc.text(`Fecha: ${fechaActual}`, 10, 20);
+    doc.text(`Nombre: ${nombre}`, 10, 30);
+    doc.text(`Apellido: ${apellido}`, 10, 40);
+    doc.text(`C.I.: ${ci}`, 10, 50);
+    doc.text(`Dirección: ${direccion}`, 10, 60);
+    doc.text(`Ciudad: ${ciudad}`, 10, 70);
+    doc.text(`Tipo de Envio: ${tipoEnvio}`, 10, 80);
+    doc.text(`Costo Total: ${costoTotal}`, 10, 90);
+    doc.text(`Tipo de tarjeta: ${tipoPago}`, 10, 100);
+    doc.text(`Nro de tarjeta: ${tarjeta}`, 10, 110);
+    doc.text(`Fecha de expiracion: ${expiracion}`, 10, 120);
+    doc.text(`Codigo CVV: ${cvv}`, 10, 130);
+
+    doc.save('compra.pdf');
+  }
+</script>
+<script src="/moduloDifusion/jsIniciarSesion/extraerdatosCliente.js"></script>
 </body>
 
 </html>
