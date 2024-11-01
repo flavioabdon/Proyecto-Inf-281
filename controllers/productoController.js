@@ -84,12 +84,12 @@ exports.insertarProducto = async (req, res) => {
     id_categoria: body.idCategoria
   };
 
-  console.log('Producto data:', productoData);
+  //console.log('Producto data:', productoData);
 
   try {
     // Consultar en la base de datos usando el JSON productoData
     const result = await productoM.insertarProducto(productoData);
-    console.log("resultado", result);
+    // console.log("resultado", result);
     // Mostrar el JSON respuesta de postgres
     res.json(result);
 
@@ -100,19 +100,18 @@ exports.insertarProducto = async (req, res) => {
 };
 //
 exports.actualizarProducto = async (req, res) => {
-  const ruta_imagen = req.file ? req.file.path : null; // Obtener el path del archivo si hay uno nuevo
+  //const ruta_imagen = req.file ? req.file.path : null; // Obtener el path del archivo si hay uno nuevo
 
   // Convertir req.body a un objeto regular en caso de ser necesario
   const body = Object.assign({}, req.body);
-
   // Crear un objeto JSON con los datos del producto
   const productoData = {
-    id_Prod: body.idProd,
+    id_Prod: req.params.id,
     nombre_Prod: body.nombreProd,
     descripcion_Prod: body.descripcionProd,
     precio: body.precioProd,
     descuento_porcent: body.descuentoProd,
-    ruta_imagen: ruta_imagen, // Actualizar la ruta de imagen solo si existe un archivo
+    // ruta_imagen: ruta_imagen, // Actualizar la ruta de imagen solo si existe un archivo
     politica_de_Envio: body.politicaEnvio,
     peso_kg: body.pesoProd,
     stock: body.stockProd,
@@ -122,12 +121,12 @@ exports.actualizarProducto = async (req, res) => {
     id_categoria: body.idCategoria
   };
 
-  console.log('Producto data (actualización):', productoData);
+  //console.log('Producto data (actualización):', productoData);
 
   try {
     // Llamada al modelo para actualizar el producto con el JSON
     const result = await productoM.modificarProducto(productoData);
-    console.log("resultado", result);
+    // console.log("resultado", result);
     // Enviar el resultado como respuesta JSON
     res.json(result);
 
@@ -144,15 +143,15 @@ exports.eliminarProducto = async (req, res) => {
 
   // Crear un objeto JSON con el ID del producto a eliminar
   const productoData = {
-    id_Prod: body.idProd
+    id_Prod: req.params.id
   };
 
-  console.log('Producto data (eliminación):', productoData);
+  //console.log('Producto data (eliminación):', productoData);
 
   try {
     // Llamada al modelo para eliminar el producto con el JSON
     const result = await productoM.eliminarProducto(productoData);
-    console.log("resultado", result);
+    // console.log("resultado", result);
     // Enviar el resultado como respuesta JSON
     res.json(result);
 

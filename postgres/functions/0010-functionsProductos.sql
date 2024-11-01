@@ -415,6 +415,7 @@ DECLARE
     resultado JSON;
 BEGIN
     -- Intentamos realizar la consulta de los artesanos
+    -- se adiciono 'idArtesano', a.id_artesano,
     BEGIN
         resultado := json_build_object(
             'estado', 'exitoso',
@@ -422,7 +423,8 @@ BEGIN
             'datos', (
                 SELECT json_agg(
                     json_build_object(
-                        'idArtesano', a.id_usuario,
+                        'idUsuario',a.id_usuario,
+                        'idArtesano', a.id_artesano,
                         'nombre', u.nombre,
                         'apellido', u.apellido,
                         'email', u.email,

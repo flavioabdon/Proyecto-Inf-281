@@ -37,7 +37,7 @@ const ProductoFunction = {
     async insertarProducto(data) {
         // Llamar a la función en la bd
         // Imprimir los datos que se van a insertar
-        console.log('Datos a insertar:', data);
+        //console.log('Datos a insertar:', data);
         const result = await sequelize.query(`
             SELECT fn_insertar_producto_artesanal(:data) AS result
         `, {
