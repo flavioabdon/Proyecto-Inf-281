@@ -24,14 +24,15 @@
         rel="stylesheet">
 
     <!-- iconos para categoria-->
-    <!-- <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" /> -->
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
 
     <!-- Custom styles for this template-->
     <link href="/dashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Agregar Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASGGV3czWjCCJME_dvhd2FnQnDr-HAAKo&callback=initMap" async defer></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASGGV3czWjCCJME_dvhd2FnQnDr-HAAKo&callback=initMap"
+        async defer></script> -->
 
     <!-- miCss -->
 
@@ -173,14 +174,6 @@
                                                         </button>
                                                     </div>
                                                 </div>
-
-                                                <!-- Mapa -->
-                                                <div class="form-group">
-                                                    <label for="ubicacionComunidad" class="labels">Ubicación</label>
-                                                    <div id="map" style="height: 400px; width: 100%;"></div>
-                                                </div>
-
-
                                                 <!-- Fin del bloque añadido -->
 
                                             </form>
@@ -194,32 +187,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Segundo Modal con Google Maps -->
-                            <div class="modal fade" id="segundoModal" tabindex="-1" role="dialog"
-                                aria-labelledby="segundoModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="segundoModalLabel">Ubicación del Mapa de Google
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Reemplaza la URL del mapa con la ubicación deseada -->
-                                            <iframe
-                                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d108149.74007316536!2d-68.17363229776905!3d-16.500849290268757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sbo!4v1729041934336!5m2!1ses!2sbo"
-                                                width="100%" height="450" style="border:0;" allowfullscreen=""
-                                                loading="lazy">
-                                            </iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
 
                             <!-- Modal para Actualizar Comunidad -->
                             <div class="modal fade" id="modalActualizarComunidad" tabindex="-1" role="dialog"
@@ -276,27 +243,39 @@
 
                                                 <!-- Longitud -->
                                                 <div class="form-group">
-                                                    <label for="longitudActualizar">Longitud:</label>
+                                                    <label for="longitudActualizar">Nueva Longitud (Abrir Mapa):</label>
                                                     <input type="text" class="form-control" id="longitudActualizar"
                                                         placeholder="Nueva Longitud" name="longitudActualizar" required>
                                                 </div>
 
                                                 <!-- Latitud -->
                                                 <div class="form-group">
-                                                    <label for="latitudActualizar">Latitud:</label>
+                                                    <label for="latitudActualizar">Nueva Latitud (Abrir Mapa):</label>
                                                     <input type="text" class="form-control" id="latitudActualizar"
                                                         placeholder="Nueva Latitud" name="latitudActualizar" required>
                                                 </div>
 
                                                 <!-- Ubicación GeoReferencial -->
                                                 <div class="form-group">
-                                                    <label for="ubicacion_geoRef_ComActualizar">Nueva Ubicación
+                                                    <label for="ubicacion_geoRef_ComActualizar">Anterior Ubicación
                                                         GeoRef:</label>
                                                     <input type="text" class="form-control"
                                                         id="ubicacion_geoRef_ComActualizar"
                                                         placeholder="Elige la nueva Ubicación GeoRef"
                                                         name="ubicacion_geoRef_ComActualizar" required>
                                                 </div>
+
+                                                <!-- Bloque añadido para ubicación -->
+                                                <div class="form-group">
+                                                    <label for="ubicacionComunidad" class="labels">Ubicación</label>
+                                                    <div class="input-group">
+                                                        <button type="button" class="btn btn-outline-primary"
+                                                            id="abrirMapa2">
+                                                            <i class="fa fa-map"></i> Abrir Mapa de Google
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- Fin del bloque añadido -->
 
                                             </form>
                                         </div>
@@ -310,13 +289,32 @@
                                 </div>
                             </div>
 
+                            <!-- Segundo Modal con Google Maps-->
+                            <div class="modal fade" id="segundoModal" tabindex="-1" role="dialog"
+                                aria-labelledby="segundoModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="segundoModalLabel">Ubicación del Mapa de Google
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
 
+                                            <div class="modal-body">
+                                                <div id="map" style="width: 100%; height: 450px;"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
                         </main>
                         <!-- fin de contenido -->
-
-
                 </div>
                 <!-- End of Main Content -->
 
@@ -335,6 +333,7 @@
 
     <!-- Logout Modal-->
     <%- include('partials/logout') %>
+
 
         <!-- sweetalert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -359,31 +358,8 @@
         <script src="/dashboard/jsComunidad/modalMapa.js"></script>
         <script src="/dashboard/jsComunidad/crudComunidad.js"></script>
 
-        <script>
-            let map;
-            let marker;
-
-            function initMap() {
-                const initialLocation = { lat: -16.5000, lng: -68.1193 }; // Ubicación inicial
-
-                map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 8,
-                    center: initialLocation,
-                });
-
-                marker = new google.maps.Marker({
-                    position: initialLocation,
-                    map: map,
-                    draggable: true, // Permitir que el usuario arrastre el marcador
-                });
-
-                // Escuchar el evento de drag del marcador
-                google.maps.event.addListener(marker, 'dragend', function (event) {
-                    document.getElementById('latitud').value = event.latLng.lat(); // Almacenar latitud
-                    document.getElementById('longitud').value = event.latLng.lng(); // Almacenar longitud
-                });
-            }
-        </script>
+        <!-- google maps -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
 
 </body>
 
