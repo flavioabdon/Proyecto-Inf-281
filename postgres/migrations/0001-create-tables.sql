@@ -27,6 +27,12 @@
 ------------------------------------------------------------------
 --en las dos entradas iniciales modificar el nombre "postgres2" si van a reemplazar su base de datos actual o crearan otra aparte
 --crear la base de datos con codificacion UTF8 para caracteres especiales en español
+
+--------------------------------------------------------------------------
+-- Creado: Flavio Condori    Fecha: 29/9/2024 	                        --
+-- Actividad:                                                           --
+-- Se elimino el campo id_pedido en la tabla productos_artesanal	--	 	                                  --
+--------------------------------------------------------------------------
 CREATE DATABASE postgres2 WITH ENCODING 'UTF8';
 --Verificar la codificacion UTF8
 SELECT datname, pg_encoding_to_char(encoding)
@@ -35,6 +41,8 @@ WHERE datname = 'postgres2';
 --Setear zona horaria del servidor
 SET TIME ZONE 'America/La_Paz';
 --crear las tablas
+CREATE EXTENSION postgis;	-- es necesario añadir la extension postgis en el postgresql y luego ejecutar esta linea 
+--
 CREATE TABLE public.MENSAJES(
     id_mensajes SERIAL PRIMARY KEY,  -- ID autoincrementable y clave primaria
     "to" VARCHAR(255) NOT NULL,      -- Campo para el destinatario
@@ -68,7 +76,6 @@ CREATE TABLE IF NOT EXISTS public.PERMISO (
     accion character varying(50) NOT NULL,   -- Ejemplo: 'ver', 'editar', 'borrar'
     UNIQUE (rol, recurso, accion)            -- Asegura que no se repitan combinaciones
 );
-CREATE EXTENSION postgis;	-- es necesario añadir la extension postgis en el postgresql y luego ejecutar esta linea 
 CREATE TABLE IF NOT EXISTS public.COMUNIDAD (
     id_comunidad SERIAL PRIMARY KEY,
     --codigo_comunidad character varying(20) UNIQUE NOT NULL, 
@@ -292,17 +299,17 @@ CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     stock INTEGER not null,
     informacion_Adicional VARCHAR(100) not NULL, 	--Ej (Talla, Color, Material, ...)
     id_artesano INTEGER NOT NULL,	--referencia al usuario ARTESANO
-    id_pedido INTEGER NOT NULL,	
+    --id_pedido INTEGER NOT NULL,	
     id_almacen INTEGER NOT NULL,
     id_categoria INTEGER NOT NULL,
     CONSTRAINT fk_productoArtesanal_artesano FOREIGN KEY (id_artesano)
         REFERENCES public.ARTESANO (id_artesano)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT fk_productoArtesanal_pedido FOREIGN KEY (id_pedido)
-        REFERENCES public.PEDIDO (id_pedido)					--**REVISAR
-        ON UPDATE CASCADE
-        ON DELETE CASCADE, 
+    --CONSTRAINT fk_productoArtesanal_pedido FOREIGN KEY (id_pedido)
+    --    REFERENCES public.PEDIDO (id_pedido)					--**REVISAR
+    --    ON UPDATE CASCADE
+    --    ON DELETE CASCADE, 
     CONSTRAINT fk_productoArtesanal_almacen FOREIGN KEY (id_almacen)
         REFERENCES public.ALMACEN (id_almacen)
         ON UPDATE CASCADE
