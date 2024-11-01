@@ -16,6 +16,39 @@ const listarAdminClientes = async (req, res) => {
     }
 };
 
+// Controlador para insertar un nuevo cliente
+const registrarAdminCliente = async (req, res) => {
+    // Obtiene los datos del formulario, incluyendo el archivo
+    const { nombreCliente, apellidoCliente, ciCliente, emailCliente, celularCliente, direccionCliente, sexoCliente, longitudCliente, latitudCliente } = req.body;
+    const fotoCliente = req.file; // El archivo de imagen se obtiene con middleware como multer
+
+    try {
+        // Inserta el nuevo artesano utilizando el modelo
+        const nuevoCliente = await adminClienteModel.registrarAdminCliente(
+            nombreCliente,
+            apellidoCliente,
+            ciCliente,
+            emailCliente,
+            celularCliente,
+            direccionCliente,
+            sexoCliente,
+            longitudCliente,
+            latitudCliente,
+            fotoCliente ? fotoCliente.path : null, // foto
+            'admin'
+        );
+
+        // Devuelve un mensaje de éxito
+        res.status(201).json({ message: 'Cliente registrado con éxito', cliente: nuevoCliente });
+
+    } catch (error) {
+        console.error('Error al registrar el cliente:', error);
+        // Devuelve un mensaje de error
+        res.status(500).json({ message: 'Error al registrar el cliente' });
+    }
+};
+
+
 // Controlador para actualizar un cliente
 const actualizarAdminCliente = async (req, res) => {
     const id_usuario = req.params.id; // El ID viene desde la URL
@@ -70,6 +103,7 @@ const eliminarAdminCliente = async (req, res) => {
 
 module.exports = {
     listarAdminClientes,
+    registrarAdminCliente,
     actualizarAdminCliente,
     eliminarAdminCliente,
 };

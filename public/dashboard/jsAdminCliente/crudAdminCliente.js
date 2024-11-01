@@ -102,7 +102,93 @@ async function listarClientes() {
     }
 }
 
+// REGISTRAR CLIENTE
+document.getElementById('formRegistrarCliente').addEventListener('submit', function (event) {
+    event.preventDefault();
 
+    // Extraer los valores de los campos del formulario
+    const nombreCliente = document.getElementById('nombreCliente').value;
+    const fotoCliente = document.getElementById('fotoCliente').files[0]; // Para manejar archivos
+    const apellidoCliente = document.getElementById('apellidoCliente').value;
+    const ciCliente = document.getElementById('ciCliente').value;
+    const emailCliente = document.getElementById('emailCliente').value;
+    const celularCliente = document.getElementById('celularCliente').value;
+    const direccionCliente = document.getElementById('direccionCliente').value;
+    const sexoCliente = document.getElementById('sexoCliente').value;
+    const longitudCliente = document.getElementById('longitudCliente').value;
+    const latitudCliente = document.getElementById('latitudCliente').value;
+
+    // Validación de campos obligatorios
+    if (!fotoCliente) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campo obligatorio',
+            text: 'La imagen de perfil del cliente es obligatoria.',
+            confirmButtonText: 'Aceptar'
+        });
+        return; // Detiene el envío del formulario
+    }
+
+    // Crear un objeto FormData para enviar datos de texto y archivo
+    const formData = new FormData();
+    formData.append('nombreCliente', nombreCliente);
+    formData.append('fotoCliente', fotoCliente);
+    formData.append('apellidoCliente', apellidoCliente);
+    formData.append('ciCliente', ciCliente);
+    formData.append('emailCliente', emailCliente);
+    formData.append('celularCliente', celularCliente);
+    formData.append('direccionCliente', direccionCliente);
+    formData.append('sexoCliente', sexoCliente);
+    formData.append('longitudCliente', longitudCliente);
+    formData.append('latitudCliente', latitudCliente);
+
+    // Recorre el FormData y muestra cada clave y valor en un alert
+    // formData.forEach((value, key) => {
+    //     alert(`Clave: ${key},
+    //          Valor: ${value}`);
+    // });
+
+    // Envía los datos al servidor Node.js
+    fetch('/registrarAdminCliente', {
+        method: 'POST',
+        body: formData // Enviar el FormData con los datos
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ocurrió un error al registrar el artesano');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Muestra una alerta de SweetAlert cuando se registra el artesano correctamente
+            Swal.fire({
+                icon: 'success',
+                title: '¡Cliente registrado!',
+                text: 'El cliente ha sido registrado correctamente',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                $('#modalAgregarCliente').modal('hide');
+            });
+
+            // Limpiar el formulario después de registrar el artesano
+            document.getElementById('formRegistrarCliente').reset();
+
+            listarClientes(); // Llama a tu función para listar los artesanos actualizados
+
+        })
+        .catch(error => {
+            // Muestra una alerta de SweetAlert cuando ocurre un error
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Ocurrió un error al registrar el cliente',
+                confirmButtonText: 'Aceptar'
+            });
+            console.error('Error al registrar el cliente:', error);
+        });
+});
+
+//------------FIN DE REGISTRAR ----------------
 // ACTUALIZAR ADMINCLIENTE
 // Evento para mostrar el modal con los datos del cliente a actualizar
 document.getElementById('tablaCliente').addEventListener('click', function (event) {
