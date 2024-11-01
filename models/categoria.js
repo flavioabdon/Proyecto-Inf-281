@@ -87,9 +87,30 @@ const eliminarCategoria = async (id_categoria) => {
     }
 };
 
+// Función para listar todas las categorías
+const listarCategoriasDelArtesano = async (id_usuario) => {
+    console.log("ID de usuario:", id_usuario);
+    const query = `SELECT * FROM fn_listar_categorias_Del_Artesano($1);`;
+    const values = [id_usuario];
+
+    try {
+        const res = await sequelize.query(query, {
+            bind: values, // Cambiado a bind
+            type: sequelize.QueryTypes.SELECT
+        });
+        return res;
+    } catch (error) {
+        console.error('Error al listar categorías:', error);
+        throw error;
+    }
+};
+
+
+
 module.exports = {
     registrarCategoria, // Exporta la función para usarla en otras partes de la aplicación
     listarCategorias, // Exporta la función para listar categorías
     actualizarCategoria,
     eliminarCategoria,
+    listarCategoriasDelArtesano, //Exporta la funcion para listar las categorias usadas por el artesano
 };

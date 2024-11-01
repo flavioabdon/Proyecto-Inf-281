@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mis Categorias</title>
+
+    <!-- datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
+
+
+
+    <!-- Custom fonts for this template-->
+    <link href="/dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- iconos -->
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+
+    <!-- Custom styles for this template-->
+    <link href="/dashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
+
+    <!-- miCss -->
+
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- sidebar -->
+        <%- include('partials/sidebar') %>
+            <!-- fin sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <!-- topbar -->
+                    <%- include('partials/topbar') %>
+                        <!-- fin de topbar -->
+
+                        <!-- contenido main -->
+                        <main class="mx-5 my-5 contenido-principal">
+
+                            <!-- Card Contenedor -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h4 class="m-0 font-weight-bold text-secondary text-center"> Mis Categorías
+                                    </h4>
+                                </div>
+                                <div class="card-body ">
+                                    <!-- Botón para abrir el modal -->
+                                    <!-- <button class="btn btn-success my-1 mt-4 ml-4" data-toggle="modal"
+                                        data-target="#modalAgregarCategoria">Añadir Categoría</button> -->
+
+                                    <div class="row contenedor-tabla">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive px-4 py-2">
+                                                <table id="tablaCategoria" class="table table-hover responsive nowrap"
+                                                    style="width:100%">
+                                                    <thead class="thead-light text-center">
+                                                        <tr>
+                                                            <th class="">#:&nbsp;</th>
+                                                            <th>ID:&nbsp;</th>
+                                                            <th class="">Nombre:&nbsp;</th>
+                                                            <th class="">Descripción:&nbsp;</th>
+                                                            <th class="">Icono:&nbsp;</th>
+                                                            <th class="">Estado:&nbsp;</th>
+                                                            <!-- <th class="">Acciones:&nbsp;</th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Contenido de la tabla -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </main>
+                        <!-- fin de contenido -->
+
+
+                </div>
+                <!-- End of Main Content -->
+
+                <%- include('partials/footer') %>
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <%- include('partials/logout') %>
+
+        <!-- sweetalert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="/dashboard/vendor/jquery/jquery.min.js"></script>
+        <script src="/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="/dashboard/js/sb-admin-2.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="/dashboard/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- datatables -->
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+
+        
+        <!-- mi js -->
+        <script src="/dashboard/jsCategoria/crudCategoriaArtesano.js"></script>
+        <script src="/dashboard/jsCategoria/icono.js"></script>
+
+
+</body>
+
+
+</html>

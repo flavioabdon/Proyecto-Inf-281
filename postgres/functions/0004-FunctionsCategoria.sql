@@ -142,3 +142,44 @@ $$ LANGUAGE plpgsql;
 
 -- Sentencia de apoyo(no muestra nada)
 SELECT fn_eliminar_categoria(58);
+
+
+--------------------------------------------------------------------------
+-- Creado: Rudolph    Fecha: 01/11/2024                           --
+-- Actividad:                                                           --
+-- Funcion para listar las categorias que uso el artesano X  en sus productos   --
+------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION fn_listar_categorias_Del_Artesano(id_usuario INT)
+RETURNS TABLE (
+    numero_registro BIGINT,
+    id_categoria INT,
+    nombre_categoria VARCHAR(100),
+    descripcion TEXT,
+    url_icon_categoria VARCHAR(255),
+    estado_registro VARCHAR(15)
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY c.id_categoria ASC) AS numero_registro,
+        c.id_categoria,
+        c.nombre_Categoria,
+        c.descripcion,
+        c.url_icon_Categoria,
+        c.estado_registro
+    FROM 
+        public.CATEGORIA c
+    JOIN 
+        public.PRODUCTO_ARTESANAL p ON c.id_categoria = p.id_categoria
+    JOIN 
+        public.ARTESANO a ON p.id_artesano = a.id_artesano
+    JOIN 
+        public.USUARIO u ON a.id_usuario = u.id_usuario
+    WHERE 
+        u.id_usuario = id_usuario;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sentencia de apoyo(muestra las categorias que el artesano uso en sus producto)
+SELECT * FROM fn_listar_categorias_Del_Artesano(13);

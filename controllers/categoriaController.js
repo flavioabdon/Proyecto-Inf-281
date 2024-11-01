@@ -66,9 +66,30 @@ const eliminarCategoria = async (req, res) => {
     }
 };
 
+
+// listar todas las categorías usadas por el Artesano X
+const listarCategoriasDelArtesano = async (req, res) => {
+    const { id_usuario } = req.params;
+    console.log("ID de usuario en controlador:", id_usuario);  // Verifica el valor
+    try {
+         // Llama al modelo para obtener las categorías, pasando el id_usuario como argumento
+         const categorias = await categoriaModel.listarCategoriasDelArtesano(id_usuario);
+
+        // Devuelve la lista de categorías
+        res.status(200).json(categorias);
+    } catch (error) {
+        console.error('Error al listar categorías:', error);
+        // Devuelve un mensaje de error
+        res.status(500).json({ message: 'Error al listar categorías' });
+    }
+};
+
 module.exports = {
     registrarCategoria,
     listarCategorias,
     actualizarCategoria,
     eliminarCategoria,
+    listarCategoriasDelArtesano,
 };
+
+

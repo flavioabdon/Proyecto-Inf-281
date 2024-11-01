@@ -43,12 +43,47 @@
             <span>Productos</span></a>
     </li>
 
+     <!-- Nav Item - Categorias Usadas por el Artesano -->
+     <li class="nav-item <%= (currentPage === 'categoriasDelArtesano') ? 'active' : '' %>">
+        <a class="nav-link" href="/categoriasDelArtesano">
+            <i class="fas fa-list"></i>
+            <span> Mis Categorias </span></a>
+    </li>
+
     <!-- Nav Item - Ventas -->
     <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-shopping-cart"></i>
             <span>Ventas</span></a>
     </li>
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Gestion Productos
+    </div>
+
+    <!-- Nav Item - Tables Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+            aria-controls="collapsePages">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Modulos</span>
+        </a>
+        <div id="collapsePages" class="collapse <%= (currentPage !== 'indexAdmin' && 
+            currentPage !== 'adminCliente' 
+            && currentPage !== 'adminArtesano' 
+            && currentPage !== 'adminDelivery') 
+            ? 'show' : '' %>" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Gestionar:</h6>
+                <a class="collapse-item <%= (currentPage === 'categoria') ? 'active' : '' %>"
+                    href="/categoriaArtesano">Categorías</a>
+            </div>
+
+        </div>
+
+    </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
