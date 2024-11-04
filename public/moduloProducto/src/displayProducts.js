@@ -7,10 +7,10 @@ const display = (products, element, filters) => {
       const { id, nombre, imagen, precio } = product;
       return ` <article class="product">
           <div class="product-container">
-            <img src="${imagen}" class="product-img img" alt="${nombre}" />
+            <img src="${imagen}" class="product-img img" alt="${nombre}"/>
            
             <div class="product-icons">
-              <a href="producto.html?id=${id}" class="product-icon">
+              <a href="/productoCliente?id=${id}" class="product-icon">
                 <i class="fas fa-search"></i>
               </a>
               <button class="product-cart-btn product-icon" data-id="${id}">

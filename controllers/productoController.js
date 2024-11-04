@@ -167,7 +167,7 @@ exports.mostrarProductoId = async (req, res) => {
 
   // Crear un objeto JSON con el ID del producto
   const productoData = {
-    id_Prod: body.idProd
+    id_Prod: req.params.id
   };
 
   console.log('Producto data (mostrar por ID):', productoData);
@@ -176,6 +176,45 @@ exports.mostrarProductoId = async (req, res) => {
     // Llamada al modelo para mostrar el producto por ID
     const result = await productoM.mostrarProductoId(productoData);
     console.log("resultado", result);
+    // Enviar el resultado como respuesta JSON
+    res.json(result);
+
+  } catch (error) {
+    console.error('Error:', error);
+    //res.status(500).json({ status: 'error', message: 'Error al mostrar el producto.' });
+  }
+};
+
+exports.mostrarProductosCliente = async (req, res) => {
+  const { } = req.body;
+  try {
+    // Consultar en la base de datos usando la función de PostgreSQL
+    const result = await productoM.mostrarProductosCliente();
+    // Mostrar el JSON respuesta de postgres
+    res.json(result);
+
+  } catch (error) {
+    console.error('Error:', error);
+    //res.status(500).render('administrador/productoView', { result: { status: 'error', message: 'Error al enviar el correo.' } });
+  }
+};
+
+
+exports.mostrarPorIdProductoCliente = async (req, res) => {
+  // Convertir req.body a un objeto regular en caso de ser necesario
+  const body = Object.assign({}, req.body);
+
+  // Crear un objeto JSON con el ID del producto
+  const productoData = {
+    id: req.params.id
+  };
+
+  //console.log('Producto data (mostrar por ID):', productoData);
+
+  try {
+    // Llamada al modelo para mostrar el producto por ID
+    const result = await productoM.mostrarPorIdProductoCliente(productoData);
+    // console.log("resultado", result);
     // Enviar el resultado como respuesta JSON
     res.json(result);
 

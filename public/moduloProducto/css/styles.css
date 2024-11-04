@@ -164,6 +164,10 @@ p {
   padding: 5rem 0;
 }
 
+.btn-color{
+  margin-left: 0.6rem;
+}
+
 .btn {
   background: var(--clr-primary-5);
   color: var(--clr-white);
@@ -667,6 +671,7 @@ product
   margin-bottom: 0.25rem;
   text-transform: capitalize;
   letter-spacing: var(--spacing);
+  text-align: center;
 }
 
 .product-price {
@@ -733,6 +738,7 @@ Products Page
   max-width: var(--max-width);
   position: relative;
 }
+
 
 .filters-container {
   position: sticky;

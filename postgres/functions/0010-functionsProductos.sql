@@ -525,3 +525,122 @@ select fn_lst_almacenes();
 --CONSULTA LISTAR ARTESANOS
 SELECT fn_lst_artesanos();
 
+-- Creado: Christian Medrano  Fecha: 3/11/2024                           --
+-- Actividad:                                                           --
+-- Funcion productos (formato de productos carrito )                      --
+------------------------------------------------------------------
+
+-- FUNCION LISTA TODOS LOS PRODUCTOS
+CREATE OR REPLACE FUNCTION fn_lst_productos_cliente()
+RETURNS JSON AS $$
+DECLARE
+    productos JSON;
+BEGIN
+    -- Construimos el JSON de productos
+    productos := (
+        SELECT json_agg(
+            json_build_object(
+                'id', p.id_prod::TEXT,
+                'caracteristicas', json_build_object(
+                    'nombre', p.nombre_prod,
+                    'descripcion', p.descripcion_prod,
+                    'categoria', LOWER(c.nombre_categoria),
+                    'colores', ARRAY[informacion_adicional],  -- Colores estáticos o dinámicos según tu lógica
+                    'precio', p.precio,
+                    'imagen', ARRAY[
+                        json_build_object(
+                            'id', CONCAT('att', INITCAP(REPLACE(c.nombre_categoria, ' ', '')), 'Img001'),
+                            'formato', json_build_object(
+                                'grande', json_build_object(
+                                    'url', COALESCE(REPLACE(p.ruta_imagen, '\\', '/'), 'URL por defecto')  -- Reemplazar barras invertidas
+                                )
+                            )
+                        )
+                    ]
+                )
+            )
+        )
+        FROM public.PRODUCTO_ARTESANAL p
+        JOIN public.CATEGORIA c ON p.id_categoria = c.id_categoria
+    );
+
+    -- Si no se encuentran productos, lanzamos un error
+    IF productos IS NULL THEN
+        RAISE EXCEPTION 'No se encontraron productos.';
+    END IF;
+
+    RETURN productos;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Si ocurre un error, capturamos el mensaje de error y devolvemos un JSON
+        RETURN json_build_object(
+            'estado', 'error',
+            'mensaje', SQLERRM
+        );
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- FUNCION MUESTRA PRODUCTO POR ID
+CREATE OR REPLACE FUNCTION fn_obtiene_productoPorId_cliente(id_producto INTEGER)
+RETURNS JSON AS $$
+DECLARE
+    producto JSON;
+BEGIN
+    -- Construimos el JSON de un único producto
+    producto := (
+        SELECT json_build_object(
+            'id', p.id_prod::TEXT,
+            'caracteristicas', json_build_object(
+                'nombre', p.nombre_prod,
+                'descripcion', p.descripcion_prod,
+                'categoria', LOWER(c.nombre_categoria),
+                'colores', ARRAY[informacion_adicional],  -- Colores estáticos o dinámicos según tu lógica
+                'precio', p.precio,
+                'imagen', ARRAY[
+                    json_build_object(
+                        'id', CONCAT('att', INITCAP(REPLACE(c.nombre_categoria, ' ', '')), 'Img001'),
+                        'formato', json_build_object(
+                            'grande', json_build_object(
+                                'url', COALESCE(REPLACE(p.ruta_imagen, '\\', '/'), 'URL por defecto')
+                            )
+                        )
+                    )
+                ]
+            )
+        )
+        FROM public.PRODUCTO_ARTESANAL p
+        JOIN public.CATEGORIA c ON p.id_categoria = c.id_categoria
+        WHERE p.id_prod = id_producto
+    );
+
+    -- Si no se encuentra el producto, lanzamos un error
+    IF producto IS NULL THEN
+        RAISE EXCEPTION 'No se encontró el producto con el ID %.', id_producto;
+    END IF;
+
+    RETURN producto;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Si ocurre un error, capturamos el mensaje de error y devolvemos un JSON
+        RETURN json_build_object(
+            'estado', 'error',
+            'mensaje', SQLERRM
+        );
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Sentencias de Apoyo
+SELECT * FROM fn_lst_productos_cliente();
+SELECT fn_obtiene_porIdproducto_cliente('{"id": 11}'::JSON);
+
+
+
+
+
+
+
+

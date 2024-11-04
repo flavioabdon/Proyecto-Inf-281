@@ -1,23 +1,20 @@
 {
-    "id": "rec4f2RIftFCb7aHh",
-    "caracteristicas": {
-        "nombre": "Mesa de piedra andina",
-        "descripcion": "Una mesa hecha con piedra de la región andina, perfecta para exteriores y ambientes naturales.",
-        "categoria": "muebles",
-        "colores": [
-            "#696969",
-            "#222"
-        ],
-        "precio": 1200,
-        "imagen": [
-            {
-                "id": "attP2cUyxU35M1zbw",
-                "formato": {
-                    "grande": {
-                        "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/49/97/85/disfruta-de-buenos-platos.jpg?w=1200&h=-1&s=1"
-                    }
-                }
-            }
-        ]
-    }
+  "id": "rec4f2RIftFCb7aHh",
+  "caracteristicas": {
+    "nombre": "Mesa de piedra andina",
+    "descripcion": "Una mesa hecha con piedra de la región andina, perfecta para exteriores y ambientes naturales.",
+    "categoria": "muebles",
+    "colores": ["#696969", "#222"],
+    "precio": 1200,
+    "imagen": [
+      {
+        "id": "attP2cUyxU35M1zbw",
+        "formato": {
+          "grande": {
+            "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/49/97/85/disfruta-de-buenos-platos.jpg?w=1200&h=-1&s=1"
+          }
+        }
+      }
+    ]
+  }
 }

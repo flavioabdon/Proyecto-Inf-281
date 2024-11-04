@@ -80,6 +80,26 @@ const ProductoFunction = {
 
         return result[0].result; // Devuelve el resultado de la verificación
     },
+    async mostrarProductosCliente() {
+        const result = await sequelize.query(`
+            SELECT fn_lst_productos_cliente() AS result
+        `, {
+            type: sequelize.QueryTypes.SELECT
+        });
+        return result[0].result; // Devuelve JSON del resultado de la función
+    },
+
+    async mostrarPorIdProductoCliente(data) {
+        // Llamar a la función en la bd
+        const result = await sequelize.query(`
+            SELECT fn_obtiene_porIdproducto_cliente(:data) AS result
+        `, {
+            replacements: { data: JSON.stringify(data) },
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        return result[0].result; // Devuelve el resultado de la verificación
+    },
 };
 
 

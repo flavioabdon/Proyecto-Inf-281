@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 // -------------ROUTES-----------
 // cliente
 const mailRoutes = require('./routes/mailRoutes');
+const productoClienteRoutes = require('./routes/productoClienteRoutes');
+
 
 //Inicio de Sesion
 const iniciarSesionRoutes = require('./routes/iniciarSesionRoutes');
@@ -51,6 +53,7 @@ app.use('/auth', iniciarSesionRoutes); // Ruta base para las rutas de autenticac
 // Usar las rutas definidas
 //cliente
 app.use('/', mailRoutes);
+app.use('/', productoClienteRoutes);
 
 //administrador
 app.use('/', categoriaRoutes);

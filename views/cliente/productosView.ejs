@@ -4,12 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Caracteristica del Producto</title>
+  <title>Productos Artesanales</title>
   <!-- font-awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
 
   <!-- styles css -->
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="/moduloProducto/css/styles.css" />
+  
 </head>
 
 <body>
@@ -40,7 +41,7 @@
         </ul>
       </div>
       <!-- logo -->
-      <img src="./images/logo.png" class="nav-logo" alt="logo" />
+      <img src="/moduloProducto/images/logo.png" class="nav-logo" alt="logo" />
       <!-- cart icon -->
       <div class="toggle-container">
         <button class="toggle-cart">
@@ -53,9 +54,8 @@
   <!-- hero -->
   <section class="page-hero">
     <div class="section-center">
-      <h3 class="page-hero-title">Caracteristicas del Producto</h3>
+      <h3 class="page-hero-title">Productos Artesanales</h3>
     </div>
-
   </section>
   <!-- sidebar -->
   <div class="sidebar-overlay">
@@ -100,47 +100,45 @@
       <div class="cart-items"></div>
       <!-- footer -->
       <footer>
-        <h3 class="cart-total text-slanted">
-          total : Bs. 12.99
+        <h3 class="cart-total text-slanted" id="totalPrecioCarrito">
+          total : Bs 12.99
         </h3>
         <button class="cart-checkout btn">Comprar</button>
       </footer>
     </aside>
   </div>
-
-
-  <!-- product info -->
-  <section class="single-product">
-    <div class="section-center single-product-center">
-      <img src="./images/main-bcg.jpeg" class="single-product-img img" alt="" />
-      <article class="single-product-info">
-        <div>
-          <h2 class="single-product-title">Joyeria</h2>
-          <p class="single-product-company text-slanted">
-            Categoria: Muebles
-          </p>
-          <p class="single-product-price">Bs. 30.00</p>
-          <div class="single-product-colors"></div>
-          <p class="single-product-desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id,
-            modi? Minima libero doloremque necessitatibus! Praesentium
-            recusandae quod nesciunt animi voluptatem!
-          </p>
-          <button class="addToCartBtn btn" data-id="id">
-            Agregar a Carrito
-          </button>
-          <button class="btn btn-color" onclick="window.location.href='http://localhost:3000/moduloProducto/productos.html';">volver</button>
-
-        </div>
-      </article>
+  <!-- products -->
+  <section class="products">
+    <!-- filters -->
+    <div class="filters">
+      <div class="filters-container">
+        <!-- search -->
+        <form class="input-form">
+          <input type="text" class="search-input" placeholder="search..." />
+        </form>
+        <!-- categories -->
+        <h4>Artesanias</h4>
+        <article class="companies">
+          <button class="company-btn">Todos</button>
+          <button class="company-btn">Textiles</button>
+        </article>
+        <!-- price -->
+        <h4>Precio</h4>
+        <form class="price-form">
+          <input type="range" class="price-filter" min="0" value="50" max="100" />
+        </form>
+        <p class="price-value"></p>
+      </div>
     </div>
+    <!-- products -->
+    <div class="products-container"></div>
   </section>
-
-
+  <!-- page loading -->
   <div class="page-loading">
     <h2>Cargando...</h2>
   </div>
-  <script type="module" src="./src/pages/product.js"></script>
+  <script type="module" src="/moduloProducto/src/pages/products.js"></script>
+  <!-- <script src="/moduloDifusion/jsIniciarSesion/extraerdatosCliente.js"></script> -->
 </body>
 
 </html>

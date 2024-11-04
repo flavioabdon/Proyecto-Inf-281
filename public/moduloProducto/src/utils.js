@@ -3,9 +3,12 @@
 //const allProductsUrl = 'https://www.course-api.com/javascript-store-products';
 
 
-const allProductsUrl = './src/json/productos.json';
+const allProductsUrl = '/mostrarProductosCliente';
 
-const singleProductUrl = './src/json/producto.json';
+//const singleProductUrl = './src/json/producto.json';
+
+const singleProductUrl = '/mostrarPorIdProductoCliente/';
+
 
 const getElement = (selection) => {
   const element = document.querySelector(selection);
@@ -19,9 +22,12 @@ const formatPrice = (price) => {
   let formattedPrice = new Intl.NumberFormat('es-BO', {
     style: 'currency',
     currency: 'BOB',
-  }).format((price).toFixed(2));
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(price).replace(/,/g, '.'); // Reemplaza la coma decimal por punto
   return formattedPrice;
 };
+
 
 
 const getStorageItem = (item) => {

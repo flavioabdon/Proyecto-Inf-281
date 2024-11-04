@@ -23,7 +23,8 @@ let productID;
 
 // show product when page loads
 window.addEventListener('DOMContentLoaded', async function () {
-  const urlID = window.location.search;
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlID = urlParams.get('id');
 
   try {
     const response = await fetch(`${singleProductUrl}${urlID}`);

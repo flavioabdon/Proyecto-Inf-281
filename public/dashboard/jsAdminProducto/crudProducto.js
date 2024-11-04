@@ -30,7 +30,7 @@ async function listarProductos() {
                     data: 'informacion_Adicional',
                     render: function (data) {
                         return `
-                            <div style="width: 50%; height: 20px; background-color: ${data}; border-radius: 4px;"></div>
+                           <div style="width: 50%; height: 20px; background-color: ${data}; border-radius: 4px; border: 1px solid gray;"></div>
                         `;
                     }
                 },

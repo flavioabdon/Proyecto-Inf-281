@@ -19,7 +19,13 @@ router.get('/listarDatosArtesanos', productosC.listarProdArtesanos); //json devu
 router.post('/insertarProducto', upload.single('fotoProd'), productosC.insertarProducto); //json ok
 router.put('/actualizarProducto/:id', productosC.actualizarProducto); //json ok
 router.delete('/eliminarProducto/:id', productosC.eliminarProducto); //json  ok
-router.post('/mostrarProductoId', productosC.mostrarProductoId); // json ok
+router.get('/mostrarProductoId/:id', productosC.mostrarProductoId); // json ok
+
+//muestra todos productos la vista del cliente (carrito)
+router.get('/mostrarProductosCliente', productosC.mostrarProductosCliente); // json ok 
+//muestra el producto por id enviado
+router.get('/mostrarPorIdProductoCliente/:id', productosC.mostrarPorIdProductoCliente); // json ok 
+
 
 
 module.exports = router;
