@@ -39,7 +39,7 @@ document.getElementById('formIniciarSesion').addEventListener('submit', async fu
                     // Redirigir según el rol del usuario
                     switch (usuario.rol) {
                         case 'Cliente':
-                            window.location.href = '/moduloProducto/productos.html';
+                            window.location.href = '/productosCliente';
                             break;
                         case 'Artesano':
                             window.location.href = '/indexArtesano';

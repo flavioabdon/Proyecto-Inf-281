@@ -164,7 +164,7 @@ p {
   padding: 5rem 0;
 }
 
-.btn-color{
+.btn-color {
   margin-left: 0.6rem;
 }
 
@@ -890,6 +890,7 @@ Single Product Page
   max-width: 25em;
   line-height: 1.8;
 }
+
 /*datos para el modal de pago
 /* Modal overlay */
 .modal-overlay {
@@ -904,6 +905,7 @@ Single Product Page
   align-items: center;
   z-index: 1000;
 }
+
 /* Modal box */
 .modal {
   background: #fff;
@@ -938,9 +940,11 @@ Single Product Page
   font-size: 1.5rem;
   cursor: pointer;
 }
+
 .hidden {
   display: none;
-  }
+}
+
 @media screen and (min-width: 992px) {
   .single-product-center {
     grid-template-columns: 1fr 1fr;
