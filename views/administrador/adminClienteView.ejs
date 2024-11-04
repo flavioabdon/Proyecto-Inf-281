@@ -99,6 +99,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <!-----------------Modal para agregar cliente------------->
                             <div class="modal fade" id="modalAgregarCliente" tabindex="-1" role="dialog"
                                 aria-labelledby="modalAgregarClienteLabel" aria-hidden="true">
@@ -112,19 +113,20 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
+                                                <!-- Imagen del perfil -->
                                                 <div class="col-md-3">
                                                     <div
                                                         class="d-flex flex-column align-items-center text-center py-5 imagenPerfilCliente">
-                                                        <!-- Imagen del perfil del cliente con tamaño fijo -->
                                                         <img id="imagenPerfilCliente" class="rounded-circle"
                                                             width="150px" height="150px" style="object-fit: cover;"
                                                             src="/moduloDifusion/img/perfil.jpg">
-                                                        <span class="p-2 m-2 bg-success badge">ARTESANO</span>
+                                                        <span class="p-2 m-2 bg-success badge">CLIENTE</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-9 px-4">
                                                     <form id="formRegistrarCliente" method="POST" action=""
                                                         enctype="multipart/form-data">
+                                                        <!-- Datos del Cliente -->
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <label for="nombreCliente"
@@ -147,11 +149,9 @@
                                                                     <span class="input-group-text"><i
                                                                             class="fa fa-upload"></i></span>
                                                                 </div>
-                                                                <img id="previewImagenCliente" src=""
-                                                                    alt="Vista previa"
+                                                                <img id="previewImagenCliente" src="" alt="Vista previa"
                                                                     style="display: none; max-width: 100%; margin-top: 10px;">
                                                             </div>
-
                                                         </div>
                                                         <div class="row mt-2">
                                                             <div class="col-md-6">
@@ -162,7 +162,7 @@
                                                                             class="fa fa-user-tag"></i></span>
                                                                     <input type="text" class="form-control"
                                                                         id="apellidoCliente" name="apellidoCliente"
-                                                                        placeholder="ingresa los apellidos" required>
+                                                                        placeholder="Ingresa los apellidos" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
@@ -175,7 +175,6 @@
                                                                         placeholder="Ingresa el C.I." required>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <div class="row mt-2">
                                                             <div class="col-md-6">
@@ -189,34 +188,28 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="celularCliente" class="labels">Numero de
+                                                                <label for="celularCliente" class="labels">Número de
                                                                     Contacto</label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text"><i
                                                                             class="fa fa-phone"></i></span>
                                                                     <input type="text" class="form-control"
                                                                         id="celularCliente" name="celularCliente"
-                                                                        placeholder="Ingrese el numero de contacto"
+                                                                        placeholder="Ingresa el número de contacto"
                                                                         required>
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
                                                         <div class="row mt-2">
-
-
                                                             <div class="col-md-6">
                                                                 <label for="direccionCliente"
-                                                                    class="labels">Direccion</label>
+                                                                    class="labels">Dirección</label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text"><i
-                                                                            class="fa fa-briefcase"></i></span>
-                                                                    <input type="text" clm-control"
-                                                                        id="direccionCliente"
-                                                                        name="direccionCliente"
-                                                                        placeholder="Direccion del cliente"
-                                                                        required>
+                                                                            class="fa fa-map-marker-alt"></i></span>
+                                                                    <input type="text" class="form-control"
+                                                                        id="direccionCliente" name="direccionCliente"
+                                                                        placeholder="Dirección del cliente" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
@@ -233,34 +226,32 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <div class="row mt-2">
                                                             <div class="col-md-6">
-                                                                <label for="longitudCliente" class="labels">Longitud</label>
+                                                                <label for="longitudCliente"
+                                                                    class="labels">Longitud</label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text"><i
-                                                                            class="fa fa-envelope"></i></span>
+                                                                            class="fa fa-map-marker"></i></span>
                                                                     <input type="text" class="form-control"
                                                                         id="longitudCliente" name="longitudCliente"
                                                                         placeholder="Longitud" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label for="latitudCliente" class="labels">Latitud</label>
+                                                                <label for="latitudCliente"
+                                                                    class="labels">Latitud</label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text"><i
-                                                                            class="fa fa-phone"></i></span>
+                                                                            class="fa fa-map-marker"></i></span>
                                                                     <input type="text" class="form-control"
                                                                         id="latitudCliente" name="latitudCliente"
-                                                                        placeholder="Latitud"required>
+                                                                        placeholder="Latitud" required>
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
                                                         <div class="row mt-2">
-                                                        <div class="row mt-1">
                                                             <div class="col-md-6">
                                                                 <label for="ubicacionCliente"
                                                                     class="labels">Ubicación</label>
@@ -271,10 +262,7 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
-
                                                         <div class="mt-4 text-center">
                                                             <button type="submit" class="btn btn-success"
                                                                 id="btnRegistrarCliente"
@@ -291,6 +279,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <!-- Modal para actualizar cliente -->
                             <div class="modal fade" id="modalActualizarCliente" tabindex="-1" role="dialog"
                                 aria-labelledby="modalActualizarClienteLabel" aria-hidden="true">
@@ -457,35 +447,35 @@
         <!--------Google Maps------>
         <script>
             let map, marker;
-        
+
             function initMap() {
                 // Coordenadas iniciales del mapa
                 const initialLocation = { lat: -16.500849, lng: -68.173632 };
-        
+
                 // Crear el mapa
                 map = new google.maps.Map(document.getElementById("map"), {
                     center: initialLocation,
                     zoom: 12,
                 });
-        
+
                 // Crear el marcador
                 marker = new google.maps.Marker({
                     position: initialLocation,
                     map: map,
                     draggable: true, // Permitir arrastrar el marcador
                 });
-        
+
                 // Escuchar el evento de arrastre del marcador para obtener la ubicación
-                google.maps.event.addListener(marker, 'dragend', function(event) {
+                google.maps.event.addListener(marker, 'dragend', function (event) {
                     const lat = event.latLng.lat();
                     const lng = event.latLng.lng();
-        
+
                     // Guardar las coordenadas en los campos de longitud y latitud
                     document.getElementById("latitudCliente").value = lat;
                     document.getElementById("longitudCliente").value = lng;
                 });
             }
-        
+
             // Abrir el modal y cargar el mapa cuando se abra el modal
             /*$('#segundoModal').on('shown.bs.modal', function () {
                 initMap(); // Llamar a la función para cargar el mapa
@@ -512,9 +502,10 @@
         <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
 
         <!-- mi js -->
+        <script src="/dashboard/jsAdminCliente/cargarFotoPerfil.js"></script>
         <script src="/dashboard/jsAdminCliente/crudAdminCliente.js"></script>
         <script src="/dashboard/jsAdminCliente/modalMapa.js"></script>
-        
+
 </body>
 
 </html>
