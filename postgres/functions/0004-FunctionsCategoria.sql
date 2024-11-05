@@ -150,7 +150,7 @@ SELECT fn_eliminar_categoria(58);
 -- Funcion para listar las categorias que uso el artesano X  en sus productos   --
 ------------------------------------------------------------------
 
-CREATE OR REPLACE FUNCTION fn_listar_categorias_Del_Artesano(id_usuario INT)
+CREATE OR REPLACE FUNCTION fn_listar_categorias_Del_Artesano(usuarioID INT)
 RETURNS TABLE (
     numero_registro BIGINT,
     id_categoria INT,
@@ -177,7 +177,7 @@ BEGIN
     JOIN 
         public.USUARIO u ON a.id_usuario = u.id_usuario
     WHERE 
-        u.id_usuario = id_usuario;
+        u.id_usuario = usuarioID;
 END;
 $$ LANGUAGE plpgsql;
 
