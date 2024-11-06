@@ -341,3 +341,32 @@ CREATE TABLE IF NOT EXISTS public.IMAGEN_PRODUCTO (
     usuario_modificacion character varying(20),
     estado_registro character varying(15)
 );
+
+--------------------------------------------------------------------------
+-- Creado: Flavio Condori    Fecha: 6/11/2024                           --
+-- Tabla para registrar productos en pedidos específicos con cantidad y ubicación
+CREATE TABLE IF NOT EXISTS public.PEDIDO_PRODUCTO (
+    id_pedido_producto SERIAL PRIMARY KEY,
+    cantidad INTEGER NOT NULL,             -- Cantidad de productos en el pedido
+    id_Prod INTEGER NOT NULL,              -- ID del producto
+    id_pedido INTEGER NOT NULL,            -- ID del pedido
+    latitud DECIMAL(9, 6),                 -- Latitud geográfica
+    longitud DECIMAL(9, 6),                -- Longitud geográfica
+    -- Restricciones de claves foráneas
+    CONSTRAINT fk_pedido_producto_pedido FOREIGN KEY (id_pedido)
+        REFERENCES public.PEDIDO (id_pedido)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    
+    CONSTRAINT fk_pedido_producto_producto FOREIGN KEY (id_Prod)
+        REFERENCES public.PRODUCTO_ARTESANAL (id_Prod)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    -- Campos de control de creación y modificación
+    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    usuario_creacion character varying(20),
+    usuario_modificacion character varying(20),
+    estado character varying(35)
+);
