@@ -86,9 +86,52 @@ const eliminarAlmacen = async (id_almacen) => {
     }
 };
 
+// Función para listar un almacén específico por id_almacen
+// Función para listar un almacén específico por ID
+const listarAlmacenPorId = async (id_almacen) => {
+    console.log("ID de almacen:", id_almacen);
+    const query = `
+    SELECT * FROM fn_listar_almacenes_ID($1);
+    `;
+
+    try {
+        // Ejecuta la consulta con el parámetro id_almacen usando bind
+        const res = await sequelize.query(query, {
+            bind: [id_almacen], // Cambiado a bind y arreglo de valores
+            type: sequelize.QueryTypes.SELECT // Tipo de consulta SELECT ya que devuelve datos
+        });
+        return res; // Devuelve datos del almacén específico
+    } catch (error) {
+        console.error('Error al listar el almacén por ID:', error); // Manejo de errores
+        throw error; // Lanza el error para ser manejado en el controlador
+    }
+};
+
+// Función para listar un almacén específico por id_producto
+const listarAlmacenPorIdproducto = async (id_prod) => {
+    console.log("ID de Producto en el modelo:", id_prod);
+    const query = `
+    SELECT * FROM fn_listar_almacenes_IDproductoGEO($1);
+    `;
+
+    try {
+        // Ejecuta la consulta con el parámetro id_almacen
+        const res = await sequelize.query(query, {
+            bind: [id_prod], // Reemplaza :id_almacen con el valor proporcionado
+            type: sequelize.QueryTypes.SELECT // Tipo de consulta SELECT ya que devuelve datos
+        });
+        return res; // Devuelve datos del almacén específico
+    } catch (error) {
+        console.error('Error al listar el almacén por ID del Producto:', error); // Manejo de errores
+        throw error; // Lanza el error para ser manejado en el controlador
+    }
+};
+
 module.exports = {
     registrarAlmacen, // Exporta la función para usarla en otras partes de la aplicación
     listarAlmacenes, // Exporta la función para listar almacenes
     actualizarAlmacen, // Exporta la función para actualizar almacenes
     eliminarAlmacen,    //Exporta la funcion para eliminar almacen
+    listarAlmacenPorId, //Exporta la funcion para listar almacen especifico por ID
+    listarAlmacenPorIdproducto, //Exporta la funcion para listar almacen especifico por ID
 };
