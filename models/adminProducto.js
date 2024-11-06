@@ -47,6 +47,20 @@ const ProductoFunction = {
 
         return result[0].result; // Devuelve el resultado de la verificación
     },
+
+    async registrarPedido(data) {
+        // Llamar a la función en la bd
+        // Imprimir los datos que se van a insertar
+        //console.log('Datos a insertar:', data);
+        const result = await sequelize.query(`
+            SELECT fn_registrar_pedido(:data) AS result
+        `, {
+            replacements: { data: JSON.stringify(data) },
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        return result[0].result; // Devuelve el resultado de la verificación
+    },
     async modificarProducto(data) {
         // Llamar a la función en la bd
         const result = await sequelize.query(`

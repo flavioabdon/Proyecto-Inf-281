@@ -223,3 +223,36 @@ exports.mostrarPorIdProductoCliente = async (req, res) => {
     //res.status(500).json({ status: 'error', message: 'Error al mostrar el producto.' });
   }
 };
+
+exports.registrarPedido = async (req, res) => {
+  // Extraer los datos del pedido desde req.body
+  const body = req.body;
+
+  // Crear un objeto JSON con los datos del pedido
+  const pedidoData = {
+    direccion_envio: body.direccion_envio,
+    costo_pedido: body.costo_pedido,
+    costo_total: body.costo_total,
+    costo_envio: body.costo_envio,
+    distancia: body.distancia,
+    id_usuario: body.id_usuario,
+    latitud_envio: body.latitud_envio,
+    longitud_envio: body.longitud_envio,
+    productos: body.productos  // Se espera que esto sea un arreglo de productos
+  };
+
+  // Log para ver los datos recibidos
+  console.log('Pedido data:', pedidoData);
+
+  try {
+    // Llamada al modelo para registrar el pedido con el JSON
+    const result = await productoM.registrarPedido(pedidoData);
+
+    // Enviar el resultado como respuesta JSON
+    res.json(result);
+
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ status: 'error', message: 'Error al registrar el pedido.' });
+  }
+};

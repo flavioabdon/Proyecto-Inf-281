@@ -26,6 +26,8 @@ router.get('/mostrarProductosCliente', productosC.mostrarProductosCliente); // j
 //muestra el producto por id enviado
 router.get('/mostrarPorIdProductoCliente/:id', productosC.mostrarPorIdProductoCliente); // json ok 
 
+// router.get('/registrarPedido'
+router.post('/registrarPedido', productosC.registrarPedido); //json recibe pedido
 
 
 module.exports = router;
