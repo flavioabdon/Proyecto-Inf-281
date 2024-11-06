@@ -135,11 +135,12 @@
   </section>
 
 
-  <!-- Modal 1: Datos personales -->
-  <div class="modal-overlay" id="modalOverlay1">
-    <div class="modal">
-      <h3>Datos personales</h3>
-      <form id="completeForm">
+
+  <form id="completeForm">
+    <!-- Modal 1: Datos personales -->
+    <div class="modal-overlay" id="modalOverlay1">
+      <div class="modal">
+        <h3>Datos personales</h3>
         <label for="nombreCliente" class="labels">Nombres</label>
         <div class="input-group">
           <span class="input-group-text"><i class="fa fa-user"></i></span>
@@ -150,7 +151,7 @@
         <div class="input-group">
           <span class="input-group-text"><i class="fa fa-user-tag"></i></span>
           <input type="text" class="form-control" id="apellidoCliente" name="apellidoCliente"
-            placeholder="ingresa los apellidos" required>
+            placeholder="Ingresa los apellidos" required>
         </div>
         <label for="ciCliente" class="labels">C.I.</label>
         <div class="input-group">
@@ -159,36 +160,31 @@
             required>
         </div>
         <button type="button" class="btn" id="nextButton1">Siguiente</button>
-      </form>
-      <button class="modal-close" id="modalClose1">&times;</button>
+        <button class="modal-close" id="modalClose1">&times;</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Modal 2: Dirección -->
-  <div class="modal-overlay" id="modalOverlay2">
-    <div class="modal">
-      <h3>Dirección de Envío</h3>
-      <form id="completeForm">
-        <label for="direccionCliente" class="labels">Direccion</label>
+    <!-- Modal 2: Dirección -->
+    <div class="modal-overlay" id="modalOverlay2">
+      <div class="modal">
+        <h3>Dirección de Envío</h3>
+        <label for="direccionCliente" class="labels">Dirección</label>
         <div class="input-group">
           <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
           <input type="text" class="form-control" id="direccionCliente" name="direccionCliente"
-            placeholder="Direccion del cliente" required>
+            placeholder="Dirección del cliente" required>
         </div>
-
         <label for="ciudadCliente">Ciudad:</label>
         <input type="text" id="ciudadCliente" required>
         <button type="button" class="btn" id="nextButton2">Siguiente</button>
-      </form>
-      <button class="modal-close" id="modalClose2">&times;</button>
+        <button class="modal-close" id="modalClose2">&times;</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Modal 3: Tipo de Envío -->
-  <div class="modal-overlay" id="modalOverlay3">
-    <div class="modal">
-      <h3>Tipo de Envío</h3>
-      <form id="completeForm">
+    <!-- Modal 3: Tipo de Envío -->
+    <div class="modal-overlay" id="modalOverlay3">
+      <div class="modal">
+        <h3>Tipo de Envío</h3>
         <label for="costoPedido" class="labels">Costo del pedido</label>
         <div class="input-group">
           <span class="input-group-text"><i class="fa fa-user"></i></span>
@@ -197,23 +193,21 @@
         </div>
         <select id="tipoEnvio" onchange="calcular()">
           <option value="directo">Recojo directo</option>
-          <option value="delivery">Envio con Delivery</option>
+          <option value="delivery">Envío con Delivery</option>
         </select>
         <div>
           <label for="costoTotal">Costo total:</label>
           <input type="text" id="costoTotal" readonly>
         </div>
         <button type="button" class="btn" id="nextButton3">Siguiente</button>
-      </form>
-      <button class="modal-close" id="modalClose3">&times;</button>
+        <button class="modal-close" id="modalClose3">&times;</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Modal 4: Tipo de Pago -->
-  <div class="modal-overlay" id="modalOverlay4">
-    <div class="modal">
-      <h3>Tipo de Pago</h3>
-      <form id="completeForm">
+    <!-- Modal 4: Tipo de Pago -->
+    <div class="modal-overlay" id="modalOverlay4">
+      <div class="modal">
+        <h3>Tipo de Pago</h3>
         <label for="tipoPago">Seleccione el tipo de pago:</label>
         <select id="tipoPago" required>
           <option value="">Seleccione una opción</option>
@@ -226,11 +220,13 @@
         <button type="button" onclick="generarQR()">Generar Pago</button>
         <div id="qrcode"></div>
         <button type="button" id="pdfButton" class="button primary hidden">Generar Reporte</button>
-        <button type="submit" class="btn">Finalizar</button>
-      </form>
-      <button class="modal-close" id="modalClose4">&times;</button>
+        <button type="submit" class="btn" id="btnFinalizarCompra">Finalizar</button>
+        <button class="modal-close" id="modalClose4">&times;</button>
+      </div>
     </div>
-  </div>
+  </form>
+
+
 
 
   <!-- page loading -->
@@ -238,10 +234,16 @@
     <h2>Cargando...</h2>
   </div>
 
+
+
+  <script type="module" src="/moduloProducto/miJS/finalizarCompra.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script type="module" src="/moduloProducto/src/pages/products.js"></script>
 
+
   <script>
+
     document.addEventListener('DOMContentLoaded', () => {
       // Referencias a los botones y formularios de cada ventana
 
@@ -260,7 +262,6 @@
       const modalClose4 = document.getElementById('modalClose4');
       const completeForm = document.getElementById('completeForm');
       const totalPrecioCarrito = document.getElementById("totalPrecioCarrito").textContent;
-
 
 
       // Mostrar la primera ventana modal al hacer clic en "Comprar"
@@ -319,25 +320,25 @@
         }
       });
       // Enviar el formulario completo desde la última ventana modal (Tipo de Pago)
-      completeForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const tipoPago = document.getElementById('tipoPago').value;
-        if (tipoPago) {
-          const nombreCliente = document.getElementById('nombreCliente').value;
-          const apellidoCliente = document.getElementById('apellidoCliente').value;
-          const direccionCliente = document.getElementById('direccionCliente').value;
-          const ciudadCliente = document.getElementById('ciudadCliente').value;
-          const tipoEnvio = document.getElementById('tipoEnvio').value;
-          alert(`Compra confirmada a nombre de ${nombreCliente} ${apellidoCliente}.\nDirección: ${direccionCliente}, ${ciudadCliente}.\nEnvío: ${tipoEnvio}.\nPago: ${tipoPago}.`);
-          modalOverlay4.style.display = 'none';
-
-          // Aquí podrías añadir el código para enviar los datos al servidor o guardarlos
-        } else {
-          alert('Por favor, seleccione un tipo de pago.');
-        }
-      });
+      // completeForm.addEventListener('submit', (e) => {
+      //   e.preventDefault();
+      //   const tipoPago = document.getElementById('tipoPago').value;
+      //   if (tipoPago) {
+      //     const nombreCliente = document.getElementById('nombreCliente').value;
+      //     const apellidoCliente = document.getElementById('apellidoCliente').value;
+      //     const direccionCliente = document.getElementById('direccionCliente').value;
+      //     const ciudadCliente = document.getElementById('ciudadCliente').value;
+      //     const tipoEnvio = document.getElementById('tipoEnvio').value;
+      //     alert(`Compra confirmada a nombre de ${nombreCliente} ${apellidoCliente}.\nDirección: ${direccionCliente}, ${ciudadCliente}.\nEnvío: ${tipoEnvio}.\nPago: ${tipoPago}.`);
+      //     modalOverlay4.style.display = 'none';
+      //     // Aquí podrías añadir el código para enviar los datos al servidor o guardarlos
+      //   } else {
+      //     alert('Por favor, seleccione un tipo de pago.');
+      //   }
+      // });
     });
   </script>
+
   <script>
     function calcular() {
       const numero1 = parseFloat(document.getElementById('costoPedido').value);
@@ -411,6 +412,8 @@
       doc.save('compra.pdf');
     }
   </script>
+
+
 
 </body>
 
