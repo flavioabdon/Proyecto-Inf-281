@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS public.IMAGEN_PRODUCTO (
 );
 
 --------------------------------------------------------------------------
--- Creado: Flavio Condori    Fecha: 18/9/2024                           --
+-- Creado: Flavio Condori    Fecha: 6/11/2024                           --
 -- Tabla para registrar productos en pedidos específicos con cantidad y ubicación
 CREATE TABLE IF NOT EXISTS public.PEDIDO_PRODUCTO (
     id_pedido_producto SERIAL PRIMARY KEY,
