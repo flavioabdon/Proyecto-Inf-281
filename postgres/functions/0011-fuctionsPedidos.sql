@@ -1,4 +1,3 @@
--- Crear función para registrar una compra 
 CREATE OR REPLACE FUNCTION fn_registrar_pedido(data JSONB)
 RETURNS JSONB AS $$
 DECLARE
@@ -6,7 +5,7 @@ DECLARE
     v_id_pedido INTEGER;
     v_direccion_envio VARCHAR(255);
     v_costo_pedido DECIMAL(10, 2);
-	v_costo_total DECIMAL(10,2);
+    v_costo_total DECIMAL(10,2);
     v_costo_envio DECIMAL(10, 2);
     v_distancia DECIMAL(10, 2);
     v_latitud DECIMAL(9, 6);
@@ -19,6 +18,7 @@ DECLARE
     v_producto JSONB;
     v_cantidad INTEGER;
     v_id_prod INTEGER;
+    v_stock_actual INTEGER;
 
     -- Variable de salida para el resultado final
     resultado JSONB;
@@ -26,7 +26,7 @@ BEGIN
     -- Extraer datos del pedido desde el JSON
     v_direccion_envio := data->>'direccion_envio';
     v_costo_pedido := (data->>'costo_pedido')::DECIMAL;
-	v_costo_total :=  (data->>'costo_total')::DECIMAL;
+    v_costo_total :=  (data->>'costo_total')::DECIMAL;
     v_costo_envio := (data->>'costo_envio')::DECIMAL;
     v_distancia := (data->>'distancia')::DECIMAL;
     v_id_usuario := (data->>'id_usuario')::INTEGER;
@@ -49,18 +49,32 @@ BEGIN
     )
     RETURNING id_pedido INTO v_id_pedido;
 
-    -- Insertar cada producto en la tabla PEDIDO_PRODUCTO
+    -- Insertar cada producto en la tabla PEDIDO_PRODUCTO y actualizar el stock
     FOR v_producto IN SELECT * FROM jsonb_array_elements(data->'productos')
     LOOP
         v_cantidad := (v_producto->>'cantidad')::INTEGER;
         v_id_prod := (v_producto->>'id_prod')::INTEGER;
 
+        -- Insertar en PEDIDO_PRODUCTO
         INSERT INTO public.PEDIDO_PRODUCTO (
-            cantidad, id_prod,latitud, longitud, id_pedido, usuario_creacion
+            cantidad, id_prod, latitud, longitud, id_pedido, usuario_creacion
         )
         VALUES (
-            v_cantidad, v_id_prod, v_latitud, v_longitud,v_id_pedido, v_id_usuario
+            v_cantidad, v_id_prod, v_latitud, v_longitud, v_id_pedido, v_id_usuario
         );
+
+        -- Descontar cantidad del stock en PRODUCTO_ARTESANAL
+        SELECT stock INTO v_stock_actual 
+        FROM producto_artesanal 
+        WHERE id_prod = v_id_prod;
+
+        IF v_stock_actual IS NULL OR v_stock_actual < v_cantidad THEN
+            RAISE EXCEPTION 'Stock insuficiente para el producto ID %', v_id_prod;
+        ELSE
+            UPDATE producto_artesanal
+            SET stock = stock - v_cantidad
+            WHERE id_prod = v_id_prod;
+        END IF;
     END LOOP;
 
     -- Verificar si se insertó algún producto; si no, lanzar excepción
