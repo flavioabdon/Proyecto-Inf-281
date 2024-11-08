@@ -2,20 +2,21 @@ const almacenModel = require('../models/almacen');
 
 // registrar
 const registrarAlmacen = async (req, res) => {
+
     // Obtiene los datos del formulario
-    const { nombreAlmacen, direccionAlmacen, capacidadAlmacen } = req.body;
+    const { nombreAlmacen, ubicacionAlmacen, direccionAlmacen, capacidadAlmacen } = req.body;
 
     try {
         // Inserta el nuevo almacen 
-        const nuevoAlmacen = await almacenModel.registrarAlmacen(nombreAlmacen, direccionAlmacen, capacidadAlmacen);
+        const nuevoAlmacen = await almacenModel.registrarAlmacen(nombreAlmacen, ubicacionAlmacen, direccionAlmacen, capacidadAlmacen);
         
         // Devuelve un mensaje de éxito
         res.status(201).json({ message: 'Almacen creado', almacen: nuevoAlmacen });
 
     } catch (error) {
-        console.error('Error al crear el almacen:', error);
+        console.error('Error al crear el almacen en el controlador:', error);
         // Devuelve un mensaje de error
-        res.status(500).json({ message: 'Error al crear el almacen' });
+        res.status(500).json({ message: 'Error al crear el almacen en el controlador' });
     }
 };
 
@@ -36,19 +37,20 @@ const listarAlmacenes = async (req, res) => {
 // Controlador para actualizar
 const actualizarAlmacen = async (req, res) => {
     const id_almacen = req.params.id; // El ID viene desde la URL
-    const { nombreAlmacen, direccionAlmacen, capacidadAlmacen } = req.body; // Datos enviados en el cuerpo
+    const { nombreAlmacen, ubicacionAlmacen, direccionAlmacen, capacidadAlmacen } = req.body; // Datos enviados en el cuerpo
 
     try {
         const almacenActualizada = await almacenModel.actualizarAlmacen(
             id_almacen,
             nombreAlmacen,
+            ubicacionAlmacen,
             direccionAlmacen,
             capacidadAlmacen
         );
         res.status(200).json({ message: 'Almacen actualizado', almacen: almacenActualizada });
     } catch (error) {
-        console.error('Error al actualizar el almacen:', error);
-        res.status(500).json({ message: 'Error al actualizar el almacen' });
+        console.error('Error al actualizar el almacen EN EL CONTROLADOR:', error);
+        res.status(500).json({ message: 'Error al actualizar el almacenEN EL CONTROLADOR' });
     }
 };
 

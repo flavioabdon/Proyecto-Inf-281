@@ -125,16 +125,22 @@
                                                         name="nombreAlmacen" required> <!--name="nombreAlmacen": Este atributo define el nombre del campo cuando el formulario se envía.-->
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="capacidadAlmacen">Capacidad (unidades):</label>
-                                                    <input type="number" class="form-control" id="capacidadAlmacen"
-                                                        placeholder="Introduce la capacidad del almacén"
-                                                        name="capacidadAlmacen" min="1" required>
+                                                    <label for="ubicacionAlmacen">Ubicacion GeoRef:</label>
+                                                    <input type="text" class="form-control" id="ubicacionAlmacen" rows="3"
+                                                        placeholder="Introduce una Ubicacion GeoRef" name="ubicacionAlmacen"
+                                                        required></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="direccionAlmacen">Dirección:</label>
                                                     <textarea class="form-control" id="direccionAlmacen" rows="3"
                                                         placeholder="Introduce una dirección" name="direccionAlmacen"
                                                         required></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="capacidadAlmacen">Capacidad (unidades):</label>
+                                                    <input type="number" class="form-control" id="capacidadAlmacen"
+                                                        placeholder="Introduce la capacidad del almacén"
+                                                        name="capacidadAlmacen" min="1" required>
                                                 </div>
 
                                                 <!-- Bloque añadido para ubicación -->
@@ -161,31 +167,6 @@
                                 </div>
                             </div>
 
-                            <!-- Segundo Modal con Google Maps -->
-                            <div class="modal fade" id="segundoModal" tabindex="-1" role="dialog"
-                                aria-labelledby="segundoModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="segundoModalLabel">Ubicación en Google Maps</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Reemplaza la URL del mapa con la ubicación deseada -->
-                                            <iframe
-                                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d108149.74007316536!2d-68.17363229776905!3d-16.500849290268757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sbo!4v1729041934336!5m2!1ses!2sbo"
-                                                width="100%" height="450" style="border:0;" allowfullscreen=""
-                                                loading="lazy">
-                                            </iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
                             <!-- Modal para Actualizar Almacen -->
                             <div class="modal fade" id="modalActualizarAlmacen" tabindex="-1" role="dialog"
                                 aria-labelledby="modalActualizarAlmacenLabel" aria-hidden="true">
@@ -208,28 +189,46 @@
 
                                                 <!-- Nombre del almacén -->
                                                 <div class="form-group">
-                                                    <label for="nombreAlmacenActualizar">Nombre del Almacén:</label>
+                                                    <label for="nombreAlmacenActualizar">Nuevo Nombre del Almacén:</label>
                                                     <input type="text" class="form-control" id="nombreAlmacenActualizar"
                                                         placeholder="Introduce el nombre del almacén"
                                                         name="nombreAlmacenActualizar" required>
                                                 </div>
+                                                <!-- Ubicacion del almacén -->
+                                                <div class="form-group">
+                                                    <label for="ubicacionAlmacenActualizar">Nueva Ubicacion GeoRef:</label>
+                                                    <input type="text" class="form-control" id="ubicacionAlmacenActualizar"
+                                                        rows="3" placeholder="Abrir Mapa para añadir nueva ubicacion GeoRef"
+                                                        name="ubicacionAlmacenActualizar" required></textarea>
+                                                </div>
+                                                <!-- Dirección del almacén -->
+                                                <div class="form-group">
+                                                    <label for="direccionAlmacenActualizar">Nueva Dirección:</label>
+                                                    <textarea class="form-control" id="direccionAlmacenActualizar"
+                                                        rows="3" placeholder="Introduce la dirección"
+                                                        name="direccionAlmacenActualizar" required></textarea>
+                                                </div>
                                                 <!-- Capacidad del almacén -->
                                                 <div class="form-group mb-0">
-                                                    <label for="capacidadAlmacenActualizar">Capacidad
+                                                    <label for="capacidadAlmacenActualizar">Nueva Capacidad
                                                         (unidades):</label>
                                                     <input type="number" class="form-control"
                                                         id="capacidadAlmacenActualizar"
                                                         placeholder="Introduce la capacidad del almacén"
                                                         name="capacidadAlmacenActualizar" min="1" required>
                                                 </div>
-                                                <!-- Dirección del almacén -->
-                                                <div class="form-group">
-                                                    <label for="direccionAlmacenActualizar">Dirección:</label>
-                                                    <textarea class="form-control" id="direccionAlmacenActualizar"
-                                                        rows="3" placeholder="Introduce la dirección"
-                                                        name="direccionAlmacenActualizar" required></textarea>
-                                                </div>
 
+                                                <!-- Bloque añadido para ubicación -->
+                                                <div class="form-group">
+                                                    <label for="ubicacionAlmacen" class="labels">Ubicación</label>
+                                                    <div class="input-group">
+                                                        <button type="button" class="btn btn-outline-primary"
+                                                            id="abrirMapa2">
+                                                            <i class="fa fa-map"></i> Abrir Mapa de Google
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- Fin del bloque añadido -->
 
                                             </form>
                                         </div>
@@ -243,13 +242,31 @@
                                 </div>
                             </div>
 
+                            <!-- Segundo Modal con Google Maps-->
+                            <div class="modal fade" id="segundoModal" tabindex="-1" role="dialog"
+                                aria-labelledby="segundoModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="segundoModalLabel">Ubicación del Mapa de Google
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
 
+                                            <div class="modal-body">
+                                                <div id="map" style="width: 100%; height: 450px;"></div>
+                                            </div>
 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </main>
                         <!-- fin de contenido -->
-
-
                 </div>
                 <!-- End of Main Content -->
 
@@ -291,6 +308,9 @@
         <!-- mi js -->
         <script src="/dashboard/jsAlmacen/modalMapa.js"></script>
         <script src="/dashboard/jsAlmacen/crudAlmacen.js"></script>
+
+        <!-- google maps -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
 
 
 

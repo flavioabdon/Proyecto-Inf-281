@@ -20,7 +20,7 @@ async function listarAlmacenes() { // listarAlmacenes
                 { data: 'numero_registro' },
                 { data: 'id_almacen' },
                 { data: 'nombre_almacen' },
-                { data: 'direccion_almacen' },
+                { data: 'direccion_almacen'},
                 {
                     data: 'capacidad_unid',
                     render: function (data) {
@@ -30,7 +30,7 @@ async function listarAlmacenes() { // listarAlmacenes
                 {
                     data: 'estado_registro',
                     render: function (data) {
-                        return data === 'activo'
+                        return data === 'Activo' || data === 'activo'
                             ? '<span class="badge badge-success">Activo</span>' // Badge verde
                             : '<span class="badge badge-danger">Inactivo</span>'; // Badge rojo
                     }
@@ -93,11 +93,11 @@ async function listarAlmacenes() { // listarAlmacenes
 // REGISTRAR 
 document.getElementById('formRegistrarAlmacen').addEventListener('submit', function (event) {
     event.preventDefault();
-   
 
     const nombreAlmacen = document.getElementById('nombreAlmacen').value;  
-    const direccionAlmacen = document.getElementById('direccionAlmacen').value;  
-    const capacidadAlmacen = document.getElementById('capacidadAlmacen').value;   
+    const ubicacionAlmacen = document.getElementById('ubicacionAlmacen').value;  
+    const direccionAlmacen = document.getElementById('direccionAlmacen').value;
+    const capacidadAlmacen = document.getElementById('capacidadAlmacen').value;  
 
     // Envía los datos al servidor Node.js
     fetch('/formRegistrarAlmacen', {
@@ -107,13 +107,14 @@ document.getElementById('formRegistrarAlmacen').addEventListener('submit', funct
         },
         body: JSON.stringify({
             nombreAlmacen: nombreAlmacen,
-            capacidadAlmacen: capacidadAlmacen,
-            direccionAlmacen: direccionAlmacen
+            ubicacionAlmacen: ubicacionAlmacen,
+            direccionAlmacen: direccionAlmacen,
+            capacidadAlmacen: capacidadAlmacen
         })
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ocurrió un error al registrar el almacen');
+                throw new Error('Ocurrió un error al registrar el almacen en el CRUD');
             }
             return response.json();
         })
@@ -162,6 +163,7 @@ document.getElementById('tablaAlmacen').addEventListener('click', function (even
             // Llenar el modal de actualización con los datos del almacen
             document.getElementById('idAlmacenActualizar').value = almacenData.id_almacen;
             document.getElementById('nombreAlmacenActualizar').value = almacenData.nombre_almacen;
+            //document.getElementById('ubicacionAlmacenActualizar').value = almacenData.ubicacion_geoRef_Alm;
             document.getElementById('direccionAlmacenActualizar').value = almacenData.direccion_almacen;
             document.getElementById('capacidadAlmacenActualizar').value = almacenData.capacidad_unid;
 
@@ -179,6 +181,7 @@ document.getElementById('formActualizarAlmacen').addEventListener('submit', func
 
     const idAlmacen = document.getElementById('idAlmacenActualizar').value;
     const nombreAlmacen = document.getElementById('nombreAlmacenActualizar').value;
+    const ubicacionAlmacen = document.getElementById('ubicacionAlmacenActualizar').value; 
     const direccionAlmacen = document.getElementById('direccionAlmacenActualizar').value;
     const capacidadAlmacen = document.getElementById('capacidadAlmacenActualizar').value;
 
@@ -192,13 +195,14 @@ document.getElementById('formActualizarAlmacen').addEventListener('submit', func
         },
         body: JSON.stringify({
             nombreAlmacen: nombreAlmacen,
+            ubicacionAlmacen: ubicacionAlmacen,
             direccionAlmacen: direccionAlmacen,
             capacidadAlmacen: capacidadAlmacen
         })
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ocurrió un error al actualizar el almacen');
+                throw new Error('Ocurrió un error al actualizar el almacen en el CRUD');
             }
             return response.json();
         })
