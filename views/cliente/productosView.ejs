@@ -134,33 +134,28 @@
     <div class="products-container"></div>
   </section>
 
-
-
   <form id="completeForm">
-    <!-- Modal 1: Datos personales -->
+      <!-- Modal 1: Datos personales -->
     <div class="modal-overlay" id="modalOverlay1">
       <div class="modal">
         <h3>Datos personales</h3>
-        <label for="nombreCliente" class="labels">Nombres</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-user"></i></span>
-          <input type="text" class="form-control" id="nombreCliente" name="nombreCliente"
-            placeholder="Ingresa los nombres" required>
-        </div>
-        <label for="apellidoCliente" class="labels">Apellidos</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-user-tag"></i></span>
-          <input type="text" class="form-control" id="apellidoCliente" name="apellidoCliente"
-            placeholder="Ingresa los apellidos" required>
-        </div>
-        <label for="ciCliente" class="labels">C.I.</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-id-card"></i></span>
-          <input type="text" class="form-control" id="ciCliente" name="ciCliente" placeholder="Ingresa el C.I."
-            required>
-        </div>
-        <button type="button" class="btn" id="nextButton1">Siguiente</button>
-        <button class="modal-close" id="modalClose1">&times;</button>
+          <label for="nombreCliente" class="labels">Nombres</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+            <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" disabled>
+          </div>
+          <label for="apellidoCliente" class="labels">Apellidos</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-user-tag"></i></span>
+            <input type="text" class="form-control" id="apellidoCliente" name="apellidoCliente" disabled>
+          </div>
+          <label for="ciCliente" class="labels">C.I.</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+            <input type="text" class="form-control" id="ciCliente" name="ciCliente" disabled>
+          </div>
+          <button type="button" class="btn" id="nextButton1">Siguiente</button>
+        <button type="button" class="modal-close" id="modalClose1">&times;</button>
       </div>
     </div>
 
@@ -168,16 +163,29 @@
     <div class="modal-overlay" id="modalOverlay2">
       <div class="modal">
         <h3>Dirección de Envío</h3>
-        <label for="direccionCliente" class="labels">Dirección</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
-          <input type="text" class="form-control" id="direccionCliente" name="direccionCliente"
-            placeholder="Dirección del cliente" required>
-        </div>
-        <label for="ciudadCliente">Ciudad:</label>
-        <input type="text" id="ciudadCliente" required>
-        <button type="button" class="btn" id="nextButton2">Siguiente</button>
-        <button class="modal-close" id="modalClose2">&times;</button>
+          <label for="longitudCliente" class="labels">Longitud</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+            <input type="text" class="form-control" id="longitudCliente" name="longitudCliente" disabled required>
+          </div>
+          <label for="latitudCliente" class="labels">Latitud</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+            <input type="text" class="form-control" id="latitudCliente" name="latitudCliente" disabled required>
+          </div>
+          <label for="direccionCliente" class="labels">Direccion</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+            <input type="text" class="form-control" id="direccionCliente" name="direccionCliente" placeholder="Direccion de envio" required>
+          </div>
+          <!--Mapa-->
+          <div class="modal-body">
+            <div id="map" style="width: 100%; height: 350px;"></div>
+          </div>
+
+          <button type="button" class="btn" id="backButton2">Atrás</button> <!-- Botón de retroceso -->
+          <button type="button" class="btn" id="nextButton2">Siguiente</button>
+          <button type="button" class="modal-close" id="modalClose2">&times;</button>
       </div>
     </div>
 
@@ -185,48 +193,67 @@
     <div class="modal-overlay" id="modalOverlay3">
       <div class="modal">
         <h3>Tipo de Envío</h3>
-        <label for="costoPedido" class="labels">Costo del pedido</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-user"></i></span>
-          <input type="number" class="form-control" id="costoPedido" oninput="calcular()" name="costoPedido"
-            placeholder="Costo actual del pedido" required>
-        </div>
-        <select id="tipoEnvio" onchange="calcular()">
-          <option value="directo">Recojo directo</option>
-          <option value="delivery">Envío con Delivery</option>
-        </select>
-        <div>
-          <label for="costoTotal">Costo total:</label>
-          <input type="text" id="costoTotal" readonly>
-        </div>
-        <button type="button" class="btn" id="nextButton3">Siguiente</button>
-        <button class="modal-close" id="modalClose3">&times;</button>
+          <label for="nroProducto" class="labels">Nro producto</label>
+          <div class="input-group">
+            <input type="hidden" class="form-control" id="nroProducto" name="nroProducto" required>
+          </div>
+          <label for="distanciaTotal" class="labels">Distancia</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+            <input type="text" class="form-control" id="distanciaTotal" name="distanciaTotal" disabled>
+          </div>
+          <label for="costoPedido" class="labels">Costo del pedido</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+            <input type="text" class="form-control" id="costoPedido" oninput="calcular()" name="costoPedido"
+              placeholder="Costo actual del pedido" disabled required>
+          </div>
+          <select id="tipoEnvio" onchange="calcular()">
+            <option value="">Seleccione una opción</option>
+            <option value="directo">Recojo directo</option>
+            <option value="delivery">Envio con Delivery</option>
+          </select>
+          <div>
+            <label for="costoTotal">Costo total:</label>
+            <input type="text" id="costoTotal" disabled required>
+          </div>
+          <button type="button" class="btn" id="backButton3">Atrás</button> <!-- Botón de retroceso -->
+          <button type="button" class="btn" id="nextButton3">Siguiente</button>
+          <button type="button" class="modal-close" id="modalClose3">&times;</button>
       </div>
     </div>
 
     <!-- Modal 4: Tipo de Pago -->
     <div class="modal-overlay" id="modalOverlay4">
       <div class="modal">
-        <h3>Tipo de Pago</h3>
-        <label for="tipoPago">Seleccione el tipo de pago:</label>
-        <select id="tipoPago" required>
-          <option value="">Seleccione una opción</option>
-          <option value="credito">Tarjeta de Crédito</option>
-          <option value="debito">Tarjeta de Débito</option>
-        </select>
-        <input type="text" id="tarjeta" name="tarjeta" placeholder="Número de tarjeta" required><br><br>
-        <input type="text" id="expiracion" name="expiracion" placeholder="Fecha de expiración" required><br><br>
-        <input type="text" id="cvv" name="cvv" placeholder="Código CVV" required><br><br>
-        <button type="button" onclick="generarQR()">Generar Pago</button>
-        <div id="qrcode"></div>
-        <button type="button" id="pdfButton" class="button primary hidden">Generar Reporte</button>
-        <button type="submit" class="btn" id="btnFinalizarCompra">Finalizar</button>
-        <button class="modal-close" id="modalClose4">&times;</button>
+          <h3>Tipo de Pago</h3>
+          
+          <label for="tipoPago">Seleccione el tipo de pago:</label>
+          <select id="tipoPago" onchange="togglePaymentFields()" required>
+              <option value="">Seleccione una opción</option>
+              <option value="qr">Pago con QR</option>
+              <option value="tarjeta">Pago con Tarjeta</option>
+          </select>
+          
+          <!-- Campos de tarjeta (ocultos por defecto) -->
+          <div id="tarjetaFields" style="display: none;">
+              <input type="text" id="tarjeta" name="tarjeta" placeholder="Número de tarjeta"><br><br>
+              <input type="text" id="expiracion" name="expiracion" placeholder="MM/YY"><br><br>
+              <input type="text" id="cvv" name="cvv" placeholder="Código CVV"><br><br>
+          </div>
+          
+          <!-- QR oculto por defecto -->
+          <div id="qrcode" style="display: none;"></div>
+  
+          <button type="button" class="btn" id="backButton4">Atrás</button> <!-- Botón de retroceso -->
+  
+          <!-- Botón "Finalizar" oculto inicialmente -->
+          <button type="submit" class="btn" id="finalizarButton" style="display: none;">Finalizar</button>
+  
+          <button type="button" class="modal-close" id="modalClose4">&times;</button>
       </div>
     </div>
   </form>
-
-
 
 
   <!-- page loading -->
@@ -234,16 +261,11 @@
     <h2>Cargando...</h2>
   </div>
 
-
-
   <script type="module" src="/moduloProducto/miJS/finalizarCompra.js"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script type="module" src="/moduloProducto/src/pages/products.js"></script>
 
-
   <script>
-
     document.addEventListener('DOMContentLoaded', () => {
       // Referencias a los botones y formularios de cada ventana
 
@@ -255,27 +277,40 @@
       const modalOverlay2 = document.getElementById('modalOverlay2');
       const modalClose2 = document.getElementById('modalClose2');
       const nextButton2 = document.getElementById('nextButton2');
+      const backButton2 = document.getElementById('backButton2');
       const modalOverlay3 = document.getElementById('modalOverlay3');
       const modalClose3 = document.getElementById('modalClose3');
       const nextButton3 = document.getElementById('nextButton3');
+      const backButton3 = document.getElementById('backButton3');
       const modalOverlay4 = document.getElementById('modalOverlay4');
       const modalClose4 = document.getElementById('modalClose4');
+      const backButton4 = document.getElementById('backButton4');
       const completeForm = document.getElementById('completeForm');
-      const totalPrecioCarrito = document.getElementById("totalPrecioCarrito").textContent;
-
-
       // Mostrar la primera ventana modal al hacer clic en "Comprar"
       buyButton.addEventListener('click', () => {
         modalOverlay1.style.display = 'flex';
         const usuarioGuardado = JSON.parse(sessionStorage.getItem('usuario'));
+        const cartItem = document.querySelector('.cart-item');
+        const nid = cartItem.getAttribute('data-id');
+        const totalPrecioCarrito = document.getElementById("totalPrecioCarrito").textContent;
         if (usuarioGuardado) {
           document.getElementById('nombreCliente').value = usuarioGuardado.nombre;
           document.getElementById('apellidoCliente').value = usuarioGuardado.apellido;
-          //document.getElementById('direccionCliente').value = usuarioGuardado.direccion;
+          document.getElementById('nroProducto').value = usuarioGuardado.direccion;
           document.getElementById('ciCliente').value = usuarioGuardado.ci;
           //para el carrito
           const numeroExtraido = parseFloat(totalPrecioCarrito.match(/[\d.]+/)[0]);
           document.getElementById("costoPedido").value = numeroExtraido;
+          document.getElementById('nroProducto').value = nid;
+          obtenerDistancia(nid)
+            .then(distancia => {
+              if (distancia !== null) {
+                //console.log(`Distancia entre cliente y almacén: ${distancia.toFixed(2)} km`);
+                document.getElementById('distanciaTotal').value = distancia.toFixed(3);
+              } else {
+                console.log('No se pudo calcular la distancia');
+              }
+            });
         }
         else {
           alert("DEBE INICIAR SESION O EN SU DEFECTO REGISTRARSE PRIMERO");
@@ -300,9 +335,9 @@
       });
       // Transición de la segunda a la tercera ventana (Dirección -> Tipo de Envío)
       nextButton2.addEventListener('click', () => {
-        const direccionCliente = document.getElementById('direccionCliente').value;
-        const ciudadCliente = document.getElementById('ciudadCliente').value;
-        if (direccionCliente && ciudadCliente) {
+        const longitudCliente = document.getElementById('longitudCliente').value;
+        const latitudCliente = document.getElementById('latitudCliente').value;
+        if (longitudCliente && latitudCliente) {
           modalOverlay2.style.display = 'none';
           modalOverlay3.style.display = 'flex';
         } else {
@@ -319,102 +354,220 @@
           alert('Por favor, seleccione un tipo de envío.');
         }
       });
-      // Enviar el formulario completo desde la última ventana modal (Tipo de Pago)
-      // completeForm.addEventListener('submit', (e) => {
-      //   e.preventDefault();
-      //   const tipoPago = document.getElementById('tipoPago').value;
-      //   if (tipoPago) {
-      //     const nombreCliente = document.getElementById('nombreCliente').value;
-      //     const apellidoCliente = document.getElementById('apellidoCliente').value;
-      //     const direccionCliente = document.getElementById('direccionCliente').value;
-      //     const ciudadCliente = document.getElementById('ciudadCliente').value;
-      //     const tipoEnvio = document.getElementById('tipoEnvio').value;
-      //     alert(`Compra confirmada a nombre de ${nombreCliente} ${apellidoCliente}.\nDirección: ${direccionCliente}, ${ciudadCliente}.\nEnvío: ${tipoEnvio}.\nPago: ${tipoPago}.`);
-      //     modalOverlay4.style.display = 'none';
-      //     // Aquí podrías añadir el código para enviar los datos al servidor o guardarlos
-      //   } else {
-      //     alert('Por favor, seleccione un tipo de pago.');
-      //   }
-      // });
+
+          // Funciones de retroceso
+      backButton2.addEventListener('click', () => {
+        modalOverlay2.style.display = 'none';
+        modalOverlay1.style.display = 'flex';
+      });
+
+      backButton3.addEventListener('click', () => {
+        modalOverlay3.style.display = 'none';
+        modalOverlay2.style.display = 'flex';
+      });
+
+      backButton4.addEventListener('click', () => {
+        modalOverlay4.style.display = 'none';
+        modalOverlay3.style.display = 'flex';
+      });
     });
   </script>
+  <!--Script para el modal 4-->
+    <script>
+      function togglePaymentFields() {
+          const tipoPago = document.getElementById("tipoPago").value;
+          const tarjetaFields = document.getElementById("tarjetaFields");
+          const qrCode = document.getElementById("qrcode");
+          const finalizarButton = document.getElementById("finalizarButton");
 
+          if (tipoPago === "tarjeta") {
+              // Mostrar campos de tarjeta y ocultar el QR
+              tarjetaFields.style.display = "block";
+              qrCode.style.display = "none";
+              finalizarButton.style.display = "block"; // Mostrar botón "Finalizar"
+          } else if (tipoPago === "qr") {
+              // Ocultar campos de tarjeta y mostrar el QR
+              tarjetaFields.style.display = "none";
+              qrCode.style.display = "block";
+              finalizarButton.style.display = "block"; // Mostrar botón "Finalizar"
+              generarQR();  // Genera el QR directamente
+          } else {
+              // Si no hay selección, oculta ambos y el botón "Finalizar"
+              tarjetaFields.style.display = "none";
+              qrCode.style.display = "none";
+              finalizarButton.style.display = "none"; // Ocultar botón "Finalizar"
+          }
+      }
+  </script>
   <script>
     function calcular() {
       const numero1 = parseFloat(document.getElementById('costoPedido').value);
-      const numero2 = 50; //costo extra del delivery
+      const numero2 = document.getElementById('distanciaTotal').value;
+      const numero3 = parseFloat((0.1 * numero2).toFixed(3));
       const operacion = document.getElementById('tipoEnvio').value;
       let resultado;
       if (operacion === 'directo') {
         resultado = numero1;
       } else if (operacion === 'delivery') {
-        resultado = numero1 + numero2;
+        resultado = numero1 + numero3;
       } else {
         resultado = 0;
       }
       document.getElementById('costoTotal').value = resultado;
     }
   </script>
+  <script>
+      // Datos fijos del cliente (pueden ser variables o pasarse a la función si varían)
+  const latitud2 = document.getElementById('latitudCliente').value; // Ejemplo de latitud del cliente
+  const longitud2 = document.getElementById('longitudCliente').value; // Ejemplo de longitud del cliente
+
+  // Función principal que calcula la distancia entre el cliente y el almacén
+  async function obtenerDistancia(id_prod) {
+    // URL de la API
+
+
+    try {
+      const response = await fetch(`/listarAlmacenIdprod/${id_prod}`);
+      if (!response.ok) {
+        throw new Error('Error en la solicitud a la API');
+      }
+
+      const data = await response.json();
+
+      // Verificamos que el array contenga al menos un objeto
+      if (data.length > 0) {
+        const { latitud, longitud } = data[0];
+        
+        // Calculamos la distancia usando la fórmula de Haversine
+        const distancia = calcularDistanciaHaversine(
+          parseFloat(latitud),
+          parseFloat(longitud),
+          latitud2,
+          longitud2
+        );
+
+        return distancia; // Devolvemos la distancia en kilómetros
+      } else {
+        throw new Error('No se encontraron datos para el ID proporcionado');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      return null; // Devolver null en caso de error
+    }
+  }
+
+  // Función para calcular la distancia con la fórmula de Haversine
+  function calcularDistanciaHaversine(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radio de la Tierra en kilómetros
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distancia = R * c; // Distancia en kilómetros
+
+    return distancia;
+  }
+
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
-    function generarQR() {
-      // Obtenemos los valores de los campos de entrada del formulario
-      const nombre = document.getElementById("nombreCliente").value;
-      const apellido = document.getElementById("apellidoCliente").value;
-      const ci = document.getElementById("ciCliente").value;
-      const direccion = document.getElementById("direccionCliente").value;
-      const costoPedido = document.getElementById("costoPedido").value;
-      const tipoEnvio = document.getElementById("tipoEnvio").value === 'directo' ? "Recojo directo" : "Delivery";
-      const costoTotal = document.getElementById("costoTotal").value;
-      // Creamos un mensaje con todos los datos obtenidos
-      const mensaje = `Compra exitosa - ${nombre} ${apellido} - Total: ${costoTotal}`;
-      // Seleccionamos el contenedor del QR y limpiamos antes de generar uno nuevo
-      const qrcodeContainer = document.getElementById('qrcode');
-      qrcodeContainer.innerHTML = ""; // Limpiar contenedor
-      // Generamos el código QR con el mensaje dinámico
-      new QRCode(qrcodeContainer, mensaje);
-      // Mostrar el botón de "Generar PDF" después de finalizar la compra
-      document.getElementById("pdfButton").classList.remove("hidden");
-    }
-  </script>
+      function generarQR() {
+    // Obtenemos los valores de los campos del modal
+    const tipoPago = document.getElementById("tipoPago").value;
+    const tarjeta = document.getElementById("tarjeta").value;
+    const expiracion = document.getElementById("expiracion").value;
+    const cvv = document.getElementById("cvv").value;
 
+    // Validación de campos del modal
+    /*if (!tipoPago || !tarjeta || !expiracion || !cvv) {
+      alert("Por favor, complete todos los campos de pago antes de generar el código QR.");
+      return; // Detiene la función si algún campo está vacío
+    }*/
+
+    // Obtenemos los valores de los campos adicionales para el mensaje QR
+    const nombre = document.getElementById("nombreCliente").value;
+    const apellido = document.getElementById("apellidoCliente").value;
+    const ci = document.getElementById("ciCliente").value;
+    const direccion = document.getElementById("longitudCliente").value;
+    const costoPedido = document.getElementById("costoPedido").value;
+    const tipoEnvio = document.getElementById("tipoEnvio").value === 'directo' ? "Recojo directo" : "Delivery";
+    const costoTotal = document.getElementById("costoTotal").value;
+
+    // Creamos un mensaje con todos los datos obtenidos
+    const mensaje = `Compra exitosa - ${nombre} ${apellido} - Total: ${costoTotal}`;
+
+    // Seleccionamos el contenedor del QR y limpiamos antes de generar uno nuevo
+    const qrcodeContainer = document.getElementById('qrcode');
+    qrcodeContainer.innerHTML = ""; // Limpiar contenedor
+
+    // Generamos el código QR con el mensaje dinámico
+    new QRCode(qrcodeContainer, mensaje);
+
+    // Mostrar el botón de "Generar PDF" después de finalizar la compra
+    //document.getElementById("pdfButton").classList.remove("hidden");
+  }
+  </script>
+  <script src="/dashboard/jsAdminProducto/modalMapa.js"></script>
+  <!-------Script para añadir el pedido-------->
+  <!--------Google Maps------>
   <script>
-    document.getElementById('pdfButton').addEventListener('click', generarPDF);
-    function generarPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      const nombre = document.getElementById("nombreCliente").value;
-      const apellido = document.getElementById("apellidoCliente").value;
-      const ci = document.getElementById("ciCliente").value;
-      const direccion = document.getElementById("direccionCliente").value;
-      const tipoEnvio = document.getElementById("tipoEnvio").value;
-      const costoTotal = document.getElementById("costoTotal").value;
-      const ciudad = document.getElementById("ciudadCliente").value;
-      const tipoPago = document.getElementById("tipoPago").value;
-      const tarjeta = document.getElementById("tarjeta").value;
-      const expiracion = document.getElementById("expiracion").value;
-      const cvv = document.getElementById("cvv").value;
-      // Obtener la fecha actual
-      const fechaActual = new Date().toLocaleDateString();
-      doc.text(`Reporte de venta`, 10, 10);
-      doc.text(`Fecha: ${fechaActual}`, 10, 20);
-      doc.text(`Nombre: ${nombre}`, 10, 30);
-      doc.text(`Apellido: ${apellido}`, 10, 40);
-      doc.text(`C.I.: ${ci}`, 10, 50);
-      doc.text(`Dirección: ${direccion}`, 10, 60);
-      doc.text(`Ciudad: ${ciudad}`, 10, 70);
-      doc.text(`Tipo de Envio: ${tipoEnvio}`, 10, 80);
-      doc.text(`Costo Total: ${costoTotal}`, 10, 90);
-      doc.text(`Tipo de tarjeta: ${tipoPago}`, 10, 100);
-      doc.text(`Nro de tarjeta: ${tarjeta}`, 10, 110);
-      doc.text(`Fecha de expiracion: ${expiracion}`, 10, 120);
-      doc.text(`Codigo CVV: ${cvv}`, 10, 130);
-      doc.save('compra.pdf');
+    let map, marker;
+
+    function initMap() {
+        // Coordenadas iniciales del mapa
+        const initialLocation = { lat: -16.500849, lng: -68.173632 };
+
+        // Crear el mapa
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: initialLocation,
+            zoom: 12,
+        });
+
+        // Crear el marcador
+        marker = new google.maps.Marker({
+            position: initialLocation,
+            map: map,
+            draggable: true, // Permitir arrastrar el marcador
+        });
+
+        // Escuchar el evento de arrastre del marcador para obtener la ubicación
+        google.maps.event.addListener(marker, 'dragend', function (event) {
+            const lat = event.latLng.lat();
+            const lng = event.latLng.lng();
+
+            // Guardar las coordenadas en los campos de longitud y latitud
+            document.getElementById("latitudCliente").value = lat;
+            document.getElementById("longitudCliente").value = lng;
+        });
     }
   </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+  <!--Pruebas-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+        <!-- Bootstrap core JavaScript-->
+        <script src="/dashboard/vendor/jquery/jquery.min.js"></script>
+        <script src="/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+        <!-- Custom scripts for all pages-->
+        <script src="/dashboard/js/sb-admin-2.min.js"></script>
 
+        <!-- Core plugin JavaScript-->
+        <script src="/dashboard/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- datatables -->
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+        <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+        
+        <!--Funcion para llenar el form-->
+        <script src="/moduloProducto/miJS/finalizarCompra.js"></script>
 </body>
 
 </html>
