@@ -114,6 +114,19 @@ const ProductoFunction = {
 
         return result[0].result; // Devuelve el resultado de la verificación
     },
+
+    // Nuevo método para listar productos del artesano por usuarioID
+    async listarProductosArtesanoX(id_usuario) {
+        console.log("ID de usuario artesano en el Model:", id_usuario);
+        const result = await sequelize.query(`
+            SELECT fn_listar_productos_artesanoX(:id_usuario) AS result
+        `, {
+            replacements: { id_usuario: id_usuario },
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        return result[0].result; // Devuelve el JSON con el resultado de la función
+    },
 };
 
 

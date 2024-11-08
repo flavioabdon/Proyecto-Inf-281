@@ -29,5 +29,14 @@ router.get('/mostrarPorIdProductoCliente/:id', productosC.mostrarPorIdProductoCl
 // router.get('/registrarPedido'
 router.post('/registrarPedido', productosC.registrarPedido); //json recibe pedido
 
+// NUEVA Ruta para la vista DEL ARTESANO
+router.get('/artesanoProducto', (req, res) => {
+    res.render('artesano/productoArtesanoview', { currentPage: "artesanoProducto" }); // Renderiza la vista
+});
+
+// NUEVA RUTA: Listar productos del artesano por usuarioID
+router.get('/listarProductosArtesanoX/:id_usuario', productosC.listarProductosArtesanoX); // JSON devuelve productos del artesano por id_usuario
+
+
 
 module.exports = router;
