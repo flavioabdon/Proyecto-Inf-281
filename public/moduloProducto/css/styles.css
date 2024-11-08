@@ -907,7 +907,7 @@ Single Product Page
 }
 
 /* Modal box */
-.modal {
+.modal-compras {
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
@@ -916,22 +916,22 @@ Single Product Page
   position: relative;
 }
 
-.modal h3 {
+.modal-compras h3 {
   margin-top: 0;
 }
 
-.modal label {
+.modal-compras label {
   display: block;
   margin: 1rem 0 0.5rem;
 }
 
-.modal input {
+.modal-compras input {
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1rem;
 }
 
-.modal-close {
+.modalCompras-close {
   position: absolute;
   top: 10px;
   right: 10px;

@@ -9,9 +9,9 @@ const listarVentas = async (req, res) => {
         // Devuelve la lista 
         res.status(200).json(ventasArtesano);
     } catch (error) {
-        console.error('Error al listar detalle de ventas artesano:', error);
+        console.error('Error al listar ventas artesano:', error);
         // Devuelve un mensaje de error
-        res.status(500).json({ message: 'Error al listar detalle de ventas artesano' });
+        res.status(500).json({ message: 'Error al listar ventas artesano' });
     }
 };
 
