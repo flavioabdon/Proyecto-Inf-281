@@ -37,10 +37,10 @@
     </div>
 
     <!-- Nav Item - Productos -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
+    <li class="nav-item <%= (currentPage === 'artesanoProducto') ? 'active' : '' %>">
+        <a class="nav-link" href="/artesanoProducto">
             <i class="fas fa-box-open"></i>
-            <span>Productos</span></a>
+            <span>Mis Productos</span></a>
     </li>
 
      <!-- Nav Item - Categorias Usadas por el Artesano -->
@@ -77,7 +77,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Gestionar:</h6>
                 <a class="collapse-item <%= (currentPage === 'categoria') ? 'active' : '' %>"
-                    href="/categoriaArtesano">Categorías</a>
+                    href="/categoriaArtesano">Categorías Existentes</a>
             </div>
 
         </div>

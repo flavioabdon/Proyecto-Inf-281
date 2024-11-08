@@ -638,9 +638,92 @@ SELECT * FROM fn_lst_productos_cliente();
 SELECT fn_obtiene_porIdproducto_cliente('{"id": 11}'::JSON);
 
 
+--------------------------------------------------------------------------
+-- Creado: Rudolph    Fecha: 08/11/2024                           --
+-- Actividad:                                                           --
+-- Funcion listar productos del Artesano                               --
+------------------------------------------------------------------
 
 
+--FUNCION  LISTAR TODOS LOS PRODUCTOS DEL ARTESANO X
+CREATE OR REPLACE FUNCTION fn_listar_productos_artesanoX(usuarioID INT)
+RETURNS JSON AS $$
+DECLARE
+    resultado JSON;
+BEGIN
+    -- Intentamos realizar la consulta de todos los productos
+    BEGIN
+        SELECT json_build_object(
+            'estado', 'exitoso',
+            'mensaje', 'Consulta exitosa',
+            'productos', json_agg(
+                json_build_object(
+                    'id_Prod', pa.id_Prod,
+                    'nombre_Prod', pa.nombre_Prod,
+                    'descripcion_Prod', pa.descripcion_Prod,
+                    'precio', pa.precio,
+                    'descuento_porcent', pa.descuento_porcent,
+                    'ruta_imagen', pa.ruta_imagen,
+                    'politica_de_Envio', pa.politica_de_Envio,
+                    'peso_kg', pa.peso_kg,
+                    'stock', pa.stock,
+                    'informacion_Adicional', pa.informacion_adicional,
+                    'id_artesano', pa.id_artesano,
+                    'id_almacen', pa.id_almacen,
+                    'id_categoria', pa.id_categoria,
+                    'fecha_creacion', pa.fecha_creacion,
+                    'artesano', json_build_object(
+                        'id_artesano', a.id_artesano,
+                        'especialidad_artesano', a.especialidad_artesano
+                    ),
+                    'usuario', json_build_object(
+                        'id_usuario', us.id_usuario,
+                        'nombre', us.nombre,
+                        'apellido', us.apellido,
+                        'email', us.email
+                    ),
+                    'almacen', json_build_object(
+                        'id_almacen', a2.id_almacen,
+                        'nombre_almacen', a2.nombre_almacen,
+                        'ubicacion', a2.ubicacion_georef_alm
+                    ),
+                    'categoria', json_build_object(
+                        'id_categoria', c.id_categoria,
+                        'nombre_categoria', c.nombre_categoria,
+                        'descripcion_categoria', c.descripcion
+                    )
+                )
+            )
+        ) INTO resultado
+        FROM public.PRODUCTO_ARTESANAL pa
+        JOIN public.artesano a ON a.id_artesano = pa.id_artesano
+        JOIN public.almacen a2 ON a2.id_almacen = pa.id_almacen
+        JOIN public.categoria c ON c.id_categoria = pa.id_categoria
+        JOIN public.usuario us ON us.id_usuario = a.id_usuario
+        WHERE 
+        us.id_usuario = usuarioID;
 
+        -- Si no se encuentran productos, lanzamos un error
+        IF resultado IS NULL THEN
+            RAISE EXCEPTION 'No se encontraron productos.';
+        END IF;
+
+    EXCEPTION WHEN OTHERS THEN
+        -- Si ocurre un error, capturamos el mensaje de error
+        resultado := json_build_object(
+            'estado', 'error',
+            'mensaje', SQLERRM
+        );
+    END;
+
+    -- Retornamos el resultado final como JSON
+    RETURN resultado;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Sentencias de Apoyo
+SELECT * FROM fn_listar_productos_artesanoX(13);
 
 
 

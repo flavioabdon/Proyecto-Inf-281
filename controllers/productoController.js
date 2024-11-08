@@ -256,3 +256,24 @@ exports.registrarPedido = async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Error al registrar el pedido.' });
   }
 };
+
+// Nuevo controlador para listar productos del artesano por usuarioID
+exports.listarProductosArtesanoX = async (req, res) => {
+  // Obtener el usuarioID desde los parámetros de la solicitud (puedes ajustarlo según cómo pases el usuarioID)
+  const { id_usuario } = req.params;
+  console.log("ID de usuario en controlador:", id_usuario);  // Verifica el valor
+
+  try {
+    // Llamada al modelo para obtener los productos por usuarioID
+    const result = await productoM.listarProductosArtesanoX(id_usuario);
+    console.log("Resultado productos artesano X:", result);
+
+    // Enviar el resultado como respuesta JSON
+    res.json(result);
+
+  } catch (error) {
+    console.error('Error:', error);
+    // Responder con un error si algo sale mal
+    res.status(500).json({ status: 'error', message: 'Error al listar los productos del artesano.' });
+  }
+};

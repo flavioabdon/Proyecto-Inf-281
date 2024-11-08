@@ -2,13 +2,13 @@ const sequelize = require('../config/database'); // Importa la conexión a la ba
 
 
 // Función para insertar usando la función almacenada en PostgreSQL
-const registrarAlmacen = async (nombre, direccion, capacidad) => {
+const registrarAlmacen = async (nombre, ubicacionGeoRefAlm, direccion, capacidad) => {
     const query = `
-        SELECT * FROM fn_insertar_almacen($1, $2, $3, $4, $5)
+        SELECT * FROM fn_insertar_almacen($1, $2, $3, $4, $5, $6)
     `;
 
     // Valores que se van a insertar en la base de datos
-    const values = [nombre, direccion, capacidad, "Administrador", "Activo"];
+    const values = [nombre, ubicacionGeoRefAlm, direccion, capacidad, "Administrador", "Activo"];
 
     try {
         // Ejecuta la consulta que llama a la función almacenada y espera el resultado
@@ -18,11 +18,10 @@ const registrarAlmacen = async (nombre, direccion, capacidad) => {
         });
         return res; // Devuelve el almacen insertado
     } catch (error) {
-        console.error('Error al registrar almacen:', error); // Manejo de errores más claro
+        console.error('Error al registrar almacen en el modelo:', error); // Manejo de errores más claro
         throw error; // Lanza el error para que sea manejado en el controlador
     }
 };
-
 
 
 // Función para listar 
@@ -44,14 +43,13 @@ const listarAlmacenes = async () => {
 };
 
 
-
 // Función para actualizar 
-const actualizarAlmacen = async (id_almacen, nombre, direccion, capacidad) => {
+const actualizarAlmacen = async (id_almacen, nombre, ubicacionGeoRefAlm, direccion, capacidad) => {
 
     const query = `
-    SELECT * FROM fn_actualizar_almacen($1, $2, $3, $4);
+    SELECT * FROM fn_actualizar_almacen($1, $2, $3, $4, $5, $6);
     `;
-    const values = [id_almacen, nombre, direccion, capacidad];
+    const values = [id_almacen, nombre, ubicacionGeoRefAlm, direccion, capacidad, "Administrador"];
 
     try {
         const [res] = await sequelize.query(query, {
@@ -87,7 +85,6 @@ const eliminarAlmacen = async (id_almacen) => {
 };
 
 // Función para listar un almacén específico por id_almacen
-// Función para listar un almacén específico por ID
 const listarAlmacenPorId = async (id_almacen) => {
     console.log("ID de almacen:", id_almacen);
     const query = `
@@ -132,6 +129,6 @@ module.exports = {
     listarAlmacenes, // Exporta la función para listar almacenes
     actualizarAlmacen, // Exporta la función para actualizar almacenes
     eliminarAlmacen,    //Exporta la funcion para eliminar almacen
-    listarAlmacenPorId, //Exporta la funcion para listar almacen especifico por ID
-    listarAlmacenPorIdproducto, //Exporta la funcion para listar almacen especifico por ID
+    listarAlmacenPorId, //Exporta la funcion para listar almacen especifico por ID de almacen
+    listarAlmacenPorIdproducto, //Exporta la funcion para listar almacen especifico por ID de producto
 };
