@@ -25,7 +25,34 @@ async function listarVentas(id_usuario) {
             columns: [
                 { data: 'num_fila' }, // Columna para número de fila
                 { data: 'id_pedido' },
-                { data: 'datos_cliente' },
+                {
+                    data: 'id_usuario_cliente',
+                    render: function (data) {
+                        return `
+                            <button class="btn btn-primary btn-sm btnUsuarioCliente" data-id="${data}" data-type="cliente">
+                                <i class="fas fa-user"></i> Ver Cliente
+                            </button>
+                        `;
+                    }
+                },
+                {
+                    data: 'id_usuario_delivery',
+                    render: function (data) {
+                        if (data === null) {
+                            return `
+                                <button class="btn btn-secondary btn-sm" disabled>
+                                    <i class="fas fa-times-circle"></i> No Asignado
+                                </button>
+                            `;
+                        } else {
+                            return `
+                                <button class="btn btn-secondary btn-sm btnUsuarioDelivery" data-id="${data}" data-type="delivery">
+                                    <i class="fas fa-truck"></i> Ver Delivery
+                                </button>
+                            `;
+                        }
+                    }
+                },
                 {
                     data: 'estado',
                     render: function (data) {
@@ -33,7 +60,7 @@ async function listarVentas(id_usuario) {
                         if (data === null) {
                             return `
                                 <span class="badge badge-warning" style="text-transform: uppercase;">
-                                    <i class="fas fa-truck" style="margin-right: 5px;"></i> EN CAMINO
+                                    <i class="fas fa-warehouse" style="margin-right: 5px;"></i> EN ALMACEN
                                 </span>
                             `;
                         }
@@ -102,7 +129,102 @@ async function listarVentas(id_usuario) {
     }
 }
 
+// Evento Click btnUsuario cliente
+document.getElementById('tablaVentas').addEventListener('click', async function (event) {
+    const boton = event.target.closest('.btnUsuarioCliente');
+    if (boton) {
 
+        // Extraer los atributos del botón (id_usuario)
+        const idUsuarioCliente = boton.getAttribute('data-id');
+        
+        // Mostrar el modal
+        $('#modalDetalleCliente').modal('show');
+        
+        try {
+            // Realizamos una solicitud GET para obtener los detalles del cliente
+            const response = await fetch(`/obtenerDatosCliente/${idUsuarioCliente}`); // Cambiar la URL según tu enrutamiento
+            
+            // Verifica si la respuesta fue exitosa (código 200)
+            if (!response.ok) {
+                throw new Error('No se pudieron cargar los datos del cliente');
+            }
+
+            // Procesar la respuesta JSON
+            const data = await response.json();
+
+            // Verificar si se recibió un cliente en los datos
+            if (Array.isArray(data) && data.length > 0) {
+                const cliente = data[0]; // Accede al primer cliente en el array
+
+                // Asignar los datos al modal
+                document.getElementById('nombreCliente').textContent = cliente.nombre || 'No disponible';
+                document.getElementById('apellidoCliente').textContent = cliente.apellido || 'No disponible';
+                document.getElementById('ciCliente').textContent = cliente.ci || 'No disponible';
+                document.getElementById('emailCliente').textContent = cliente.email || 'No disponible';
+                document.getElementById('numeroCliente').textContent = cliente.numero_contacto || 'No disponible';
+              
+            } else {
+                // Si no se encuentra el cliente
+                alert("No se encontraron datos para el cliente");
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al cargar los datos del cliente: ' + error.message);
+        }
+    }
+});
+
+// Evento Click btnUsuario delivery
+document.getElementById('tablaVentas').addEventListener('click', async function (event) {
+    const boton = event.target.closest('.btnUsuarioDelivery');
+    if (boton) {
+        // Extraer los atributos del botón (id_usuario)
+        const idUsuarioDelivery = boton.getAttribute('data-id');
+        
+        // Mostrar el modal
+        $('#modalDetalleDelivery').modal('show');
+        
+        try {
+            // Realizamos una solicitud GET para obtener los detalles del delivery
+            const response = await fetch(`/obtenerDatosDelivery/${idUsuarioDelivery}`); // Cambiar la URL según tu enrutamiento
+            
+            // Verifica si la respuesta fue exitosa (código 200)
+            if (!response.ok) {
+                throw new Error('No se pudieron cargar los datos del delivery');
+            }
+
+            // Procesar la respuesta JSON
+            const data = await response.json();
+
+            // Verificar si se recibió un delivery en los datos
+            if (Array.isArray(data) && data.length > 0) {
+                const delivery = data[0]; // Accede al primer registro de delivery en el array
+
+                // Asignar los datos al modal
+                document.getElementById('nombreDelivery').textContent = delivery.nombre || 'No disponible';
+                document.getElementById('apellidoDelivery').textContent = delivery.apellido || 'No disponible';
+                document.getElementById('ciDelivery').textContent = delivery.ci || 'No disponible';
+                document.getElementById('emailDelivery').textContent = delivery.email || 'No disponible';
+                document.getElementById('numeroDelivery').textContent = delivery.numero_contacto || 'No disponible';
+                document.getElementById('tipoVehiculo').textContent = delivery.tipo_vehiculo || 'No disponible';
+                document.getElementById('matriculaVehiculo').textContent = delivery.matricula_vehiculo || 'No disponible';
+              
+            } else {
+                // Si no se encuentra el delivery
+                alert("No se encontraron datos para el delivery");
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al cargar los datos del delivery: ' + error.message);
+        }
+    }
+});
+
+
+
+//Evento Click btnDetalles
 document.getElementById('tablaVentas').addEventListener('click', async function (event) {
     if (event.target.closest('.btnDetalles')) {
         // Obtener la fila (tr) más cercana al botón de detalles

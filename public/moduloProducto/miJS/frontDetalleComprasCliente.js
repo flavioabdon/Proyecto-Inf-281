@@ -33,7 +33,7 @@ async function listarCompras(id_usuario) {
                         if (data === null) {
                             return `
                                 <span class="badge badge-warning" style="text-transform: uppercase;">
-                                    <i class="fas fa-truck" style="margin-right: 5px;"></i> EN CAMINO
+                                    <i class="fas fa-warehouse" style="margin-right: 5px;"></i> EN ALMACEN
                                 </span>
                             `;
                         }

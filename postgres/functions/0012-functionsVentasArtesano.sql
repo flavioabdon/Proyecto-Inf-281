@@ -1,14 +1,15 @@
 --------------------------------------------------------------------------
--- Creado: Christian Medrano    Fecha: 8/11/2024                           --
+-- Creado: Christian Medrano    Fecha: 11/11/2024                           --
 -- Actividad:                                                           --
 -- Funciones ventas de un artesano                               --
 ------------------------------------------------------------------
 -- LISTA VENTAS POR ID_USUARIO
-CREATE OR REPLACE FUNCTION fn_listar_ventas_artesano(p_id_usuario INT)
+CREATE OR REPLACE FUNCTION fn_listar_ventas_artesano(p_id_usuario_artesano INT)
 RETURNS TABLE (
     num_fila BIGINT,
     id_pedido INT,
-    datos_cliente TEXT,
+    id_usuario_cliente INT,
+    id_usuario_delivery INT,
     estado TEXT,
     suma_total NUMERIC
 ) AS $$
@@ -17,7 +18,8 @@ BEGIN
     SELECT 
         ROW_NUMBER() OVER(ORDER BY pe.id_pedido) AS num_fila,
         pe.id_pedido,
-        CONCAT(u.ci, ' - ', u.nombre, ' ', u.apellido) AS datos_cliente,
+        u_cliente.id_usuario AS id_usuario_cliente,
+        u_delivery.id_usuario AS id_usuario_delivery,
         pp.estado::TEXT AS estado, 
         SUM(pa.precio * pp.cantidad) AS suma_total
     FROM 
@@ -29,21 +31,32 @@ BEGIN
     INNER JOIN 
         cliente AS c ON c.id_cliente = pe.id_cliente 
     INNER JOIN 
-        usuario AS u ON u.id_usuario = c.id_usuario 
+        usuario AS u_cliente ON u_cliente.id_usuario = c.id_usuario 
     INNER JOIN 
         artesano AS a ON a.id_artesano = pa.id_artesano
+    LEFT JOIN 
+        envio AS e ON e.id_pedido = pe.id_pedido
+    LEFT JOIN 
+        delivery AS d ON d.id_delivery = e.id_delivery
+    LEFT JOIN 
+        usuario AS u_delivery ON u_delivery.id_usuario = d.id_usuario
     WHERE 
-        a.id_usuario = p_id_usuario
+        a.id_usuario = p_id_usuario_artesano
     GROUP BY 
-        pe.id_pedido, datos_cliente, pp.estado
+        pe.id_pedido, id_usuario_cliente, id_usuario_delivery, pp.estado
     ORDER BY 
         pe.id_pedido;
 END;
 $$ LANGUAGE plpgsql;
 
--- sentencia de apoyo
 SELECT * FROM fn_listar_ventas_artesano(12);  
 
+
+--------------------------------------------------------------------------
+-- Creado: Christian Medrano    Fecha: 8/11/2024                           --
+-- Actividad:                                                           --
+-- Funciones ventas de un artesano                               --
+------------------------------------------------------------------
 
 -- LISTAS DETALLE DE VENTAS ARTESANO MUESTRA PRODUCTOS  SUBTOTAL POR ID_USUARIO,ID_PEDIDO  
 CREATE OR REPLACE FUNCTION fn_listar_detalle_ventas_artesano(
@@ -93,3 +106,5 @@ $$ LANGUAGE plpgsql;
 
 -- sentencia de apoyo
 SELECT * FROM fn_listar_detalle_ventas_artesano(12, 2);
+
+

@@ -911,7 +911,8 @@ Single Product Page
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
-  width: 300px;
+  width: 400px;
+  height: auto;
   text-align: center;
   position: relative;
 }
