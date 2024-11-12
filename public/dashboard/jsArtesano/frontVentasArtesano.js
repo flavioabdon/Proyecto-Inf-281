@@ -2,17 +2,15 @@
 const usuarioGuardado = JSON.parse(sessionStorage.getItem('usuario'));
 const id_usuario = usuarioGuardado.id_usuario;
 
-
 // Función para listar ventas de un artesano
 async function listarVentas(id_usuario) {
     try {
-        // Realizamos una solicitud GET para obtener las ventas del artesano
-        const response = await fetch(`/listarVentasArtesano/${id_usuario}`); // Cambiar la URL según tu enrutamiento
+        const response = await fetch(`/listarVentasArtesano/${id_usuario}`);
         if (!response.ok) {
             throw new Error('No se pudieron cargar las ventas');
         }
 
-        const ventas = await response.json(); // Convierte la respuesta a JSON
+        const ventas = await response.json();
 
         // Limpiar la tabla antes de actualizar
         $('#tablaVentas').DataTable().clear().destroy();
@@ -23,13 +21,13 @@ async function listarVentas(id_usuario) {
             autoWidth: true,
             data: ventas,
             columns: [
-                { data: 'num_fila' }, // Columna para número de fila
+                { data: 'num_fila' },
                 { data: 'id_pedido' },
                 {
                     data: 'id_usuario_cliente',
                     render: function (data) {
                         return `
-                            <button class="btn btn-primary btn-sm btnUsuarioCliente" data-id="${data}" data-type="cliente">
+                            <button class="btn btn-secondary btn-sm btnUsuarioCliente" data-id="${data}" data-type="cliente">
                                 <i class="fas fa-user"></i> Ver Cliente
                             </button>
                         `;
@@ -38,96 +36,122 @@ async function listarVentas(id_usuario) {
                 {
                     data: 'id_usuario_delivery',
                     render: function (data) {
-                        if (data === null) {
-                            return `
-                                <button class="btn btn-secondary btn-sm" disabled>
+                        return data === null
+                            ? `<button class="btn btn-secondary btn-sm" disabled>
                                     <i class="fas fa-times-circle"></i> No Asignado
-                                </button>
-                            `;
-                        } else {
-                            return `
-                                <button class="btn btn-secondary btn-sm btnUsuarioDelivery" data-id="${data}" data-type="delivery">
+                               </button>`
+                            : `<button class="btn btn-secondary btn-sm btnUsuarioDelivery" data-id="${data}" data-type="delivery">
                                     <i class="fas fa-truck"></i> Ver Delivery
-                                </button>
-                            `;
-                        }
+                               </button>`;
                     }
                 },
                 {
                     data: 'estado',
                     render: function (data) {
-                        // Si el estado es NULL, reemplazamos con un badge naranja "EN CAMINO" y un ícono de entrega
-                        if (data === null) {
-                            return `
-                                <span class="badge badge-warning" style="text-transform: uppercase;">
-                                    <i class="fas fa-warehouse" style="margin-right: 5px;"></i> EN ALMACEN
-                                </span>
-                            `;
+                        let badgeClass, iconClass, text;
+
+                        switch (data) {
+                            case "En Almacen":
+                                badgeClass = "badge badge-warning";
+                                iconClass = "fas fa-warehouse";
+                                text = "EN ALMACEN";
+                                break;
+                            case "En Camino":
+                                badgeClass = "badge badge-info";
+                                iconClass = "fas fa-truck";
+                                text = "EN CAMINO";
+                                break;
+                            case "En Casa":
+                                badgeClass = "badge badge-primary";
+                                iconClass = "fas fa-home";
+                                text = "EN CASA";
+                                break;
+                            case "Finalizado":
+                                badgeClass = "badge badge-success";
+                                iconClass = "fas fa-check-circle";
+                                text = "FINALIZADO";
+                                break;
+                            default:
+                                badgeClass = "badge badge-secondary";
+                                iconClass = "fas fa-question-circle";
+                                text = "DESCONOCIDO";
                         }
-                        // Si el estado no es NULL, mostramos el estado original con un badge correspondiente
-                        return `<span class="badge badge-${getBadgeClass(data)}" style="text-transform: uppercase;">${data}</span>`;
+
+                        return `
+                            <span class="${badgeClass}" style="text-transform: uppercase; margin: 5px 0; padding: 8px 10px; border-radius: 3px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">
+                                <i class="${iconClass}" style="margin-right: 8px;"></i> ${text}
+                            </span>
+                        `;
                     }
                 },
                 {
                     data: 'suma_total',
                     render: function (data) {
-                        // Usamos un badge cuadrado con el texto 'Bs.' delante del valor
-                        return `<span class="badge badge-success" style="border-radius: 0; padding: 8px 12px;">Bs. ${data}</span>`;
+                        return `<span class="badge badge-success" style="border-radius: 0; padding: 8px 12px; font-weight: bold;">Bs. ${data}</span>`;
                     }
                 },
-
                 {
-                    data: null, // Sin datos directos para esta columna
+                    data: null,
                     defaultContent: ` 
                         <div class='text-center'>
                             <div class='btn-group'>
-                                <!-- Botón de detalles con ícono -->
                                 <button title='Ver detalles' class='btn btn-info btn-sm btnDetalles'>
                                     <i class='fas fa-info-circle'></i> Detalles
                                 </button>
                             </div>
                         </div>`
                 }
-
             ],
             language: {
-                "decimal": "",
-                "emptyTable": "No hay información disponible",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscar:",
-                "zeroRecords": "No se encontraron registros coincidentes",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
+                decimal: "",
+                emptyTable: "No hay información disponible",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                lengthMenu: "Mostrar _MENU_ registros por página",
+                loadingRecords: "Cargando...",
+                processing: "Procesando...",
+                search: "Buscar:",
+                zeroRecords: "No se encontraron registros coincidentes",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior"
                 },
-                "aria": {
-                    "sortAscending": ": activar para ordenar de forma ascendente",
-                    "sortDescending": ": activar para ordenar de forma descendente"
+                aria: {
+                    sortAscending: ": activar para ordenar de forma ascendente",
+                    sortDescending: ": activar para ordenar de forma descendente"
                 }
             },
             order: [[0, 'desc']],
             columnDefs: [
                 {
-                    targets: [1], // Puedes ocultar la columna de ID si es necesario
+                    targets: [1],
                     visible: false
                 },
                 {
-                    targets: [0, 2, 4], // Centrar columnas
+                    targets: [0, 2, 4],
                     className: 'text-left'
                 }
-            ]
+            ],
+            footerCallback: function (row, data, start, end, display) {
+                const api = this.api();
+
+                // Calcula la suma total de la columna `suma_total`
+                const total = api.column(5, { page: 'current' }).data().reduce((a, b) => {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+                // Actualiza el pie de la tabla con el total
+                $(api.column(5).footer()).html(`Bs. ${total.toFixed(2)}`);
+            }
         });
     } catch (error) {
         console.error('Error al cargar las ventas del artesano:', error);
     }
 }
+
 
 // Evento Click btnUsuario cliente
 document.getElementById('tablaVentas').addEventListener('click', async function (event) {
@@ -136,14 +160,14 @@ document.getElementById('tablaVentas').addEventListener('click', async function 
 
         // Extraer los atributos del botón (id_usuario)
         const idUsuarioCliente = boton.getAttribute('data-id');
-        
+
         // Mostrar el modal
         $('#modalDetalleCliente').modal('show');
-        
+
         try {
             // Realizamos una solicitud GET para obtener los detalles del cliente
             const response = await fetch(`/obtenerDatosCliente/${idUsuarioCliente}`); // Cambiar la URL según tu enrutamiento
-            
+
             // Verifica si la respuesta fue exitosa (código 200)
             if (!response.ok) {
                 throw new Error('No se pudieron cargar los datos del cliente');
@@ -162,7 +186,7 @@ document.getElementById('tablaVentas').addEventListener('click', async function 
                 document.getElementById('ciCliente').textContent = cliente.ci || 'No disponible';
                 document.getElementById('emailCliente').textContent = cliente.email || 'No disponible';
                 document.getElementById('numeroCliente').textContent = cliente.numero_contacto || 'No disponible';
-              
+
             } else {
                 // Si no se encuentra el cliente
                 alert("No se encontraron datos para el cliente");
@@ -181,14 +205,14 @@ document.getElementById('tablaVentas').addEventListener('click', async function 
     if (boton) {
         // Extraer los atributos del botón (id_usuario)
         const idUsuarioDelivery = boton.getAttribute('data-id');
-        
+
         // Mostrar el modal
         $('#modalDetalleDelivery').modal('show');
-        
+
         try {
             // Realizamos una solicitud GET para obtener los detalles del delivery
             const response = await fetch(`/obtenerDatosDelivery/${idUsuarioDelivery}`); // Cambiar la URL según tu enrutamiento
-            
+
             // Verifica si la respuesta fue exitosa (código 200)
             if (!response.ok) {
                 throw new Error('No se pudieron cargar los datos del delivery');
@@ -209,7 +233,7 @@ document.getElementById('tablaVentas').addEventListener('click', async function 
                 document.getElementById('numeroDelivery').textContent = delivery.numero_contacto || 'No disponible';
                 document.getElementById('tipoVehiculo').textContent = delivery.tipo_vehiculo || 'No disponible';
                 document.getElementById('matriculaVehiculo').textContent = delivery.matricula_vehiculo || 'No disponible';
-              
+
             } else {
                 // Si no se encuentra el delivery
                 alert("No se encontraron datos para el delivery");

@@ -15,8 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
 
-
-
+   
     <!-- Custom fonts for this template-->
     <link href="/dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -86,6 +85,14 @@
                                                     <tbody>
                                                         <!-- Contenido de la tabla -->
                                                     </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="5" style="text-align:right">Total:</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <!-- Celdas vacías para el total en `suma_total` -->
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -292,6 +299,12 @@
         <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
         <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
         <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+
+
+      
+        
+    
+        
 
         <!-- mi js -->
         <script src="/dashboard/jsArtesano/frontVentasArtesano.js"></script>
