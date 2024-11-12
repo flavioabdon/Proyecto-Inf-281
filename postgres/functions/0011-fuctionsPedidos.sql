@@ -42,10 +42,10 @@ BEGIN
 
     -- Insertar en la tabla PEDIDO y obtener el id_pedido generado
     INSERT INTO public.PEDIDO (
-        direccion_envio, costo_pedido, costo_envio, distancia, id_cliente, usuario_creacion
+        direccion_envio, costo_pedido, costo_envio, distancia, id_cliente, usuario_creacion,estado_registro
     )
     VALUES (
-        v_direccion_envio, v_costo_pedido, v_costo_envio, v_distancia, v_id_cliente, v_id_usuario
+        v_direccion_envio, v_costo_pedido, v_costo_envio, v_distancia, v_id_cliente, v_id_usuario,'En almacen'
     )
     RETURNING id_pedido INTO v_id_pedido;
 
@@ -56,11 +56,11 @@ BEGIN
         v_id_prod := (v_producto->>'id_prod')::INTEGER;
 
         -- Insertar en PEDIDO_PRODUCTO
-        INSERT INTO public.PEDIDO_PRODUCTO (
-            cantidad, id_prod, latitud, longitud, id_pedido, usuario_creacion
+        INSERT INTO public.PEDIDO_PRODUCTO ( 
+            cantidad, id_prod, latitud, longitud,  id_pedido, usuario_creacion,estado
         )
         VALUES (
-            v_cantidad, v_id_prod, v_latitud, v_longitud, v_id_pedido, v_id_usuario
+            v_cantidad, v_id_prod, v_latitud, v_longitud, v_id_pedido, v_id_usuario,'En almacen'
         );
 
         -- Descontar cantidad del stock en PRODUCTO_ARTESANAL

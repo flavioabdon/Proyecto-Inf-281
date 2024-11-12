@@ -352,6 +352,7 @@ CREATE TABLE IF NOT EXISTS public.PEDIDO_PRODUCTO (
     id_pedido INTEGER NOT NULL,            -- ID del pedido
     latitud DECIMAL(9, 6),                 -- Latitud geográfica
     longitud DECIMAL(9, 6),                -- Longitud geográfica
+    opcion_de_envio VARCHAR (250)          -- Politica de envio, (Recogo directo, Envio con Delivery)
     -- Restricciones de claves foráneas
     CONSTRAINT fk_pedido_producto_pedido FOREIGN KEY (id_pedido)
         REFERENCES public.PEDIDO (id_pedido)
