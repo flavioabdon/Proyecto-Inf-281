@@ -32,6 +32,7 @@ const ventasArtesanoRoutes = require('./routes/ventasArtesanoRoutes');
 
 //Delivery
 const indexDeliveryRoutes = require('./routes/indexDeliveryRoutes');
+const pedidosDeliveryRoutes = require('./routes/pedidosDeliveryRoutes');
 
 //Productos
 const productoRoutes = require('./routes/productoRoutes');
@@ -81,6 +82,7 @@ app.use('/', ventasArtesanoRoutes);
 
 //delivery
 app.use('/', indexDeliveryRoutes);
+app.use('/', pedidosDeliveryRoutes);
 
 //productos
 app.use('/', productoRoutes);
