@@ -113,41 +113,45 @@ document.getElementById('completeForm').addEventListener('submit', function (eve
 function generarPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-  
+
     // Datos del pedido
     const nombre = document.getElementById("nombreCliente").value;
     const apellido = document.getElementById("apellidoCliente").value;
     const ci = document.getElementById("ciCliente").value;
     const direccion = document.getElementById("direccionCliente").value;
     const tipoEnvio = document.getElementById("tipoEnvio").value;
-    const costoTotal = document.getElementById("costoTotal").value;
-    const ciudad = document.getElementById("latitudCliente").value;
+    const costoTotal = parseFloat(document.getElementById("costoTotal").value) || 0;
+    const costoPedido = parseFloat(document.getElementById("costoPedido").value) || 0;
+    const lat = document.getElementById("latitudCliente").value;
+    const lon = document.getElementById("longitudCliente").value;
+    const ubicacion = lat+','+lon;
     const tipoPago = document.getElementById("tipoPago").value;
-    
-    // Datos de la tarjeta
-    const tarjeta = document.getElementById("tarjeta").value;
-    const expiracion = document.getElementById("expiracion").value;
-    const cvv = document.getElementById("cvv").value;
-  
+
+    // Calcular costo de envío (solo si es "Envio con Delivery")
+    let costoEnvio = 0;
+    if (tipoEnvio === "delivery") {
+        costoEnvio = costoTotal - costoPedido;
+    }
+
     // Fecha actual
     const fechaActual = new Date().toLocaleDateString();
-  
+
     // Estilo del encabezado
     doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
     doc.text("Reporte de Venta", 105, 20, null, null, "center");
-  
+
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     doc.text(`Fecha: ${fechaActual}`, 10, 30);
-  
+
     // Sección de detalles del cliente
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
     doc.text("Detalles del Cliente", 10, 40);
     doc.setLineWidth(0.5);
     doc.line(10, 42, 200, 42);  // Línea divisoria
-  
+
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     const clienteInfo = [
@@ -155,75 +159,105 @@ function generarPDF() {
       { label: "Apellido:", value: apellido },
       { label: "C.I.:", value: ci },
       { label: "Dirección:", value: direccion },
-      { label: "Ciudad:", value: ciudad }
+      { label: "Ubicacion:", value: ubicacion }
     ];
-  
+
     let yOffset = 50;
     clienteInfo.forEach(info => {
-      doc.text(`${info.label}`, 10, yOffset);
-      doc.text(`${info.value}`, 60, yOffset);
-      yOffset += 10;
+        doc.text(`${info.label}`, 10, yOffset);
+        doc.text(`${info.value}`, 60, yOffset);
+        yOffset += 10;
     });
-  
-    // Sección de detalles del pedido
+    // Sección de productos
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.text("Detalles del Pedido", 10, yOffset);
+    doc.text("Detalles de los Productos", 10, yOffset);
     doc.line(10, yOffset + 2, 200, yOffset + 2);  // Línea divisoria
-  
+
     yOffset += 10;
-    const pedidoInfo = [
-      { label: "Tipo de Envío:", value: tipoEnvio },
-      { label: "Costo Total:", value: costoTotal }
-    ];
-    pedidoInfo.forEach(info => {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "normal");
-      doc.text(`${info.label}`, 10, yOffset);
-      doc.text(`${info.value}`, 60, yOffset);
-      yOffset += 10;
+
+    const cartItems = document.querySelectorAll(".cart-item");
+    cartItems.forEach((item, index) => {
+        const nombreProducto = item.querySelector(".cart-item-name").textContent.trim();
+        const precioProducto = item.querySelector(".cart-item-price").textContent.trim();
+        const cantidadProducto = item.querySelector(".cart-item-amount").textContent.trim();
+
+        // Agregar datos del producto al PDF
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        doc.text(`Producto ${index + 1}:`, 10, yOffset);
+        doc.text(`Nombre: ${nombreProducto}`, 20, yOffset + 10);
+        doc.text(`Precio: ${precioProducto}`, 20, yOffset + 20);
+        doc.text(`Cantidad: ${cantidadProducto}`, 20, yOffset + 30);
+        yOffset += 40;  // Ajustar el espacio vertical para el siguiente producto
     });
-  
+
+     // Sección de detalles del pedido
+     doc.setFontSize(14);
+     doc.setFont("helvetica", "bold");
+     doc.text("Detalles del Pedido", 10, yOffset);
+     doc.line(10, yOffset + 2, 200, yOffset + 2);  // Línea divisoria
+ 
+     yOffset += 10;
+     const pedidoInfo = [
+       { label: "Tipo de Envío:", value: tipoEnvio === "directo" ? "Recojo directo" : "Envio con Delivery" },
+       { label: "Costo Total:", value: `Bs ${costoTotal.toFixed(2)}` }
+     ];
+ 
+     pedidoInfo.forEach(info => {
+         doc.setFontSize(12);
+         doc.setFont("helvetica", "normal");
+         doc.text(`${info.label}`, 10, yOffset);
+         doc.text(`${info.value}`, 60, yOffset);
+         yOffset += 10;
+     });
+ 
+     // Mostrar el campo "Costo de Envío" solo si el tipo de envío es "Envio con Delivery"
+     if (tipoEnvio === "delivery") {
+         doc.setFontSize(12);
+         doc.setFont("helvetica", "normal");
+         doc.text("Costo de Envío:", 10, yOffset);
+         doc.text(`Bs ${costoEnvio.toFixed(2)}`, 60, yOffset);
+         yOffset += 10;
+     }
+        
     // Sección de pago
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
     doc.text("Detalles de Pago", 10, yOffset);
     doc.line(10, yOffset + 2, 200, yOffset + 2);  // Línea divisoria
-  
+
     yOffset += 10;
     
-    // Determinar el contenido de la sección de pago
     if (tipoPago === "tarjeta") {
-      // Mostrar detalles de la tarjeta
-      const pagoInfo = [
-        { label: "Tipo de Pago:", value: tipoPago === "tarjeta" ? "Tarjeta" : "" },
-        { label: "Nro de Tarjeta:", value: `**** **** **** ${tarjeta.slice(-4)}` },  // Ocultar parte del número
-        { label: "Fecha de Expiración:", value: expiracion },
-        { label: "Código CVV:", value: "***" }  // Ocultar CVV
-      ];
-      
-      pagoInfo.forEach(info => {
+        const pagoInfo = [
+            { label: "Tipo de Pago:", value: "Tarjeta" },
+            { label: "Nro de Tarjeta:", value: `**** **** **** ${tarjeta.slice(-4)}` },
+            { label: "Fecha de Expiración:", value: expiracion },
+            { label: "Código CVV:", value: "***" } // Ocultar CVV
+        ];
+        
+        pagoInfo.forEach(info => {
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${info.label}`, 10, yOffset);
+            doc.text(`${info.value}`, 60, yOffset);
+            yOffset += 10;
+        });
+    } else if (tipoPago === "qr") {
         doc.setFontSize(12);
         doc.setFont("helvetica", "normal");
-        doc.text(`${info.label}`, 10, yOffset);
-        doc.text(`${info.value}`, 60, yOffset);
+        doc.text("Método de Pago: Pago con QR", 10, yOffset);
         yOffset += 10;
-      });
-    } else if (tipoPago === "qr") {
-      // Indicar que el pago fue realizado con QR
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "normal");
-      doc.text("Método de Pago: Pago con QR", 10, yOffset);
-      yOffset += 10;
     }
-  
+
     // Pie de página
     doc.setLineWidth(0.2);
     doc.line(10, 280, 200, 280);  // Línea divisoria en el pie de página
     doc.setFontSize(10);
     doc.setFont("helvetica", "italic");
     doc.text("Gracias por su compra", 105, 285, null, null, "center");
-  
+
     // Guardar el documento
     doc.save('reporte_de_venta.pdf');
-  };
+};
