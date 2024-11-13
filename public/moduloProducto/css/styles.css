@@ -164,10 +164,6 @@ p {
   padding: 5rem 0;
 }
 
-.btn-color {
-  margin-left: 0.6rem;
-}
-
 .btn {
   background: var(--clr-primary-5);
   color: var(--clr-white);
@@ -674,6 +670,7 @@ product
   text-align: center;
 }
 
+
 .product-price {
   margin-bottom: 0;
   color: var(--clr-grey-3);
@@ -738,7 +735,6 @@ Products Page
   max-width: var(--max-width);
   position: relative;
 }
-
 
 .filters-container {
   position: sticky;
@@ -889,61 +885,6 @@ Single Product Page
 .single-product-desc {
   max-width: 25em;
   line-height: 1.8;
-}
-
-/*datos para el modal de pago
-/* Modal overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Modal box */
-.modal-compras {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 400px;
-  height: auto;
-  text-align: center;
-  position: relative;
-}
-
-.modal-compras h3 {
-  margin-top: 0;
-}
-
-.modal-compras label {
-  display: block;
-  margin: 1rem 0 0.5rem;
-}
-
-.modal-compras input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.modalCompras-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.hidden {
-  display: none;
 }
 
 @media screen and (min-width: 992px) {

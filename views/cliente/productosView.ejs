@@ -10,6 +10,7 @@
 
   <!-- styles css -->
   <link rel="stylesheet" href="/moduloProducto/css/styles.css" />
+  <link rel="stylesheet" href="/moduloProducto/css/styleCompras.css" />
 
 </head>
 
@@ -139,21 +140,28 @@
     <div class="modal-overlay" id="modalOverlay1">
       <div class="modal-compras">
         <h3>Datos personales</h3>
-        <label for="nombreCliente" class="labels">Nombres</label>
+
+        <!-- Campo Nombres -->
+        <label for="nombreCliente" class="labels">Nombres:</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-user"></i></span>
+          <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
           <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" disabled>
         </div>
-        <label for="apellidoCliente" class="labels">Apellidos</label>
+
+        <!-- Campo Apellidos -->
+        <label for="apellidoCliente" class="labels">Apellidos:</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-user-tag"></i></span>
+          <span class="input-group-text"><i class="fa fa-tag"></i></span>
           <input type="text" class="form-control" id="apellidoCliente" name="apellidoCliente" disabled>
         </div>
-        <label for="ciCliente" class="labels">C.I.</label>
+
+        <!-- Campo C.I. -->
+        <label for="ciCliente" class="labels">C.I.:</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+          <span class="input-group-text"><i class="fa fa-id-badge"></i></span>
           <input type="text" class="form-control" id="ciCliente" name="ciCliente" disabled>
         </div>
+
         <button type="button" class="btn" id="nextButton1">Siguiente</button>
         <button type="button" class="modalCompras-close" id="modalClose1">&times;</button>
       </div>
@@ -163,97 +171,141 @@
     <div class="modal-overlay" id="modalOverlay2">
       <div class="modal-compras">
         <h3>Dirección de Envío</h3>
-        <label for="longitudCliente" class="labels">Longitud</label>
+
+        <!-- Campo de Longitud con ícono de coordenadas -->
+        <label for="longitudCliente" class="labels">Longitud:</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+          <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span>
           <input type="text" class="form-control" id="longitudCliente" name="longitudCliente" disabled required>
         </div>
-        <label for="latitudCliente" class="labels">Latitud</label>
+
+        <!-- Campo de Latitud con ícono de coordenadas -->
+        <label for="latitudCliente" class="labels">Latitud:</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+          <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span>
           <input type="text" class="form-control" id="latitudCliente" name="latitudCliente" disabled required>
         </div>
-        <label for="direccionCliente" class="labels">Direccion</label>
+
+        <!-- Campo de Dirección con ícono de dirección -->
+        <label for="direccionCliente" class="labels">Dirección:</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+          <span class="input-group-text"><i class="fa fa-map-signs"></i></span>
           <input type="text" class="form-control" id="direccionCliente" name="direccionCliente"
-            placeholder="Direccion de envio" required>
+            placeholder="Dirección de envío" required>
         </div>
-        <!--Mapa-->
-        <div class="modal-body">
+
+        <!-- Mapa -->
+        <div class="modal-bodyCompras">
           <div id="map" style="width: 100%; height: 350px;"></div>
         </div>
 
-        <button type="button" class="btn" id="backButton2">Atrás</button> <!-- Botón de retroceso -->
-        <button type="button" class="btn" id="nextButton2">Siguiente</button>
+        <!-- Botones de navegación -->
+        <button type="button" class="btn btnAtras" id="backButton2">Atrás</button>
+        <button type="button" class="btn btnSiguiente" id="nextButton2">Siguiente</button>
         <button type="button" class="modalCompras-close" id="modalClose2">&times;</button>
       </div>
     </div>
+
 
     <!-- Modal 3: Tipo de Envío -->
     <div class="modal-overlay" id="modalOverlay3">
       <div class="modal-compras">
         <h3>Tipo de Envío</h3>
-        <label for="nroProducto" class="labels">Nro producto</label>
+
+        <input type="hidden" class="form-control" id="nroProducto" name="nroProducto" required>
+
+        <!-- Campo de Distancia con ícono de distancia -->
+        <label for="distanciaTotal" class="labels">Distancia (En Km)</label>
         <div class="input-group">
-          <input type="hidden" class="form-control" id="nroProducto" name="nroProducto" required>
-        </div>
-        <label for="distanciaTotal" class="labels">Distancia</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-user"></i></span>
+          <span class="input-group-text"><i class="fa fa-road"></i></span>
           <input type="text" class="form-control" id="distanciaTotal" name="distanciaTotal" disabled>
         </div>
-        <label for="costoPedido" class="labels">Costo del pedido</label>
+
+        <!-- Campo de Costo del Pedido con ícono de dinero -->
+        <label for="costoPedido" class="labels">Costo del pedido (En Bs.)</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-user"></i></span>
+          <span class="input-group-text"><i class="fa fa-money-bill-wave"></i></span>
           <input type="text" class="form-control" id="costoPedido" oninput="calcular()" name="costoPedido"
             placeholder="Costo actual del pedido" disabled required>
         </div>
-        <select id="tipoEnvio" onchange="calcular()">
-          <option value="">Seleccione una opción</option>
-          <option value="directo">Recojo directo</option>
-          <option value="delivery">Envio con Delivery</option>
-        </select>
-        <div>
-          <label for="costoTotal">Costo total:</label>
-          <input type="text" id="costoTotal" disabled required>
+
+        <!-- Selección de Tipo de Envío con ícono de camión de entrega -->
+        <label for="tipoEnvio" class="labels">Tipo de Envío</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa fa-truck"></i></span>
+          <select id="tipoEnvio" class="form-control" onchange="calcular()">
+            <option value="">Seleccione una opción</option>
+            <option value="directo">Recojo directo</option>
+            <option value="delivery">Envío con Delivery</option>
+          </select>
         </div>
-        <button type="button" class="btn" id="backButton3">Atrás</button> <!-- Botón de retroceso -->
-        <button type="button" class="btn" id="nextButton3">Siguiente</button>
+
+        <!-- Campo de Costo Total con ícono de suma -->
+        <label for="costoTotal" class="labels">Costo total (En Bs.):</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa fa-calculator"></i></span>
+          <input type="text" id="costoTotal" class="form-control" disabled required>
+        </div>
+
+        <!-- Botones de navegación -->
+        <button type="button" class="btn btnAtras" id="backButton3">Atrás</button>
+        <button type="button" class="btn btnSiguiente" id="nextButton3">Siguiente</button>
         <button type="button" class="modalCompras-close" id="modalClose3">&times;</button>
       </div>
     </div>
+
 
     <!-- Modal 4: Tipo de Pago -->
     <div class="modal-overlay" id="modalOverlay4">
       <div class="modal-compras">
         <h3>Tipo de Pago</h3>
 
+        <!-- Selección de tipo de pago con ícono de moneda -->
         <label for="tipoPago">Seleccione el tipo de pago:</label>
-        <select id="tipoPago" onchange="togglePaymentFields()" required>
-          <option value="">Seleccione una opción</option>
-          <option value="qr">Pago con QR</option>
-          <option value="tarjeta">Pago con Tarjeta</option>
-        </select>
-
-        <!-- Campos de tarjeta (ocultos por defecto) -->
-        <div id="tarjetaFields" style="display: none;">
-          <input type="text" id="tarjeta" name="tarjeta" placeholder="Número de tarjeta"><br><br>
-          <input type="text" id="expiracion" name="expiracion" placeholder="MM/YY"><br><br>
-          <input type="text" id="cvv" name="cvv" placeholder="Código CVV"><br><br>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fa fa-wallet"></i></span>
+          <select id="tipoPago" class="form-control" onchange="togglePaymentFields()" required>
+            <option value="">Seleccione una opción</option>
+            <option value="qr">Pago con QR</option>
+            <option value="tarjeta">Pago con Tarjeta</option>
+          </select>
         </div>
 
-        <!-- QR oculto por defecto -->
-        <div id="qrcode" style="display: none;"></div>
+        <!-- Campos de tarjeta (ocultos por defecto) -->
+        <div id="tarjetaFields" style="display: none; margin-top: 1rem;">
+          <label for="tarjeta">Número de tarjeta:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+            <input type="text" id="tarjeta" name="tarjeta" placeholder="Número de tarjeta" class="form-control">
+          </div>
 
-        <button type="button" class="btn" id="backButton4">Atrás</button> <!-- Botón de retroceso -->
+          <label for="expiracion">Fecha de expiración:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
+            <input type="text" id="expiracion" name="expiracion" placeholder="MM/YY" class="form-control">
+          </div>
 
-        <!-- Botón "Finalizar" oculto inicialmente -->
-        <button type="submit" class="btn" id="finalizarButton" style="display: none;">Finalizar</button>
+          <label for="cvv">Código CVV:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-key"></i></span>
+            <input type="text" id="cvv" name="cvv" placeholder="Código CVV" class="form-control">
+          </div>
+        </div>
 
+        <!-- Campo QR para pago con ícono QR (oculto por defecto) -->
+        <div id="qrcode" style="display: none;">
+        </div>
+
+        <!-- Botón de navegación y finalizar -->
+        <button type="button" class="btn btnAtras" id="backButton4">Atrás</button>
+        <button type="submit" class="btn btnSiguiente" id="finalizarButton" style="display: none;">Finalizar</button>
+
+        <!-- Botón para cerrar modal -->
         <button type="button" class="modalCompras-close" id="modalClose4">&times;</button>
       </div>
     </div>
+
+
   </form>
 
 
@@ -288,15 +340,18 @@
       const completeForm = document.getElementById('completeForm');
       // Mostrar la primera ventana modal al hacer clic en "Comprar"
       buyButton.addEventListener('click', () => {
-        modalOverlay1.style.display = 'flex';
+
         const usuarioGuardado = JSON.parse(sessionStorage.getItem('usuario'));
-        const cartItem = document.querySelector('.cart-item');
-        const nid = cartItem.getAttribute('data-id');
-        const totalPrecioCarrito = document.getElementById("totalPrecioCarrito").textContent;
+
         if (usuarioGuardado) {
+
+          modalOverlay1.style.display = 'flex';
+          const cartItem = document.querySelector('.cart-item');
+          const nid = cartItem.getAttribute('data-id');
+          const totalPrecioCarrito = document.getElementById("totalPrecioCarrito").textContent;
+
           document.getElementById('nombreCliente').value = usuarioGuardado.nombre;
           document.getElementById('apellidoCliente').value = usuarioGuardado.apellido;
-          document.getElementById('nroProducto').value = usuarioGuardado.direccion;
           document.getElementById('ciCliente').value = usuarioGuardado.ci;
           //para el carrito
           const numeroExtraido = parseFloat(totalPrecioCarrito.match(/[\d.]+/)[0]);
@@ -313,9 +368,18 @@
             });
         }
         else {
-          alert("DEBE INICIAR SESION O EN SU DEFECTO REGISTRARSE PRIMERO");
-          window.location.href = '/login-registrar';
+          Swal.fire({
+            icon: 'warning',
+
+            text: 'DEBES INICIAR SESIÓN O REGISTRARTE',
+            confirmButtonText: 'Ir a Login',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/login-registrar';
+            }
+          });
         }
+
       });
       // Cerrar cada modal al hacer clic en el botón de cerrar
       modalClose1.addEventListener('click', () => { modalOverlay1.style.display = 'none'; });
@@ -337,11 +401,12 @@
       nextButton2.addEventListener('click', () => {
         const longitudCliente = document.getElementById('longitudCliente').value;
         const latitudCliente = document.getElementById('latitudCliente').value;
-        if (longitudCliente && latitudCliente) {
+        const direccionCliente = document.getElementById('direccionCliente').value;
+        if (longitudCliente && latitudCliente && direccionCliente) {
           modalOverlay2.style.display = 'none';
           modalOverlay3.style.display = 'flex';
         } else {
-          alert('Por favor, complete todos los campos de dirección.');
+          alert('Por favor, complete todos los campos de Dirección.');
         }
       });
       // Transición de la tercera a la cuarta ventana (Tipo de Envío -> Tipo de Pago)
@@ -384,12 +449,12 @@
         // Mostrar campos de tarjeta y ocultar el QR
         tarjetaFields.style.display = "block";
         qrCode.style.display = "none";
-        finalizarButton.style.display = "block"; // Mostrar botón "Finalizar"
+        finalizarButton.style.display = ""; // Mostrar botón "Finalizar"
       } else if (tipoPago === "qr") {
         // Ocultar campos de tarjeta y mostrar el QR
         tarjetaFields.style.display = "none";
-        qrCode.style.display = "block";
-        finalizarButton.style.display = "block"; // Mostrar botón "Finalizar"
+        qrCode.style.display = "";
+        finalizarButton.style.display = ""; // Mostrar botón "Finalizar"
         generarQR();  // Genera el QR directamente
       } else {
         // Si no hay selección, oculta ambos y el botón "Finalizar"
@@ -504,7 +569,7 @@
       // Seleccionamos el contenedor del QR y limpiamos antes de generar uno nuevo
       const qrcodeContainer = document.getElementById('qrcode');
       qrcodeContainer.innerHTML = ""; // Limpiar contenedor
-
+      qrcodeContainer.innerHTML = `<p>Escanee el código QR para realizar el pago</p>`;
       // Generamos el código QR con el mensaje dinámico
       new QRCode(qrcodeContainer, mensaje);
 
@@ -512,7 +577,7 @@
       //document.getElementById("pdfButton").classList.remove("hidden");
     }
   </script>
-  <script src="/dashboard/jsAdminProducto/modalMapa.js"></script>
+
   <!-------Script para añadir el pedido-------->
   <!--------Google Maps------>
   <script>
@@ -568,6 +633,8 @@
 
   <!--Funcion para llenar el form-->
   <script src="/moduloProducto/miJS/finalizarCompra.js"></script>
+
+  <script src="/moduloProducto/miJS/resetForm.js"></script>
 </body>
 
 </html>

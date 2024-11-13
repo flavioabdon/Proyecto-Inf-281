@@ -60,7 +60,7 @@ BEGIN
             cantidad, id_prod, latitud, longitud,  id_pedido, usuario_creacion,estado
         )
         VALUES (
-            v_cantidad, v_id_prod, v_latitud, v_longitud, v_id_pedido, v_id_usuario,'En almacen'
+            v_cantidad, v_id_prod, v_latitud, v_longitud, v_id_pedido, v_id_usuario,'En Almacen'
         );
 
         -- Descontar cantidad del stock en PRODUCTO_ARTESANAL

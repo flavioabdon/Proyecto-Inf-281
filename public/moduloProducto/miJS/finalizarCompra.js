@@ -21,7 +21,7 @@ document.getElementById('completeForm').addEventListener('submit', function (eve
     const id_usuario = usuarioGuardado.id_usuario;
 
     // Validaciones
-    if(tipoPago=='tarjeta'){
+    if (tipoPago == 'tarjeta') {
         if (!tipoPago) {
             alert('Por favor, seleccione un tipo de pago.');
             this.isSubmitting = false;
@@ -74,41 +74,41 @@ document.getElementById('completeForm').addEventListener('submit', function (eve
 
     // Enviar el pedido
     fetch('/registrarPedido', {
-        method: 'POST', 
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: orderJson 
+        body: orderJson
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error en la solicitud');
-        }
-        return response.json(); 
-    })
-    .then(data => {
-        return Swal.fire({
-            icon: 'success',
-            title: '¡Felicidades!',
-            text: 'El pedido ha sido realizado correctamente',
-            confirmButtonText: 'Aceptar'
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+            return response.json();
+        })
+        .then(data => {
+            return Swal.fire({
+                icon: 'success',
+                title: '¡Felicidades!',
+                text: 'El pedido ha sido realizado correctamente',
+                confirmButtonText: 'Aceptar'
+            });
+        })
+        .then(() => {
+            generarPDF(); // Generar el PDF
+            window.location.href = '/ComprasCliente'; // Redirigir a la página
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Ocurrió un error al realizar el pedido',
+                confirmButtonText: 'Aceptar'
+            });
+            console.error('Hubo un problema con la solicitud:', error);
+        })
+        .finally(() => {
+            // Restablece la variable de control
+            this.isSubmitting = false;
         });
-    })
-    .then(() => {
-        generarPDF(); // Generar el PDF
-        window.location.href = '/productosCliente'; // Redirigir a la página
-    })
-    .catch(error => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error.message || 'Ocurrió un error al realizar el pedido',
-            confirmButtonText: 'Aceptar'
-        });
-        console.error('Hubo un problema con la solicitud:', error);
-    })
-    .finally(() => {
-        // Restablece la variable de control
-        this.isSubmitting = false;
-    });
 });
 function generarPDF() {
     const { jsPDF } = window.jspdf;
@@ -124,7 +124,7 @@ function generarPDF() {
     const costoPedido = parseFloat(document.getElementById("costoPedido").value) || 0;
     const lat = document.getElementById("latitudCliente").value;
     const lon = document.getElementById("longitudCliente").value;
-    const ubicacion = lat+','+lon;
+    const ubicacion = lat + ',' + lon;
     const tipoPago = document.getElementById("tipoPago").value;
 
     // Calcular costo de envío (solo si es "Envio con Delivery")
@@ -155,11 +155,11 @@ function generarPDF() {
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     const clienteInfo = [
-      { label: "Nombre:", value: nombre },
-      { label: "Apellido:", value: apellido },
-      { label: "C.I.:", value: ci },
-      { label: "Dirección:", value: direccion },
-      { label: "Ubicacion:", value: ubicacion }
+        { label: "Nombre:", value: nombre },
+        { label: "Apellido:", value: apellido },
+        { label: "C.I.:", value: ci },
+        { label: "Dirección:", value: direccion },
+        // { label: "Ubicacion:", value: ubicacion }
     ];
 
     let yOffset = 50;
@@ -192,35 +192,35 @@ function generarPDF() {
         yOffset += 40;  // Ajustar el espacio vertical para el siguiente producto
     });
 
-     // Sección de detalles del pedido
-     doc.setFontSize(14);
-     doc.setFont("helvetica", "bold");
-     doc.text("Detalles del Pedido", 10, yOffset);
-     doc.line(10, yOffset + 2, 200, yOffset + 2);  // Línea divisoria
- 
-     yOffset += 10;
-     const pedidoInfo = [
-       { label: "Tipo de Envío:", value: tipoEnvio === "directo" ? "Recojo directo" : "Envio con Delivery" },
-       { label: "Costo Total:", value: `Bs ${costoTotal.toFixed(2)}` }
-     ];
- 
-     pedidoInfo.forEach(info => {
-         doc.setFontSize(12);
-         doc.setFont("helvetica", "normal");
-         doc.text(`${info.label}`, 10, yOffset);
-         doc.text(`${info.value}`, 60, yOffset);
-         yOffset += 10;
-     });
- 
-     // Mostrar el campo "Costo de Envío" solo si el tipo de envío es "Envio con Delivery"
-     if (tipoEnvio === "delivery") {
-         doc.setFontSize(12);
-         doc.setFont("helvetica", "normal");
-         doc.text("Costo de Envío:", 10, yOffset);
-         doc.text(`Bs ${costoEnvio.toFixed(2)}`, 60, yOffset);
-         yOffset += 10;
-     }
-        
+    // Sección de detalles del pedido
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Detalles del Pedido", 10, yOffset);
+    doc.line(10, yOffset + 2, 200, yOffset + 2);  // Línea divisoria
+
+    yOffset += 10;
+    const pedidoInfo = [
+        { label: "Tipo de Envío:", value: tipoEnvio === "directo" ? "Recojo directo" : "Envio con Delivery" },
+        { label: "Costo Total:", value: `Bs ${costoTotal.toFixed(2)}` }
+    ];
+
+    pedidoInfo.forEach(info => {
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        doc.text(`${info.label}`, 10, yOffset);
+        doc.text(`${info.value}`, 60, yOffset);
+        yOffset += 10;
+    });
+
+    // Mostrar el campo "Costo de Envío" solo si el tipo de envío es "Envio con Delivery"
+    if (tipoEnvio === "delivery") {
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "normal");
+        doc.text("Costo de Envío:", 10, yOffset);
+        doc.text(`Bs ${costoEnvio.toFixed(2)}`, 60, yOffset);
+        yOffset += 10;
+    }
+
     // Sección de pago
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
@@ -228,7 +228,7 @@ function generarPDF() {
     doc.line(10, yOffset + 2, 200, yOffset + 2);  // Línea divisoria
 
     yOffset += 10;
-    
+
     if (tipoPago === "tarjeta") {
         const pagoInfo = [
             { label: "Tipo de Pago:", value: "Tarjeta" },
@@ -236,7 +236,7 @@ function generarPDF() {
             { label: "Fecha de Expiración:", value: expiracion },
             { label: "Código CVV:", value: "***" } // Ocultar CVV
         ];
-        
+
         pagoInfo.forEach(info => {
             doc.setFontSize(12);
             doc.setFont("helvetica", "normal");
