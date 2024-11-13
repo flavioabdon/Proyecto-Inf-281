@@ -93,7 +93,7 @@ async function listarVentas(id_usuario) {
                 {
                     data: null,
                     defaultContent: ` 
-                        <div class='text-center'>
+                        <div class=''>
                             <div class='btn-group'>
                                 <button title='Ver detalles' class='btn btn-info btn-sm btnDetalles'>
                                     <i class='fas fa-info-circle'></i> Detalles

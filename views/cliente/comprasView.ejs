@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Compras Cliente</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 
     <!-- datatables -->
@@ -12,158 +12,292 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
 
-
-
     <!-- iconos -->
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
-
     <!-- Custom styles for this template-->
-    <link href="/dashboard/css/sb-admin-2.min.css" rel="stylesheet">>
+    <link href="/dashboard/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
 
-    <!-- styles css -->
-    <link rel="stylesheet" href="/moduloProducto/css/styles.css" />
+    <!-- styles -->
+    <link rel="stylesheet" href="/moduloDifusion/css/sweetAlert.css">
+    <link rel="stylesheet" href="/moduloDifusion/css/nav-footer.css">
+    <link rel="stylesheet" href="/moduloDifusion/css/registrarUsuario.css">
 
+
+    <title>Perfil Cliente</title>
 </head>
 
 <body>
-    <!-- navbar -->
-    <nav class="navbar page">
-        <div class="nav-center">
-            <!-- links -->
-            <div>
-                <button class="toggle-nav">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="nav-links">
-                    <li>
-                        <a href="/" class="nav-link">
-                            Inicio
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/productosCliente" class="nav-link">
-                            Productos
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link">
-                            Cerrar Sesión
-                        </a>
-                    </li>
-                </ul>
+    <!-- Inicio del header -->
+    <header id="inicio">
+        <!-- navbar -->
+        <nav id="nav">
+            <div class="nav-center">
+                <!-- nav header -->
+                <div class="nav-header">
+                    <img src="/moduloDifusion/img/logo.png" class="logo" alt="logo" />
+                    <button class="nav-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+                <!-- links -->
+                <div class="links-container">
+                    <ul class="links">
+                        <li><a href="/" class="">Inicio</a></li>
+                        <li><a href="/moduloDifusion/html/novedades-categorias.html" class="">Novedades</a></li>
+                        <li><a href="/productosCliente" class="">Productos</a></li>
+                    </ul>
+                </div>
             </div>
-            <!-- logo -->
-            <img src="/moduloProducto/images/logo.png" class="nav-logo" alt="logo" />
-            <!-- cart icon -->
-            <div class="toggle-container">
-                <button class="toggle-cart">
-                    <i class="fas fa-shopping-cart"></i>
-                </button>
-                <span class="cart-item-count">1</span>
+            <div class="btn-sb btn-white loginActive">
+                <a href="login-registrar" class="login">Ingresar/Registrarse <i class="fas fa-user"></i></a>
+                <div class="dropdown-login">
+                    <a href="/comprasCliente" class="">Mi Perfil</a>
+                    <a href="#Cerrar Sesion" class="">CERRAR SESIÓN</a>
+                </div>
             </div>
-        </div>
-    </nav>
-    <!-- hero -->
-    <section class="page-hero">
-        <div class="section-center">
-            <h3 class="page-hero-title">Compras Cliente</h3>
-        </div>
-    </section>
+        </nav>
+    </header>
+    <!-- Fin del header -->
 
-    <section class="container py-5">
 
-        <!-- Card Contenedor -->
-        <div class="card shadow mb-4">
-            <!-- <div class="card-header py-3">
-                <h4 class="m-0 font-weight-bold text-secondary text-center">Compras
-                </h4>
-            </div> -->
-            <div class="card-body">
+    <main class="container-pagina">
+        <section class="section-center compras-cliente">
 
-                <div class="row contenedor-tabla">
-                    <div class="col-lg-12">
-                        <div class="table-responsive table-responsive px-4 py-2">
-                            <table id="tablaCompras" class="table  table-hover responsive nowrap" style="width:100%">
-                                <thead class="thead-light text-center">
-                                    <tr>
-                                        <th class="">#:&nbsp;</th>
-                                        <th>id_pedido:&nbsp;</th>
-                                        <th class="">Datos Artesano:&nbsp;</th>
-                                        <th class="">Estado_Pedido:&nbsp;</th>
-                                        <th class="">Total:&nbsp;</th>
-                                        <th class="">Acciones:&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Contenido de la tabla -->
-                                </tbody>
-                            </table>
+            <!-- Card Contenedor -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h4 class="m-0 font-weight-bold text-secondary text-center p-2">Compras Realizadas
+                    </h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="row contenedor-tabla">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table-responsive px-4 py-2">
+                                <table id="tablaCompras" class="table  table-hover responsive nowrap"
+                                    style="width:100%">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="">#:&nbsp;</th>
+                                            <th>id_pedido:&nbsp;</th>
+                                            <th class="">Datos Artesano:&nbsp;</th>
+                                            <th class="">Datos Delivery:&nbsp;</th>
+                                            <th class="">Estado_Pedido:&nbsp;</th>
+                                            <th class="">Productos:&nbsp;</th>
+                                            <th class="">Costo_Productos:&nbsp;</th>
+                                            <th class="">Costo_Envio:&nbsp;</th>
+                                            <th class="">Total:&nbsp;</th>
+                                            <th class="">Acciones:&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        <!-- Contenido de la tabla -->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="8" style="text-align:right">Total:</th>
+                                            <th></th>
+                                            <th></th>
+                                            <!-- Celdas vacías para el total en `suma_total` -->
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- Modal para Ver Detalle de Compras -->
+            <div class="modal fade" id="modalDetalleCompras" tabindex="-1" role="dialog"
+                aria-labelledby="modalDetalleComprasLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDetalleComprasLabel">Detalle de Compras</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row contenedor-tabla">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive px-4 py-2">
+                                        <table id="tablaDetalleCompras" class="table table-hover responsive nowrap"
+                                            style="width:100%">
+                                            <thead class="thead-light text-center">
+                                                <tr>
+                                                    <th>#:&nbsp;</th>
+                                                    <th>id_Producto:&nbsp;</th>
+                                                    <th>Nombre:&nbsp;</th>
+                                                    <th>Descripción:&nbsp;</th>
+                                                    <th>Color:&nbsp;</th>
+                                                    <th>Imagen:&nbsp;</th>
+                                                    <th>Precio:&nbsp;</th>
+                                                    <th>Cantidad:&nbsp;</th>
+                                                    <th>Sub-Total:&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Contenido de la tabla -->
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Modal para Ver Detalle de Compras -->
-                <div class="modal fade" id="modalDetalleCompras" tabindex="-1" role="dialog"
-                    aria-labelledby="modalDetalleComprasLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalDetalleComprasLabel">Detalle de Compras</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+
+            <!-- Modal para Ver Detalle del Artesano -->
+            <div class="modal fade" id="modalDetalleArtesano" tabindex="-1" role="dialog"
+                aria-labelledby="modalDetalleArtesanoLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDetalleArtesanoLabel">Datos del Artesano
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Contenedor con los detalles del artesano -->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><strong>Nombres:</strong></label>
+                                            <p id="nombreArtesano"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Apellidos:</strong></label>
+                                            <p id="apellidoArtesano"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>CI:</strong></label>
+                                            <p id="ciArtesano"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><strong>Email:</strong></label>
+                                            <p id="emailArtesano"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Número de contacto:</strong></label>
+                                            <p id="numeroArtesano"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Especialidad:</strong></label>
+                                            <p id="especialidadArtesano"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Más detalles del artesano si es necesario -->
                             </div>
-                            <div class="modal-body">
-                                <div class="row contenedor-tabla">
-                                    <div class="col-lg-12">
-                                        <div class="table-responsive px-4 py-2">
-                                            <table id="tablaDetalleCompras" class="table table-hover responsive nowrap"
-                                                style="width:100%">
-                                                <thead class="thead-light text-center">
-                                                    <tr>
-                                                        <th>#:&nbsp;</th>
-                                                        <th>id_Producto:&nbsp;</th>
-                                                        <th>Nombre:&nbsp;</th>
-                                                        <th>Descripción:&nbsp;</th>
-                                                        <th>Color:&nbsp;</th>
-                                                        <th>Imagen:&nbsp;</th>
-                                                        <th>Precio:&nbsp;</th>
-                                                        <th>Cantidad:&nbsp;</th>
-                                                        <th>Sub-Total:&nbsp;</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- Contenido de la tabla -->
-                                                </tbody>
-                                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Modal para Ver Detalle del Delivery -->
+            <div class="modal fade" id="modalDetalleDelivery" tabindex="-1" role="dialog"
+                aria-labelledby="modalDetalleDeliveryLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDetalleDeliveryLabel">Datos del Delivery
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Contenedor con los detalles del delivery -->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><strong>Nombres:</strong></label>
+                                            <p id="nombreDelivery"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Apellidos:</strong></label>
+                                            <p id="apellidoDelivery"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>CI:</strong></label>
+                                            <p id="ciDelivery"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><strong>Email:</strong></label>
+                                            <p id="emailDelivery"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Número de contacto:</strong></label>
+                                            <p id="numeroDelivery"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Tipo de Vehículo:</strong></label>
+                                            <p id="tipoVehiculo"></p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Matrícula del Vehículo:</strong></label>
+                                            <p id="matriculaVehiculo"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
-        </div>
 
 
+        </section>
+
+    </main>
 
 
-    </section>
+    <!-- Inicio del footer -->
+    <footer class="section">
+        <p>
+            copyright &copy; Productos Artesanales Bolivia
+            <span id="date"></span>. Todos los derechos reservados
+        </p>
+    </footer>
+    <!-- Fin del footer -->
+
+    <!-- btn flecha -->
+    <a class="scroll-link top-link" href="#inicio">
+        <i class="fas fa-arrow-up"></i>
+    </a>
 
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- jQUERY-->
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -177,6 +311,9 @@
 
     <!-- mi js -->
     <script src="/moduloProducto/miJS/frontDetalleComprasCliente.js"></script>
+
+    <!-- mi js -->
+    <script src="/moduloDifusion/js/index.js"></script>
 
 
 </body>
