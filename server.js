@@ -37,6 +37,9 @@ const pedidosDeliveryRoutes = require('./routes/pedidosDeliveryRoutes');
 //Productos
 const productoRoutes = require('./routes/productoRoutes');
 
+//Pedidos
+const pedidosRoutes = require('./routes/pedidosRoutes');
+
 const app = express();
 
 
@@ -86,6 +89,9 @@ app.use('/', pedidosDeliveryRoutes);
 
 //productos
 app.use('/', productoRoutes);
+
+//pedidos
+app.use('/',pedidosRoutes)
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
