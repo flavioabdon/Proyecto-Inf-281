@@ -89,7 +89,7 @@ async function listarTodosLosPedidosDelivery() {
                     data: null, // Sin datos directos para esta columna
                     defaultContent: ` 
                         <div class='btn-group'>
-                            <button title='Ver Mapa' class='btn btn-primary btn-sm btnVerMapa'>
+                            <button title='Ver Mapa' class='btn btn-primary btn-sm btnDireccionAlmacen'>
                                 <i class="fas fa-map-marker-alt"></i> Ver Mapa
                             </button>
                         </div>
@@ -436,6 +436,42 @@ document.getElementById('tablaPedidos').addEventListener('click', function (even
                     });
             }
         });
+    }
+});
+
+//Evento Click btnDireccionAlmacen(Coordenadas)
+document.getElementById('tablaPedidos').addEventListener('click', async function (event) {
+    if (event.target.closest('.btnDireccionAlmacen')) {
+        // Obtener la fila (tr) más cercana al botón
+        const fila = $(event.target).closest('tr');
+        // Obtener el ID del pedido desde DataTable
+        const id_pedido = $('#tablaPedidos').DataTable().row(fila).data().id_pedido;
+
+        try {
+            // Realizar la petición con el id_pedido en la URL
+            const response = await fetch(`/obtenerCoordenadasAlmacen/${id_pedido}`);
+
+            if (!response.ok) {
+                throw new Error('No se pudieron cargar las coordenadas del almacén');
+            }
+
+            // Obtener las coordenadas desde la respuesta
+            const coordenadas = await response.json();
+
+            const direccion_almacen = coordenadas[0].direccion_almacen;
+
+            // Separar la latitud y longitud
+            const [lat, lng] = direccion_almacen.split(',').map(coord => parseFloat(coord.trim()));
+
+            // Crear un enlace a Google Maps con las coordenadas
+            const mapaUrl = `https://www.google.com/maps?q=${lat},${lng}&hl=es`;
+
+            // Abrir el enlace en una nueva pestaña
+            window.open(mapaUrl, '_blank');
+
+        } catch (error) {
+            console.error(error.message); // Manejo de errores
+        }
     }
 });
 

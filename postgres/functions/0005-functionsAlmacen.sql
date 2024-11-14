@@ -281,3 +281,31 @@ $$ LANGUAGE plpgsql;
 
 -- Sentencia de Apoyo
 SELECT * FROM fn_listar_almacenes_IDproductoGEO(1);
+
+--------------------------------------------------------------------------
+-- Creado: Christian Medrano    Fecha: 14/11/2024                           --
+-- Actividad:                                                           --
+-- Funcion obtener coordenadas(latitud,longitud) almacen del primer producto--
+------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION fn_obtener_coordenadas_direccion_almacen(p_id_pedido INT)
+RETURNS TABLE (direccion_almacen TEXT) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        CONCAT(ST_Y(a.ubicacion_georef_alm), ', ', ST_X(a.ubicacion_georef_alm)) AS direccion_almacen
+    FROM 
+        pedido p
+    INNER JOIN pedido_producto pp ON pp.id_pedido = p.id_pedido
+    INNER JOIN producto_artesanal pa ON pa.id_prod = pp.id_prod 
+    INNER JOIN almacen a ON a.id_almacen = pa.id_almacen 
+    WHERE 
+        p.id_pedido = p_id_pedido
+    ORDER BY 
+        pp.id_pedido_producto ASC
+    LIMIT 1;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sentencia de apoyo
+select * from fn_obtener_coordenadas_direccion_almacen(3);

@@ -22,8 +22,14 @@ router.delete('/eliminarAlmacen/:id', almacenController.eliminarAlmacen); // Usa
 // Ruta para listar un almacén específico por ID de almacen
 router.get('/listarAlmacen/:id_almacen', almacenController.listarAlmacenPorId); // Usa el controlador para listar un almacén por ID
 
-// Ruta para listar un almacén específico por ID del sproducto
+// Ruta para listar un almacén específico por ID del producto
 router.get('/listarAlmacenIdprod/:id_prod', almacenController.listarAlmacenPorIdproducto); // Usa el controlador para listar un almacén por ID
+
+
+//Ruta para obtner coordenas de almacen(del primer producto) por id_pedido
+router.get('/obtenerCoordenadasAlmacen/:id', almacenController.obtenerCoordenadas); 
+
+
 
 //exporta el router para que pueda ser utilizado en server.js
 module.exports = router;

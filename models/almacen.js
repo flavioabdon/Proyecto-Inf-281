@@ -124,6 +124,27 @@ const listarAlmacenPorIdproducto = async (id_prod) => {
     }
 };
 
+
+// Función para listar ventas
+const obtenerCoordenadas = async (id_pedido) => {
+    const query = `
+    SELECT * FROM fn_obtener_coordenadas_direccion_almacen($1);
+    `;
+    const values = [id_pedido];
+    try {
+        // Ejecuta la consulta y espera el resultado
+        const res = await sequelize.query(query, {
+            bind: values,
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        return res; 
+    } catch (error) {
+        console.error('Error al obtener coordenadas almacen con id_pedido:', id_pedido, error); 
+        throw error; 
+    }
+};
+
 module.exports = {
     registrarAlmacen, // Exporta la función para usarla en otras partes de la aplicación
     listarAlmacenes, // Exporta la función para listar almacenes
@@ -131,4 +152,5 @@ module.exports = {
     eliminarAlmacen,    //Exporta la funcion para eliminar almacen
     listarAlmacenPorId, //Exporta la funcion para listar almacen especifico por ID de almacen
     listarAlmacenPorIdproducto, //Exporta la funcion para listar almacen especifico por ID de producto
+    obtenerCoordenadas,
 };
