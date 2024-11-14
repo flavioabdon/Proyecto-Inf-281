@@ -110,7 +110,7 @@ async function listarCompras(id_usuario) {
                         // Verificar si el valor es 0 y mostrar "Recojo directo", sino mostrar "Bs." con el valor
                         return data == 0 ? `<strong>Recojo Directo</strong>` : `<strong>Bs. ${data}</strong>`;
                     }
-                },               
+                },
                 {
                     data: 'suma_total',
                     render: function (data) {
@@ -123,17 +123,11 @@ async function listarCompras(id_usuario) {
                     defaultContent: ` 
                         <div class=''>
                             <div class='btn-group'>
-                                <button title='Confirmar Pedido' class='btn btn-success btn-sm btnConfirmar' disabled>
+                                <button title='Confirmar Pedido' class='btn btn-success btn-sm btnConfirmar'>
                                     <i class='fas fa-check-circle'></i> Confirmar Pedido
                                 </button>
                             </div>
                         </div>`,
-                    createdCell: function (td, cellData, rowData, row, col) {
-                        // Verificar si el estado es "En Casa" para habilitar el botón
-                        if (rowData.estado === "En Casa") {
-                            $(td).find('.btnConfirmar').prop('disabled', false);
-                        }
-                    }
                 }
             ],
             language: {
@@ -390,6 +384,75 @@ document.getElementById('tablaCompras').addEventListener('click', async function
     }
 });
 
+// Evento Click Confirmar Pedido
+document.getElementById('tablaCompras').addEventListener('click', function (event) {
+    if (event.target.closest('.btnConfirmar')) {
+        // Obtener la fila (tr) más cercana al botón
+        const fila = $(event.target).closest('tr');
+
+        // Obtener el ID del pedido y el estado desde DataTable
+        const id_pedido = $('#tablaCompras').DataTable().row(fila).data().id_pedido;
+        const estado = $('#tablaCompras').DataTable().row(fila).data().estado;
+
+        // Verificar si el estado es "En Casa"
+        if (estado === "En Casa") {
+            // Mostrar una confirmación de notificación utilizando SweetAlert
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Quieres notificar al artesano que tu pedido ya ha llegado a tu casa?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, Notificar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Envía la solicitud para notificar al artesano que el pedido llegó
+                    fetch('/confirmar_entrega', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id_pedido: id_pedido })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Ocurrió un error al notificar al artesano');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Muestra una alerta de SweetAlert cuando la notificación es enviada correctamente
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Notificación enviada!',
+                                text: 'El artesano ha sido notificado que tu pedido ya llegó a tu casa.',
+                                confirmButtonText: 'Aceptar'
+                            })
+                            listarCompras(id_usuario);
+                        })
+                        .catch(error => {
+                            // Muestra una alerta de error en caso de fallo
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error al notificar',
+                                text: error.message || 'Ocurrió un error al notificar al artesano.',
+                                confirmButtonText: 'Aceptar'
+                            });
+                            console.error('Error al notificar al artesano:', error);
+                        });
+                }
+            });
+        } else {
+            // Si el estado no es "En Casa", muestra un mensaje de advertencia
+            Swal.fire({
+                icon: 'warning',
+                title: 'Acción no permitida',
+                text: 'Solo puedes notificar la llegada del pedido una vez el estado sea "En Casa".',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    }
+});
 
 
 

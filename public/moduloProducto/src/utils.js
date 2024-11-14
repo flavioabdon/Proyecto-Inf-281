@@ -20,12 +20,11 @@ const getElement = (selection) => {
 
 const formatPrice = (price) => {
   let formattedPrice = new Intl.NumberFormat('es-BO', {
-    style: 'currency',
-    currency: 'BOB',
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
+    useGrouping: false // Desactiva el separador de miles
   }).format(price).replace(/,/g, '.'); // Reemplaza la coma decimal por punto
-  return formattedPrice;
+  return `Bs ${formattedPrice}`;
 };
 
 

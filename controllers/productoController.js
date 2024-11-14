@@ -250,7 +250,7 @@ exports.registrarPedido = async (req, res) => {
 
     // Enviar el resultado como respuesta JSON
     res.json(result);
-
+    console.log(result);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ status: 'error', message: 'Error al registrar el pedido.' });

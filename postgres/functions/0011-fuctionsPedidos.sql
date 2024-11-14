@@ -167,12 +167,12 @@ BEGIN
 
     -- Actualizar el estado del pedido a "En camino"
     UPDATE PEDIDO
-    SET estado_registro = 'En camino'
+    SET estado_registro = 'En Camino'
     WHERE id_pedido = v_id_pedido;
 
     -- Actualizar el estado de todos los productos del pedido a "En camino"
     UPDATE PEDIDO_PRODUCTO
-    SET estado = 'En camino'
+    SET estado = 'En Camino'
     WHERE id_pedido = v_id_pedido;
 
     -- Obtener el último número de tracking generado
@@ -194,7 +194,7 @@ BEGIN
         num_tracking, estado, fecha_estado, tipo_envio, id_delivery, id_pedido, fecha_creacion, fecha_modificacion, usuario_creacion, usuario_modificacion, estado_registro
     )
     VALUES (
-        v_num_tracking, 'En camino', CURRENT_TIMESTAMP, 'Estandar', v_id_delivery, v_id_pedido, CURRENT_TIMESTAMP, NULL, NULL, NULL, 'En camino'
+        v_num_tracking, 'En Camino', CURRENT_TIMESTAMP, 'Estandar', v_id_delivery, v_id_pedido, CURRENT_TIMESTAMP, NULL, NULL, NULL, 'En Camino'
     );
 
     -- Preparar la respuesta de éxito
@@ -245,18 +245,18 @@ BEGIN
 
     -- Actualizar el estado del pedido a 'En casa'
     UPDATE pedido
-    SET estado_registro = 'En casa'
+    SET estado_registro = 'En Casa'
     WHERE id_pedido = v_id_pedido;
 
     -- Actualizar el estado de todos los productos del pedido a 'En casa'
     UPDATE pedido_producto
-    SET estado = 'En casa'
+    SET estado = 'En Casa'
     WHERE id_pedido = v_id_pedido;
 
     -- Actualizar el estado de envío a 'En casa'
     UPDATE envio
-    SET estado_registro = 'En casa',
-        estado = 'En casa',
+    SET estado_registro = 'En Casa',
+        estado = 'En Casa',
         fecha_modificacion = CURRENT_TIMESTAMP
     WHERE id_pedido = v_id_pedido;
 

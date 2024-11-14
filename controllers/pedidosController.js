@@ -19,7 +19,7 @@ exports.tomar_pedidos_delivery = async (req, res) => {
     // console.log("resultado", result);
     // Mostrar el JSON respuesta de postgres
     res.json(result);
-
+    console.log(result);
   } catch (error) {
     console.error('Error:', error);
     //res.status(500).json({ status: 'error', message: 'Error al insertar el pedido.' });

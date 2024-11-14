@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Pedidos Delivery</title>
+    <title>Mis Pedidos</title>
 
     <!-- datatables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
@@ -70,7 +70,7 @@
                                     <div class="row contenedor-tabla">
                                         <div class="col-lg-12">
                                             <div class="table-responsive table-responsive px-4 py-2">
-                                                <table id="tablaPedidos" class="table  table-hover responsive nowrap"
+                                                <table id="tablaMisPedidos" class="table  table-hover responsive nowrap"
                                                     style="width:100%">
                                                     <thead class="thead-light text-center">
                                                         <tr>
@@ -79,9 +79,9 @@
                                                             <th class="">Datos Cliente:&nbsp;</th>
                                                             <th class="">Datos Artesano:&nbsp;</th>
                                                             <th class="">Estado del Pedido:&nbsp;</th>
+                                                            <th class="">NroTracking:&nbsp;</th>
                                                             <th class="">Dirección_Almacén:&nbsp;</th>
                                                             <th class="">Dirección_Envío:&nbsp;</th>
-                                                            
                                                             <th class="">Costo de Envío:&nbsp;</th>
                                                             <th class="">Productos:&nbsp;</th>
                                                             <th class="">Acciones:&nbsp;</th>
@@ -254,7 +254,6 @@
                             </div>
 
 
-
                         </main>
                         <!-- fin de contenido -->
 
@@ -298,11 +297,8 @@
         <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
 
         <!-- mi js -->
-        <script src="/dashboard/jsDelivery/frontListarTodosLosPedidos.js"></script>
-
+        <script src="/dashboard/jsDelivery/frontListarPedidosPorId.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=TU_CLAVE_API&callback=initMap" async defer></script>
-
-
 </body>
 
 </html>

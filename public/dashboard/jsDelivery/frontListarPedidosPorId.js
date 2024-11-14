@@ -1,25 +1,22 @@
 
-
 const usuarioGuardado = JSON.parse(sessionStorage.getItem('usuario'));
 const id_usuario_delivery = usuarioGuardado.id_usuario;
 
 
-// Función para listar todos los pedidos para los delivery
-async function listarTodosLosPedidosDelivery() {
+async function listarPedidosPorId(id_usuario_delivery) {
     try {
-
-        const response = await fetch(`/listarTodosLosPedidosDelivery`);
+        const response = await fetch(`/listarPedidosDeliveryPorId/${id_usuario_delivery}`);
         if (!response.ok) {
-            throw new Error('No se pudieron cargar todos los pedidos');
+            throw new Error('No se pudieron cargar los pedidos del delivery');
         }
 
         const pedidos = await response.json();
 
         // Limpiar la tabla antes de actualizar
-        $('#tablaPedidos').DataTable().clear().destroy();
+        $('#tablaMisPedidos').DataTable().clear().destroy();
 
         // Inicializar DataTables con los datos actualizados
-        $('#tablaPedidos').DataTable({
+        $('#tablaMisPedidos').DataTable({
             responsive: true,
             autoWidth: true,
             data: pedidos,
@@ -86,6 +83,12 @@ async function listarTodosLosPedidosDelivery() {
                     }
                 },
                 {
+                    data: 'num_tracking',
+                    render: function (data) {
+                        return `<strong>${data}</strong>`;
+                    }
+                },
+                {
                     data: null, // Sin datos directos para esta columna
                     defaultContent: ` 
                         <div class='btn-group'>
@@ -132,55 +135,56 @@ async function listarTodosLosPedidosDelivery() {
                     data: null, // Sin datos directos para esta columna
                     defaultContent: `
                             <div class='btn-group'>
-                                <button title='Tomar Pedido' class='btn btn-info btn-sm btnTomarPedido'>
-                                    <i class='fas fa-hand-paper'></i> Tomar Pedido
+                                <button title='Notificar' class='btn btn-warning btn-sm btnNotificar'>
+                                    <i class='fas fa-bell'></i> Notificar
                                 </button>
                             </div>
                             `
                 }
             ],
+
             language: {
-                "decimal": "",
-                "emptyTable": "No hay información disponible",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscar:",
-                "zeroRecords": "No se encontraron registros coincidentes",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
+                decimal: "",
+                emptyTable: "No hay información disponible",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                infoEmpty: "Mostrando 0 a 0 de 0 registros",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                lengthMenu: "Mostrar _MENU_ registros por página",
+                loadingRecords: "Cargando...",
+                processing: "Procesando...",
+                search: "Buscar:",
+                zeroRecords: "No se encontraron registros coincidentes",
+                paginate: {
+                    first: "Primero",
+                    last: "Último",
+                    next: "Siguiente",
+                    previous: "Anterior"
                 },
-                "aria": {
-                    "sortAscending": ": activar para ordenar de forma ascendente",
-                    "sortDescending": ": activar para ordenar de forma descendente"
+                aria: {
+                    sortAscending: ": activar para ordenar de forma ascendente",
+                    sortDescending: ": activar para ordenar de forma descendente"
                 }
             },
-            order: [[0, 'desc']], // Ordena por la primera columna (num_fila)
+            order: [[0, 'desc']],
             columnDefs: [
                 {
-                    targets: [1], // Puedes ocultar la columna de ID si es necesario
+                    targets: [1],
                     visible: false
                 },
                 {
-                    targets: [0, 2, 4], // Centrar columnas
+                    targets: [0, 2, 4],
                     className: 'text-left'
                 }
-            ]
+            ],
+
         });
     } catch (error) {
         console.error('Error al cargar los pedidos del delivery:', error);
     }
 }
 
-
 // Evento Click btnUsuario cliente
-document.getElementById('tablaPedidos').addEventListener('click', async function (event) {
+document.getElementById('tablaMisPedidos').addEventListener('click', async function (event) {
     const boton = event.target.closest('.btnUsuarioCliente');
     if (boton) {
 
@@ -226,7 +230,7 @@ document.getElementById('tablaPedidos').addEventListener('click', async function
 });
 
 // Evento Click btnUsuario Artesano
-document.getElementById('tablaPedidos').addEventListener('click', async function (event) {
+document.getElementById('tablaMisPedidos').addEventListener('click', async function (event) {
     const boton = event.target.closest('.btnUsuarioArtesano'); // Cambia la clase a la correspondiente
     if (boton) {
 
@@ -270,13 +274,13 @@ document.getElementById('tablaPedidos').addEventListener('click', async function
 });
 
 //Evento Click btnDetalles
-document.getElementById('tablaPedidos').addEventListener('click', async function (event) {
+document.getElementById('tablaMisPedidos').addEventListener('click', async function (event) {
     if (event.target.closest('.btnDetalles')) {
         // Obtener la fila (tr) más cercana al botón de detalles
         const fila = $(event.target).closest('tr');
 
         // Obtener los datos de la fila seleccionada desde DataTable
-        const pedidosData = $('#tablaPedidos').DataTable().row(fila).data();
+        const pedidosData = $('#tablaMisPedidos').DataTable().row(fila).data();
 
         if (pedidosData) {
             const id_pedido = pedidosData.id_pedido;
@@ -374,65 +378,64 @@ document.getElementById('tablaPedidos').addEventListener('click', async function
     }
 });
 
-// Evento Click btnTomarPedido
-document.getElementById('tablaPedidos').addEventListener('click', function (event) {
-    if (event.target.closest('.btnTomarPedido')) {
-        // Obtener la fila (tr) más cercana al botón de tomar pedido
+// Evento Click notificar
+document.getElementById('tablaMisPedidos').addEventListener('click', function (event) {
+    if (event.target.closest('.btnNotificar')) {
+        // Obtener la fila (tr) más cercana al botón de notificar
         const fila = $(event.target).closest('tr');
 
         // Obtener el ID del pedido desde DataTable
-        const id_pedido = $('#tablaPedidos').DataTable().row(fila).data().id_pedido;
+        const id_pedido = $('#tablaMisPedidos').DataTable().row(fila).data().id_pedido;
 
-        // Mostrar una confirmación de tomar pedido utilizando SweetAlert
+        // Mostrar una confirmación de notificación utilizando SweetAlert
         Swal.fire({
             title: '¿Estás seguro?',
-            text: '¿Quieres tomar este pedido?',
+            text: '¿Quieres notificar al cliente que su pedido ya se encuentra en su casa?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonText: 'Sí, Tomar',
+            confirmButtonText: 'Sí, Notificar',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Envía la solicitud para tomar el pedido al servidor
-                fetch('/tomar_pedido_delivery', {
+                // Envía la solicitud para notificar al cliente al servidor
+                fetch('/delivery_en_casa', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         id_pedido: id_pedido,
-                        id_usuario: id_usuario_delivery,
                     })
                 })
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('Ocurrió un error al tomar el pedido');
+                            throw new Error('Ocurrió un error al notificar al cliente');
                         }
                         return response.json();
                     })
                     .then(data => {
-                        // Muestra una alerta de SweetAlert cuando el pedido es tomado correctamente
+                        // Muestra una alerta de SweetAlert cuando la notificación es enviada correctamente
                         Swal.fire({
                             icon: 'success',
-                            title: '¡Pedido tomado!',
-                            text: 'El pedido ha sido tomado correctamente',
+                            title: '¡Notificación enviada!',
+                            text: 'El cliente ha sido notificado que su pedido ya se encuentra en su casa.',
                             confirmButtonText: 'Aceptar'
                         }).then(() => {
-
+                            // Redirige a la página de "Mis Pedidos"
                             window.location.href = '/misPedidosDelivery';
                         });
 
-                        listarTodosLosPedidosDelivery();
+                        listarPedidosPorId(id_usuario_delivery); // Re-actualiza la lista de pedidos
                     })
                     .catch(error => {
                         // Muestra una alerta de SweetAlert cuando ocurre un error
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: error.message || 'Ocurrió un error al tomar el pedido',
+                            text: error.message || 'Ocurrió un error al notificar al cliente.',
                             confirmButtonText: 'Aceptar'
                         });
-                        console.error('Error al tomar el pedido:', error);
+                        console.error('Error al notificar al cliente:', error);
                     });
             }
         });
@@ -441,5 +444,5 @@ document.getElementById('tablaPedidos').addEventListener('click', function (even
 
 
 
+document.addEventListener('DOMContentLoaded', listarPedidosPorId(id_usuario_delivery));
 
-document.addEventListener('DOMContentLoaded', listarTodosLosPedidosDelivery());
