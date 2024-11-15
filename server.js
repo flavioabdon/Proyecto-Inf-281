@@ -28,7 +28,7 @@ const adminDeliveryRoutes = require('./routes/adminDeliveryRoutes');
 //Artesano
 const indexArtesanoRoutes = require('./routes/indexArtesanoRoutes');
 const ventasArtesanoRoutes = require('./routes/ventasArtesanoRoutes');
-
+const TodasLasventasArtesanoRoutes = require('./routes/TodasLasventasArtesanoRoutes');
 
 //Delivery
 const indexDeliveryRoutes = require('./routes/indexDeliveryRoutes');
@@ -82,6 +82,7 @@ app.use('/', adminDeliveryRoutes);
 //artesano
 app.use('/', indexArtesanoRoutes);
 app.use('/', ventasArtesanoRoutes);
+app.use('/', TodasLasventasArtesanoRoutes);
 
 //delivery
 app.use('/', indexDeliveryRoutes);
