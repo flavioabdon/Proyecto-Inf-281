@@ -78,7 +78,7 @@ async function listarVentas(id_usuario) {
                         }
 
                         return `
-                            <span class="${badgeClass}" style="text-transform: uppercase; margin: 5px 0; padding: 8px 10px; border-radius: 3px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">
+                            <span class="${badgeClass}" style="text-transform: uppercase; margin: 0; padding: 8px 10px; border-radius: 3px; box-shadow: 1px 1px 5px rgba(0,0,0,0.1);">
                                 <i class="${iconClass}" style="margin-right: 8px;"></i> ${text}
                             </span>
                         `;

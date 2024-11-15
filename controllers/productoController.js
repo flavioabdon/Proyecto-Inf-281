@@ -84,7 +84,7 @@ exports.insertarProducto = async (req, res) => {
     id_categoria: body.idCategoria
   };
 
-  //console.log('Producto data:', productoData);
+  console.log('Producto data:', productoData);
 
   try {
     // Consultar en la base de datos usando el JSON productoData
@@ -92,7 +92,7 @@ exports.insertarProducto = async (req, res) => {
     // console.log("resultado", result);
     // Mostrar el JSON respuesta de postgres
     res.json(result);
-
+    console.log(result);
   } catch (error) {
     console.error('Error:', error);
     //res.status(500).json({ status: 'error', message: 'Error al insertar el producto.' });
@@ -266,7 +266,7 @@ exports.listarProductosArtesanoX = async (req, res) => {
   try {
     // Llamada al modelo para obtener los productos por usuarioID
     const result = await productoM.listarProductosArtesanoX(id_usuario);
-    console.log("Resultado productos artesano X:", result);
+    //console.log("Resultado productos artesano X:", result);
 
     // Enviar el resultado como respuesta JSON
     res.json(result);

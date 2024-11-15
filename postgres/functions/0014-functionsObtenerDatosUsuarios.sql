@@ -41,7 +41,8 @@ RETURNS TABLE(
     ci VARCHAR,
     email VARCHAR,
     numero_contacto VARCHAR,
-    especialidad_artesano VARCHAR
+    especialidad_artesano VARCHAR,
+    id_artesano INTEGER  -- Se añade el id_artesano
 ) AS $$
 BEGIN
     RETURN QUERY
@@ -51,12 +52,14 @@ BEGIN
         u.ci,
         u.email,
         u.numero_contacto,
-        a.especialidad_artesano
+        a.especialidad_artesano,
+        a.id_artesano  -- Selección de id_artesano
     FROM usuario u
     INNER JOIN artesano a ON u.id_usuario = a.id_usuario
     WHERE u.id_usuario = id_usuario_artesano;
 END;
 $$ LANGUAGE plpgsql;
+
 
 -- sentencia de apoyo
 select * from fn_obtener_datos_artesano_por_id(12);

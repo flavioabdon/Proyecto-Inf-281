@@ -6,7 +6,7 @@ async function listarProductos() {
         //alert(usuarioGuardado);
         console.log(usuarioGuardado);
         const id_usuario = usuarioGuardado.id_usuario;
-        console.log(id_usuario);   
+        console.log(id_usuario);
 
         const response = await fetch(`/listarProductosArtesanoX/${id_usuario}`, { // ruta 
             method: 'GET',
@@ -192,47 +192,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // CARGAR ID ARTESANOS
 document.addEventListener("DOMContentLoaded", function () {
-    // Obtener el select id_artesano
-    const usuarioSelect = document.getElementById("id_artesano");
+    // Obtener el input id_artesano
+    const idArtesanoInput = document.getElementById("id_artesano");
 
     // Obtener el usuario logueado desde sessionStorage
     const usuarioGuardado = JSON.parse(sessionStorage.getItem('usuario'));
-    const id_usuario = usuarioGuardado ? usuarioGuardado.id_usuario : null;
+    let id_usuario_artesano = usuarioGuardado.id_usuario;
 
-    // Función para cargar usuarios
-    function cargarUsuarios() {
-        fetch('/listarDatosArtesanos') // Cambia esto al endpoint de tu API
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta API listarAdminArtesanos');
-                }
-                return response.json(); // respuesta JSON
-            })
-            .then(data => {
-                // Verificar que el estado sea exitoso antes de cargar los datos
-                if (data.estado !== "exitoso") {
-                    throw new Error(data.mensaje); // Lanza un error si la consulta no fue exitosa
-                }
-
-                // Limpiar las opciones actuales antes de cargar nuevas
-                usuarioSelect.innerHTML = '<option value="">Selecciona un usuario</option>'; // Opción predeterminada
-
-                // Recorrer los datos y crear opciones para el select
-                data.datos.forEach(artesano => {
-                    const option = document.createElement("option");
-                    option.value = artesano.idArtesano; // El ID del artesano será el valor
-                    option.textContent = `${artesano.nombre} ${artesano.apellido} - ${artesano.ci} `; // El nombre y apellido serán el texto visible
-                    usuarioSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error al cargar usuarios:', error);
-            });
-    }
-
-    // Llamar a la función para cargar los usuarios al cargar la página
-    cargarUsuarios();
+    // Función para cargar los datos del artesano
+    fetch(`/obtenerDatosArtesano/${id_usuario_artesano}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta API listarAdminArtesanos');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data) {
+                idArtesanoInput.value = data[0].id_artesano;
+            } else {
+                console.error('No se encontró el id_artesano en la respuesta');
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar los datos del artesano:', error);
+        });
 });
+
 
 
 // REGISTRAR PRODUCTO
