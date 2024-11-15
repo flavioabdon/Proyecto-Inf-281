@@ -93,8 +93,19 @@ exports.verificarCodigo = async (req, res) => {
   try {
     // Consultar en la base de datos usando la función de PostgreSQL
     const result = await clienteM.verificaCodigo({ emailVerificacion, codigoVerificacion });
-    // Mostrar el JSON respuesta de postgres
-    res.json(result);
+    //Recuperar el usuario 
+    const usuario = result.usuario;
+    //console.log(usuario);
+    if (usuario) {
+      // Envía todos los datos del usuario y un mensaje de éxito al frontend
+      res.status(200).json({
+          message: 'Registro exitoso',
+          usuario // Enviar todos los datos del usuario
+      });
+    } else {
+        // Si no, devuelve un error de credenciales incorrectas
+        res.status(401).json({ message: 'Credenciales incorrectas' });
+    }  
 
   } catch (error) {
     console.error('Error al enviar el correo:', error);
