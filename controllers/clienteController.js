@@ -34,20 +34,24 @@ exports.registrarCliente = async (req, res) => {
     });
 
     let htmlTemplate = `
-    <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-      <h2 style="color: #4CAF50;">Confirmación de Cuenta</h2>
-      <p>Hola,</p>
-      <p>Gracias por registrarte. Para confirmar tu cuenta, utiliza el siguiente código:</p>
-      <div style="margin: 20px 0; text-align: center;">
-        <span style="font-size: 24px; font-weight: bold; color: #4CAF50;">${codigoAleatorio}</span>
+    <div style="font-family: Arial, sans-serif; background-color: #f8fbff; padding: 20px; text-align: center;">
+      <div style="max-width: 400px; margin: 0 auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 20px;">
+        <h2 style="font-size: 24px; color: #333; margin-bottom: 20px;">Confirmar Cuenta</h2>
+        <p style="font-size: 16px; color: #555; margin-bottom: 20px;">
+          El código fue enviado a tu correo: <strong style="color: #333;">${to}</strong>
+        </p>
+        <p style="font-size: 16px; color: #555; margin-bottom: 10px;">Código de Verificación:</p>
+        <div style="font-size: 48px; font-weight: bold; color: #4CAF50; margin-bottom: 20px;">${codigoAleatorio}</div>
+        <p style="font-size: 14px; color: #777; margin-bottom: 20px;">
+          Si no solicitaste este código, puedes ignorar este mensaje.
+        </p>
       </div>
-      <p>Si no solicitaste este correo, por favor ignóralo.</p>
-      <p>¡Gracias!</p>
-      <footer style="margin-top: 20px; font-size: 12px; color: #888;">
-        <p>Este mensaje fue enviado automáticamente, por favor no responda a este correo.</p>
-      </footer>
+      <p style="font-size: 12px; color: #999; margin-top: 20px;">
+        Este mensaje fue enviado automáticamente, por favor no respondas.
+      </p>
     </div>
   `;
+  
 
     // Opciones del correo electrónico
     let mailOptions = {
