@@ -18,30 +18,46 @@ DECLARE
     v_correo TEXT;
     v_codigo TEXT;
     v_existe BOOLEAN;
+    v_usuario JSON;
 BEGIN
     -- Extraer los valores del JSON
     v_correo := data->>'emailVerificacion';
     v_codigo := data->>'codigoVerificacion';
 
-    -- Verificar si existe el correo y el código en la tabla usuarios
+    -- Verificar si existe el correo y el código en la tabla mensajes
     SELECT EXISTS (
-		select 1 from "mensajes" m 
-		where m.to = v_correo and m.message = 'Codigo:' || v_codigo
+        SELECT 1 
+        FROM mensajes m 
+        WHERE m.to = v_correo 
+          AND m.message = 'Codigo:' || v_codigo
     ) INTO v_existe;
 
     IF v_existe THEN
-	 	-- Cambiar el estado de pendiente a activo
-		update  usuario set estado_registro='activo'
-		where email= v_correo;
+        -- Cambiar el estado de pendiente a activo
+        UPDATE usuario 
+        SET estado_registro = 'activo'
+        WHERE email = v_correo;
 
-        -- cambiar el estado de pendiente a activo
-        update  cliente c set estado_registro='activo'
-		where c.id_usuario = (
-		select u.id_usuario from usuario u 
-		where u.email = v_correo);
+        UPDATE cliente c 
+        SET estado_registro = 'activo'
+        WHERE c.id_usuario = (
+            SELECT u.id_usuario 
+            FROM usuario u 
+            WHERE u.email = v_correo
+        );
 
-        -- Retornar un JSON de éxito si el correo y el código son válidos
-        RETURN json_build_object('status', 'success', 'message', 'Código verificado correctamente.');
+        -- Obtener los datos del usuario
+        SELECT row_to_json(u) 
+        INTO v_usuario
+        FROM usuario u
+        WHERE u.email = v_correo;
+
+        -- Retornar un JSON de éxito junto con los datos del usuario
+        RETURN json_build_object(
+            'status', 'success',
+            'message', 'Código verificado correctamente.',
+            'usuario', v_usuario
+        );
     ELSE
         -- Retornar un JSON de error si el correo o el código no son válidos
         RETURN json_build_object('status', 'error', 'message', 'Correo o código incorrecto.');

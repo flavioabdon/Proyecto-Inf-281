@@ -33,12 +33,32 @@ exports.registrarCliente = async (req, res) => {
       }
     });
 
+    let htmlTemplate = `
+    <div style="font-family: Arial, sans-serif; background-color: #f8fbff; padding: 20px; text-align: center;">
+      <div style="max-width: 400px; margin: 0 auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 20px;">
+        <h2 style="font-size: 24px; color: #333; margin-bottom: 20px;">Confirmar Cuenta</h2>
+        <p style="font-size: 16px; color: #555; margin-bottom: 20px;">
+          El código fue enviado a tu correo: <strong style="color: #333;">${to}</strong>
+        </p>
+        <p style="font-size: 16px; color: #555; margin-bottom: 10px;">Código de Verificación:</p>
+        <div style="font-size: 48px; font-weight: bold; color: #4CAF50; margin-bottom: 20px;">${codigoAleatorio}</div>
+        <p style="font-size: 14px; color: #777; margin-bottom: 20px;">
+          Si no solicitaste este código, puedes ignorar este mensaje.
+        </p>
+      </div>
+      <p style="font-size: 12px; color: #999; margin-top: 20px;">
+        Este mensaje fue enviado automáticamente, por favor no respondas.
+      </p>
+    </div>
+  `;
+  
+
     // Opciones del correo electrónico
     let mailOptions = {
       from: correoConfig.user,
       to: to,
       subject: subject,
-      text: message
+      html: htmlTemplate
     };
 
     // Enviar el correo electrónico
@@ -93,8 +113,19 @@ exports.verificarCodigo = async (req, res) => {
   try {
     // Consultar en la base de datos usando la función de PostgreSQL
     const result = await clienteM.verificaCodigo({ emailVerificacion, codigoVerificacion });
-    // Mostrar el JSON respuesta de postgres
-    res.json(result);
+    //Recuperar el usuario 
+    const usuario = result.usuario;
+    //console.log(usuario);
+    if (usuario) {
+      // Envía todos los datos del usuario y un mensaje de éxito al frontend
+      res.status(200).json({
+          message: 'Registro exitoso',
+          usuario // Enviar todos los datos del usuario
+      });
+    } else {
+        // Si no, devuelve un error de credenciales incorrectas
+        res.status(401).json({ message: 'Credenciales incorrectas' });
+    }  
 
   } catch (error) {
     console.error('Error al enviar el correo:', error);
