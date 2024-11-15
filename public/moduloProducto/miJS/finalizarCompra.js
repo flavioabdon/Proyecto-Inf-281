@@ -167,7 +167,14 @@ function generarPDF() {
         doc.text(`${info.label}`, 10, yOffset);
         doc.text(`${info.value}`, 60, yOffset);
         yOffset += 10;
+
+        // Verificar si hay que agregar una nueva página
+        if (yOffset > 260) { // Aproximadamente la mitad de la página
+            doc.addPage();
+            yOffset = 20; // Reiniciar el yOffset en la nueva página
+        }
     });
+    
     // Sección de productos
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
@@ -190,6 +197,12 @@ function generarPDF() {
         doc.text(`Precio: ${precioProducto}`, 20, yOffset + 20);
         doc.text(`Cantidad: ${cantidadProducto}`, 20, yOffset + 30);
         yOffset += 40;  // Ajustar el espacio vertical para el siguiente producto
+
+        // Verificar si hay que agregar una nueva página
+        if (yOffset > 260) { // Aproximadamente la mitad de la página
+            doc.addPage();
+            yOffset = 20; // Reiniciar el yOffset en la nueva página
+        }
     });
 
     // Sección de detalles del pedido
@@ -210,6 +223,12 @@ function generarPDF() {
         doc.text(`${info.label}`, 10, yOffset);
         doc.text(`${info.value}`, 60, yOffset);
         yOffset += 10;
+
+        // Verificar si hay que agregar una nueva página
+        if (yOffset > 260) { // Aproximadamente la mitad de la página
+            doc.addPage();
+            yOffset = 20; // Reiniciar el yOffset en la nueva página
+        }
     });
 
     // Mostrar el campo "Costo de Envío" solo si el tipo de envío es "Envio con Delivery"
@@ -219,6 +238,12 @@ function generarPDF() {
         doc.text("Costo de Envío:", 10, yOffset);
         doc.text(`Bs ${costoEnvio.toFixed(2)}`, 60, yOffset);
         yOffset += 10;
+
+        // Verificar si hay que agregar una nueva página
+        if (yOffset > 260) { // Aproximadamente la mitad de la página
+            doc.addPage();
+            yOffset = 20; // Reiniciar el yOffset en la nueva página
+        }
     }
 
     // Sección de pago
@@ -243,12 +268,24 @@ function generarPDF() {
             doc.text(`${info.label}`, 10, yOffset);
             doc.text(`${info.value}`, 60, yOffset);
             yOffset += 10;
+
+            // Verificar si hay que agregar una nueva página
+            if (yOffset > 260) { // Aproximadamente la mitad de la página
+                doc.addPage();
+                yOffset = 20; // Reiniciar el yOffset en la nueva página
+            }
         });
     } else if (tipoPago === "qr") {
         doc.setFontSize(12);
         doc.setFont("helvetica", "normal");
         doc.text("Método de Pago: Pago con QR", 10, yOffset);
         yOffset += 10;
+
+        // Verificar si hay que agregar una nueva página
+        if (yOffset > 260) { // Aproximadamente la mitad de la página
+            doc.addPage();
+            yOffset = 20; // Reiniciar el yOffset en la nueva página
+        }
     }
 
     // Pie de página

@@ -29,7 +29,8 @@ router.get('/listarAlmacenIdprod/:id_prod', almacenController.listarAlmacenPorId
 //Ruta para obtner coordenas de almacen(del primer producto) por id_pedido
 router.get('/obtenerCoordenadasAlmacen/:id', almacenController.obtenerCoordenadas); 
 
-
+//Ruta para obtener coordenas de almacen de todos los productos por id_pedido
+router.get('/obtenerCoordenadasAlmacenes/:id', almacenController.obtenerCoordenadasPedido); 
 
 //exporta el router para que pueda ser utilizado en server.js
 module.exports = router;

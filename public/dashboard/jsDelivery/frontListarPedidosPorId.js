@@ -450,31 +450,34 @@ document.getElementById('tablaMisPedidos').addEventListener('click', async funct
         // Obtener el ID del pedido desde DataTable
         const id_pedido = $('#tablaMisPedidos').DataTable().row(fila).data().id_pedido;
 
-        try {
-            // Realizar la petición con el id_pedido en la URL
-            const response = await fetch(`/obtenerCoordenadasAlmacen/${id_pedido}`);
+        const longitudI = -68.13575604248047;
+        const latitudI = -16.5066583477171;
+          // Configuración de la ubicación del cliente y creación del mapa
+          const location = { lat: latitudI, lng: longitudI };
+          map1 = new google.maps.Map(document.getElementById("map1"), {
+            center: location,
+            zoom: 12,
+          });
+        const response = await fetch(`/obtenerCoordenadasAlmacenes/${id_pedido}`);
 
-            if (!response.ok) {
-                throw new Error('No se pudieron cargar las coordenadas del almacén');
-            }
-
-            // Obtener las coordenadas desde la respuesta
-            const coordenadas = await response.json();
-
-            const direccion_almacen = coordenadas[0].direccion_almacen;
-
-            // Separar la latitud y longitud
-            const [lat, lng] = direccion_almacen.split(',').map(coord => parseFloat(coord.trim()));
-
-            // Crear un enlace a Google Maps con las coordenadas
-            const mapaUrl = `https://www.google.com/maps?q=${lat},${lng}&hl=es`;
-
-            // Abrir el enlace en una nueva pestaña
-            window.open(mapaUrl, '_blank');
-
-        } catch (error) {
-            console.error(error.message); // Manejo de errores
+        // Verifica si la respuesta fue exitosa
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.statusText}`);
         }
+
+        // Extrae el JSON de la respuesta
+        const coordenadas = await response.json();
+        coordenadas.forEach(almacen => {
+            const { latitud, longitud } = almacen;
+    
+            // Crear marcador para el almacén
+            new google.maps.Marker({
+                position: { lat: latitud, lng: longitud },
+                map: map1,
+                title: `Almacén ID: ${almacen.id_almacen}`, // Mostrar ID del almacén al pasar el cursor
+            });
+        });
+        $('#modalMapa').modal('show');
     }
 });
 

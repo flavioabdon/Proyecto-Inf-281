@@ -124,6 +124,16 @@ const obtenerCoordenadas = async (req, res) => {
     }
 };
 
+const obtenerCoordenadasPedido = async (req, res) => {
+    const id_pedido = req.params.id;
+    try {
+        const coordenadas = await almacenModel.obtenerCoordenadasPedido(id_pedido);
+        res.status(200).json(coordenadas); // Envía el JSON de coordenadas
+    } catch (error) {
+        console.error('Error al obtener las coordenadas de los almacenes:', error);
+        res.status(500).json({ message: 'Error al obtener las coordenadas de los almacenes' });
+    }
+};
 
 module.exports = {
     registrarAlmacen,
@@ -133,4 +143,5 @@ module.exports = {
     listarAlmacenPorId,
     listarAlmacenPorIdproducto,
     obtenerCoordenadas,
+    obtenerCoordenadasPedido,
 };

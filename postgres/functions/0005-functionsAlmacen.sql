@@ -309,3 +309,33 @@ $$ LANGUAGE plpgsql;
 
 -- Sentencia de apoyo
 select * from fn_obtener_coordenadas_direccion_almacen(3);
+
+--------------------------------------------------------------------------
+-- Creado: Daniel Tapia    Fecha: 15/11/2024                           --
+-- Actividad:                                                           --
+-- Funcion obtener coordenadas de todos los almacenes de los productos del pedido--
+------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION obtener_ubicaciones_almacenes(id_p INT)
+RETURNS JSON AS $$
+DECLARE
+    resultado JSON;
+BEGIN
+    -- Obtener las coordenadas de cada almacén asociado al pedido
+    resultado := (
+        SELECT json_agg(json_build_object(
+            'id_almacen', a.id_almacen,
+            'longitud', ST_X(a.ubicacion_georef_alm),
+            'latitud', ST_Y(a.ubicacion_georef_alm)
+        ))
+        FROM pedido_producto pp
+        JOIN producto_artesanal pa ON pp.id_prod = pa.id_prod
+        JOIN almacen a ON pa.id_almacen = a.id_almacen
+        WHERE pp.id_pedido = id_p
+    );
+
+    RETURN resultado;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Sentencia de apoyo
+select * from obtener_ubicaciones_almacenes(21)

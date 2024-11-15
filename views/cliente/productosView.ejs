@@ -211,7 +211,6 @@
     <div class="modal-overlay" id="modalOverlay3">
       <div class="modal-compras">
         <h3>Tipo de Envío</h3>
-
         <input type="hidden" class="form-control" id="nroProducto" name="nroProducto" required>
 
         <!-- Campo de Distancia con ícono de distancia -->
@@ -340,46 +339,26 @@
       const completeForm = document.getElementById('completeForm');
       // Mostrar la primera ventana modal al hacer clic en "Comprar"
       buyButton.addEventListener('click', () => {
-
+        modalOverlay1.style.display = 'flex';
         const usuarioGuardado = JSON.parse(sessionStorage.getItem('usuario'));
-
+        const cartItem = document.querySelector('.cart-item');
+        const nid = cartItem.getAttribute('data-id');
+        const totalPrecioCarrito = document.getElementById("totalPrecioCarrito").textContent;
         if (usuarioGuardado) {
-
-          modalOverlay1.style.display = 'flex';
-          const cartItem = document.querySelector('.cart-item');
-          const nid = cartItem.getAttribute('data-id');
-          const totalPrecioCarrito = document.getElementById("totalPrecioCarrito").textContent;
-
           document.getElementById('nombreCliente').value = usuarioGuardado.nombre;
           document.getElementById('apellidoCliente').value = usuarioGuardado.apellido;
+          document.getElementById('nroProducto').value = usuarioGuardado.direccion;
           document.getElementById('ciCliente').value = usuarioGuardado.ci;
           //para el carrito
           const numeroExtraido = parseFloat(totalPrecioCarrito.match(/[\d.]+/)[0]);
           document.getElementById("costoPedido").value = numeroExtraido;
           document.getElementById('nroProducto').value = nid;
-          obtenerDistancia(nid)
-            .then(distancia => {
-              if (distancia !== null) {
-                //console.log(`Distancia entre cliente y almacén: ${distancia.toFixed(2)} km`);
-                document.getElementById('distanciaTotal').value = distancia.toFixed(3);
-              } else {
-                console.log('No se pudo calcular la distancia');
-              }
-            });
+          
         }
         else {
-          Swal.fire({
-            icon: 'warning',
-
-            text: 'DEBES INICIAR SESIÓN O REGISTRARTE',
-            confirmButtonText: 'Ir a Login',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = '/login-registrar';
-            }
-          });
+          alert("DEBE INICIAR SESION O EN SU DEFECTO REGISTRARSE PRIMERO");
+          window.location.href = '/login-registrar';
         }
-
       });
       // Cerrar cada modal al hacer clic en el botón de cerrar
       modalClose1.addEventListener('click', () => { modalOverlay1.style.display = 'none'; });
@@ -393,6 +372,8 @@
         if (nombreCliente && apellidoCliente) {
           modalOverlay1.style.display = 'none';
           modalOverlay2.style.display = 'flex';
+          //llamada al mapa
+          initMap();
         } else {
           alert('Por favor, complete todos los campos.');
         }
@@ -401,12 +382,25 @@
       nextButton2.addEventListener('click', () => {
         const longitudCliente = document.getElementById('longitudCliente').value;
         const latitudCliente = document.getElementById('latitudCliente').value;
-        const direccionCliente = document.getElementById('direccionCliente').value;
-        if (longitudCliente && latitudCliente && direccionCliente) {
+        if (longitudCliente && latitudCliente) {
           modalOverlay2.style.display = 'none';
           modalOverlay3.style.display = 'flex';
+          //calculo de la distancia
+          const cartItem = document.querySelector('.cart-item');
+          const nid = cartItem.getAttribute('data-id');
+          obtenerDistancia(nid)
+            .then(distancia => {
+              if (distancia !== null) {
+                //console.log(`Distancia entre cliente y almacén: ${distancia.toFixed(2)} km`);
+                document.getElementById('distanciaTotal').value = distancia.toFixed(3);
+              } else {
+                console.log('No se pudo calcular la distancia');
+              }
+            });
+          //mapa estatico
+          staticMap();
         } else {
-          alert('Por favor, complete todos los campos de Dirección.');
+          alert('Por favor, complete todos los campos de dirección.');
         }
       });
       // Transición de la tercera a la cuarta ventana (Tipo de Envío -> Tipo de Pago)
@@ -420,7 +414,7 @@
         }
       });
 
-      // Funciones de retroceso
+          // Funciones de retroceso
       backButton2.addEventListener('click', () => {
         modalOverlay2.style.display = 'none';
         modalOverlay1.style.display = 'flex';
@@ -440,35 +434,35 @@
   <!--Script para el modal 4-->
   <script>
     function togglePaymentFields() {
-      const tipoPago = document.getElementById("tipoPago").value;
-      const tarjetaFields = document.getElementById("tarjetaFields");
-      const qrCode = document.getElementById("qrcode");
-      const finalizarButton = document.getElementById("finalizarButton");
+          const tipoPago = document.getElementById("tipoPago").value;
+          const tarjetaFields = document.getElementById("tarjetaFields");
+          const qrCode = document.getElementById("qrcode");
+          const finalizarButton = document.getElementById("finalizarButton");
 
-      if (tipoPago === "tarjeta") {
-        // Mostrar campos de tarjeta y ocultar el QR
-        tarjetaFields.style.display = "block";
-        qrCode.style.display = "none";
-        finalizarButton.style.display = ""; // Mostrar botón "Finalizar"
-      } else if (tipoPago === "qr") {
-        // Ocultar campos de tarjeta y mostrar el QR
-        tarjetaFields.style.display = "none";
-        qrCode.style.display = "";
-        finalizarButton.style.display = ""; // Mostrar botón "Finalizar"
-        generarQR();  // Genera el QR directamente
-      } else {
-        // Si no hay selección, oculta ambos y el botón "Finalizar"
-        tarjetaFields.style.display = "none";
-        qrCode.style.display = "none";
-        finalizarButton.style.display = "none"; // Ocultar botón "Finalizar"
+          if (tipoPago === "tarjeta") {
+              // Mostrar campos de tarjeta y ocultar el QR
+              tarjetaFields.style.display = "block";
+              qrCode.style.display = "none";
+              finalizarButton.style.display = "block"; // Mostrar botón "Finalizar"
+          } else if (tipoPago === "qr") {
+              // Ocultar campos de tarjeta y mostrar el QR
+              tarjetaFields.style.display = "none";
+              qrCode.style.display = "block";
+              finalizarButton.style.display = "block"; // Mostrar botón "Finalizar"
+              generarQR();  // Genera el QR directamente
+          } else {
+              // Si no hay selección, oculta ambos y el botón "Finalizar"
+              tarjetaFields.style.display = "none";
+              qrCode.style.display = "none";
+              finalizarButton.style.display = "none"; // Ocultar botón "Finalizar"
+          }
       }
-    }
   </script>
   <script>
     function calcular() {
       const numero1 = parseFloat(document.getElementById('costoPedido').value);
       const numero2 = document.getElementById('distanciaTotal').value;
-      const numero3 = parseFloat((0.1 * numero2).toFixed(3));
+      const numero3 = parseFloat((10 * numero2).toFixed(3));
       const operacion = document.getElementById('tipoEnvio').value;
       let resultado;
       if (operacion === 'directo') {
@@ -482,15 +476,11 @@
     }
   </script>
   <script>
-    // Datos fijos del cliente (pueden ser variables o pasarse a la función si varían)
-    const latitud2 = document.getElementById('latitudCliente').value; // Ejemplo de latitud del cliente
-    const longitud2 = document.getElementById('longitudCliente').value; // Ejemplo de longitud del cliente
-
     // Función principal que calcula la distancia entre el cliente y el almacén
     async function obtenerDistancia(id_prod) {
-      // URL de la API
-
-
+        // Datos del cliente 
+      const latitud2 = document.getElementById('latitudCliente').value; 
+      const longitud2 = document.getElementById('longitudCliente').value; 
       try {
         const response = await fetch(`/listarAlmacenIdprod/${id_prod}`);
         if (!response.ok) {
@@ -502,7 +492,6 @@
         // Verificamos que el array contenga al menos un objeto
         if (data.length > 0) {
           const { latitud, longitud } = data[0];
-
           // Calculamos la distancia usando la fórmula de Haversine
           const distancia = calcularDistanciaHaversine(
             parseFloat(latitud),
@@ -526,18 +515,17 @@
       const R = 6371; // Radio de la Tierra en kilómetros
       const dLat = (lat2 - lat1) * (Math.PI / 180);
       const dLon = (lon2 - lon1) * (Math.PI / 180);
-
+      
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
+        
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const distancia = R * c; // Distancia en kilómetros
 
       return distancia;
     }
-
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
@@ -578,40 +566,134 @@
     }
   </script>
 
-  <!-------Script para añadir el pedido-------->
   <!--------Google Maps------>
   <script>
     let map, marker;
 
-    function initMap() {
-      // Coordenadas iniciales del mapa
-      const initialLocation = { lat: -16.500849, lng: -68.173632 };
+function initMap() {
+    // Coordenadas iniciales del mapa
+    const initialLocation = { lat: -16.5060, lng: -68.1155 };
+    //const initialLocation = { lat: -16.500849, lng: -68.173632 };
 
-      // Crear el mapa
-      map = new google.maps.Map(document.getElementById("map"), {
+    // Crear el mapa
+    map = new google.maps.Map(document.getElementById("map"), {
         center: initialLocation,
         zoom: 12,
-      });
+    });
 
-      // Crear el marcador
-      marker = new google.maps.Marker({
+    // Crear el marcador
+    marker = new google.maps.Marker({
         position: initialLocation,
         map: map,
         draggable: true, // Permitir arrastrar el marcador
-      });
+    });
 
-      // Escuchar el evento de arrastre del marcador para obtener la ubicación
-      google.maps.event.addListener(marker, 'dragend', function (event) {
+    // Escuchar el evento de arrastre del marcador para obtener la ubicación
+    google.maps.event.addListener(marker, 'dragend', function (event) {
         const lat = event.latLng.lat();
         const lng = event.latLng.lng();
 
         // Guardar las coordenadas en los campos de longitud y latitud
         document.getElementById("latitudCliente").value = lat;
         document.getElementById("longitudCliente").value = lng;
+    });
+  }
+  </script>
+  <script>
+    let map1, marker1, directionsService, directionsRenderer;
+  
+    async function staticMap() {
+      // Obtener las coordenadas del cliente desde el formulario
+      const longitudI = parseFloat(document.getElementById("longitudCliente").value);
+      const latitudI = parseFloat(document.getElementById("latitudCliente").value);
+      // Crear la ubicación a partir de las coordenadas del cliente
+      const clientLocation = { lat: latitudI, lng: longitudI };
+  
+      if (isNaN(latitudI) || isNaN(longitudI)) {
+        console.error("Las coordenadas del cliente no son válidas.");
+        return;
+      }
+  
+      // Configuración de la ubicación del cliente y creación del mapa
+      const location = { lat: latitudI, lng: longitudI };
+      map1 = new google.maps.Map(document.getElementById("map1"), {
+        center: location,
+        zoom: 12,
+      });
+  
+      // Crear el marcador del cliente
+      marker1 = new google.maps.Marker({
+        position: location,
+        map: map1,
+        draggable: false,
+        title: "Ubicación del Cliente"
+      });
+      // Inicializar el servicio y renderizador de direcciones
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer();
+  
+      // Vincular el renderizador al mapa
+      directionsRenderer.setMap(map1);
+      // Procesamiento de los elementos del carrito
+      const cartItems = document.querySelectorAll(".cart-item");
+  
+      for (const item of cartItems) {
+        const id_prod = item.getAttribute("data-id");
+        try {
+          // Llamada a la API para obtener la ubicación del producto
+          const response = await fetch(`/listarAlmacenIdprod/${id_prod}`);
+          if (!response.ok) {
+            throw new Error(`Error al obtener datos de la API para ID ${id_prod}`);
+          }
+  
+          const data = await response.json();
+          console.log(`Datos recibidos para ID ${id_prod}:`, data);
+  
+          if (data.length > 0) {
+            const { latitud, longitud } = data[0];
+  
+            if (!isNaN(latitud) && !isNaN(longitud)) {
+              const productLocation = { lat: parseFloat(latitud), lng: parseFloat(longitud) };
+              const productMarker = new google.maps.Marker({
+                position: productLocation,
+                map: map1,
+                title: `Producto ID: ${id_prod}`,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+              });
+              drawRoute(clientLocation, productLocation);
+  
+            } else {
+              console.warn(`Coordenadas inválidas para el producto ID ${id_prod}`);
+            }
+          } else {
+            console.warn(`No se encontraron datos para el producto ID ${id_prod}`);
+          }
+        } catch (error) {
+          console.error(`Error al obtener la ubicación del producto ${id_prod}:`, error);
+        }
+      }
+    }
+    // Función para trazar la ruta desde el cliente hasta el producto
+    function drawRoute(start, end) {
+      const request = {
+        origin: start,       // Coordenadas de inicio (cliente)
+        destination: end,    // Coordenadas de destino (producto)
+        travelMode: google.maps.TravelMode.DRIVING // Modo de transporte
+      };
+  
+      directionsService.route(request, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          // Mostrar la ruta en el mapa
+          directionsRenderer.setDirections(result);
+        } else {
+          console.error("Error al calcular la ruta:", status);
+        }
       });
     }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+
+  <!--MY KEY!!!!!!!!!!!!!!!!!!!-->
+  <script src="https://maps.googleapis.com/maps/api/js?key="></script>
   <!--Pruebas-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

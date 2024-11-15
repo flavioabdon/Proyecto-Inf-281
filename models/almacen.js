@@ -145,6 +145,29 @@ const obtenerCoordenadas = async (id_pedido) => {
     }
 };
 
+// Función para listar las coordenadas de un pedido
+const obtenerCoordenadasPedido = async (id_pedido) => {
+    const query = `
+        SELECT obtener_ubicaciones_almacenes($1) AS ubicaciones;
+    `;
+    const values = [id_pedido];
+    
+    try {
+        // Ejecuta la consulta y espera el resultado
+        const res = await sequelize.query(query, {
+            bind: values,
+            type: sequelize.QueryTypes.SELECT
+        });
+
+        // Sequelize devuelve un array con un objeto en el formato [{ ubicaciones: JSON }]
+        // Accedemos directamente al JSON que contiene las ubicaciones
+        return res[0].ubicaciones; 
+    } catch (error) {
+        console.error('Error al obtener coordenadas de almacenes con id_pedido:', id_pedido, error); 
+        throw error; 
+    }
+};
+
 module.exports = {
     registrarAlmacen, // Exporta la función para usarla en otras partes de la aplicación
     listarAlmacenes, // Exporta la función para listar almacenes
@@ -153,4 +176,5 @@ module.exports = {
     listarAlmacenPorId, //Exporta la funcion para listar almacen especifico por ID de almacen
     listarAlmacenPorIdproducto, //Exporta la funcion para listar almacen especifico por ID de producto
     obtenerCoordenadas,
+    obtenerCoordenadasPedido,
 };
