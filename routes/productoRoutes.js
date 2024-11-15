@@ -31,7 +31,7 @@ router.post('/registrarPedido', productosC.registrarPedido); //json recibe pedid
 
 // NUEVA Ruta para la vista DEL ARTESANO
 router.get('/artesanoProducto', (req, res) => {
-    res.render('artesano/productoArtesanoview', { currentPage: "artesanoProducto" }); // Renderiza la vista
+    res.render('artesano/productoArtesanoView', { currentPage: "artesanoProducto" }); // Renderiza la vista
 });
 
 // NUEVA RUTA: Listar productos del artesano por usuarioID

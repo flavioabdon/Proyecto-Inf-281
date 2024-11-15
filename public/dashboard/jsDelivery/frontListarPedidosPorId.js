@@ -167,10 +167,10 @@ async function listarPedidosPorId(id_usuario_delivery) {
             },
             order: [[0, 'desc']],
             columnDefs: [
-                // {
-                //     targets: [1],
-                //     visible: false
-                // },
+                {
+                    targets: [1],
+                    visible: false
+                },
                 {
                     targets: [0, 2, 4],
                     className: 'text-left'

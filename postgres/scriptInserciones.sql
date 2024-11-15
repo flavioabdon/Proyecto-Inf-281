@@ -201,6 +201,89 @@ CREATE TABLE IF NOT EXISTS public.PRODUCTO_ARTESANAL (
     estado_registro character varying(15)
 );
 
+
+-- ====================================
+-- TABLA PEDIDO
+-- ====================================
+CREATE TABLE IF NOT EXISTS public.PEDIDO (
+    id_pedido SERIAL PRIMARY KEY,				--** nroPedido
+    direccion_Envio VARCHAR(255) NOT NULL,
+    costo_Pedido DECIMAL(10, 2) NOT NULL,
+    costo_envio DECIMAL(10, 2) NOT NULL,
+    distancia DECIMAL(10, 2),            
+    id_cliente INTEGER NOT NULL,	--referencia al usuario CLIENTE
+    CONSTRAINT fk_pedido_cliente FOREIGN KEY (id_cliente)
+        REFERENCES public.CLIENTE (id_cliente)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE, 
+    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,		--
+    fecha_modificacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    usuario_creacion character varying(20),
+    usuario_modificacion character varying(20),
+    estado_registro character varying(15)
+);
+
+
+-- ====================================
+-- TABLA PRODUCTO - PEDIDO
+-- ====================================
+
+CREATE TABLE IF NOT EXISTS public.PEDIDO_PRODUCTO (
+    id_pedido_producto SERIAL PRIMARY KEY,
+    cantidad INTEGER NOT NULL,             -- Cantidad de productos en el pedido
+    id_Prod INTEGER NOT NULL,              -- ID del producto
+    id_pedido INTEGER NOT NULL,            -- ID del pedido
+    latitud DECIMAL(9, 6),                 -- Latitud geográfica
+    longitud DECIMAL(9, 6),                -- Longitud geográfica
+    -- Restricciones de claves foráneas
+    CONSTRAINT fk_pedido_producto_pedido FOREIGN KEY (id_pedido)
+        REFERENCES public.PEDIDO (id_pedido)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    
+    CONSTRAINT fk_pedido_producto_producto FOREIGN KEY (id_Prod)
+        REFERENCES public.PRODUCTO_ARTESANAL (id_Prod)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    -- Campos de control de creación y modificación
+    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    usuario_creacion character varying(20),
+    usuario_modificacion character varying(20),
+    estado character varying(35)
+);
+
+-- ====================================
+-- TABLA ENVIO
+-- ====================================
+
+CREATE TABLE IF NOT EXISTS public.ENVIO (
+    id_envio SERIAL PRIMARY KEY,
+    num_tracking VARCHAR(50) NOT NULL,		--generado RR123456789BO
+    estado VARCHAR(50) NOT NULL,	--(en almacen, recibido por delivery, en camino, entregado, ...).
+    fecha_estado TIMESTAMP WITH TIME ZONE NOT NULL,
+    tipo_envio VARCHAR(30) NOT NULL,	--(urgente, estándar, express).
+    id_delivery INTEGER NOT NULL,	--referencia al usuario DELIVERY
+    id_pedido INTEGER NOT NULL,		--referencia al tabla PEDIDO
+    CONSTRAINT fk_envio_delivery FOREIGN KEY (id_delivery)
+        REFERENCES public.DELIVERY (id_delivery)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_envio_pedido FOREIGN KEY (id_pedido)
+        REFERENCES public.PEDIDO (id_pedido)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE, 
+    fecha_creacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,		--
+    fecha_modificacion TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    usuario_creacion character varying(20),
+    usuario_modificacion character varying(20),
+    estado_registro character varying(15)
+);
+
+
+
+
 -- ====================================
 -- ELIMINACIÓN DE TABLAS ANTERIORES (SI EXISTEN)
 -- ====================================
@@ -213,7 +296,8 @@ DROP TABLE IF EXISTS public.comunidad;
 DROP TABLE IF EXISTS public.categoria;
 DROP TABLE IF EXISTS public.almacen;
 DROP TABLE IF EXISTS public.producto_artesanal;
-
+DROP TABLE IF EXISTS public.envio;
+DROP TABLE IF EXISTS public.pedido;
 
 
 -- ====================================
@@ -221,16 +305,16 @@ DROP TABLE IF EXISTS public.producto_artesanal;
 -- ====================================
 INSERT INTO public.COMUNIDAD (Departamento, provincia, Municipio, nombreCom, ubicacion_geoRef_Com, usuario_creacion, estado_registro)
 VALUES
-('La Paz', 'Murillo', 'La Paz', 'Villa Fátima', ST_SetSRID(ST_MakePoint(-68.1287, -16.4826), 4326), 'admin', 'activo'),
-('La Paz', 'Murillo', 'La Paz', 'Obrajes', ST_SetSRID(ST_MakePoint(-68.1193, -16.5277), 4326), 'admin', 'activo'),
-('La Paz', 'Murillo', 'La Paz', 'Achumani', ST_SetSRID(ST_MakePoint(-68.0921, -16.5525), 4326), 'admin', 'activo'),
-('La Paz', 'Murillo', 'La Paz', 'Sopocachi', ST_SetSRID(ST_MakePoint(-68.1246, -16.5002), 4326), 'admin', 'activo'),
-('La Paz', 'Murillo', 'La Paz', 'San Antonio', ST_SetSRID(ST_MakePoint(-68.1095, -16.5183), 4326), 'admin', 'activo'),
-('La Paz', 'Murillo', 'El Alto', 'Ciudad Satélite', ST_SetSRID(ST_MakePoint(-68.2111, -16.5196), 4326), 'admin', 'activo'),
-('La Paz', 'Los Andes', 'Pucarani', 'Pucarani', ST_SetSRID(ST_MakePoint(-68.5802, -16.3335), 4326), 'admin', 'activo'),
-('La Paz', 'Pacajes', 'Patacamaya', 'Patacamaya', ST_SetSRID(ST_MakePoint(-68.3887, -17.2362), 4326), 'admin', 'activo'),
-('La Paz', 'Omasuyos', 'Achacachi', 'Achacachi', ST_SetSRID(ST_MakePoint(-68.6826, -16.0721), 4326), 'admin', 'activo'),
-('La Paz', 'Nor Yungas', 'Coroico', 'Coroico', ST_SetSRID(ST_MakePoint(-67.7278, -16.1902), 4326), 'admin', 'activo');
+    ('La Paz', 'Murillo', 'La Paz', 'Villa Fátima', ST_SetSRID(ST_MakePoint(-68.1287, -16.4826), 4326), 'admin', 'activo'),
+    ('La Paz', 'Murillo', 'La Paz', 'Obrajes', ST_SetSRID(ST_MakePoint(-68.1193, -16.5277), 4326), 'admin', 'activo'),
+    ('La Paz', 'Murillo', 'La Paz', 'Achumani', ST_SetSRID(ST_MakePoint(-68.0921, -16.5525), 4326), 'admin', 'activo'),
+    ('La Paz', 'Murillo', 'La Paz', 'Sopocachi', ST_SetSRID(ST_MakePoint(-68.1246, -16.5002), 4326), 'admin', 'activo'),
+    ('La Paz', 'Murillo', 'La Paz', 'San Antonio', ST_SetSRID(ST_MakePoint(-68.1095, -16.5183), 4326), 'admin', 'activo'),
+    ('La Paz', 'Murillo', 'El Alto', 'Ciudad Satélite', ST_SetSRID(ST_MakePoint(-68.2111, -16.5196), 4326), 'admin', 'activo'),
+    ('La Paz', 'Los Andes', 'Pucarani', 'Pucarani', ST_SetSRID(ST_MakePoint(-68.5802, -16.3335), 4326), 'admin', 'activo'),
+    ('La Paz', 'Pacajes', 'Patacamaya', 'Patacamaya', ST_SetSRID(ST_MakePoint(-68.3887, -17.2362), 4326), 'admin', 'activo'),
+    ('La Paz', 'Omasuyos', 'Achacachi', 'Achacachi', ST_SetSRID(ST_MakePoint(-68.6826, -16.0721), 4326), 'admin', 'activo'),
+    ('La Paz', 'Nor Yungas', 'Coroico', 'Coroico', ST_SetSRID(ST_MakePoint(-67.7278, -16.1902), 4326), 'admin', 'activo');
 
 -- ====================================
 -- INSERCIÓN DE DATOS EN LA TABLA CATEGORIA
@@ -313,6 +397,7 @@ INSERT INTO public.USUARIO (codigo_Usuario, nombre, apellido, email, numero_Cont
 ('LM12345678', 'Lorena', 'Mendoza', 'lorena.mendoza@gmail.com', '75231597', MD5('Password1002'), '12345695', 'F', 'uploads/1729139333329-752832548.jpg', 'Artesano', DEFAULT, DEFAULT, 'sistema', NULL, 'activo'),
 ('PM12345678', 'Pablo', 'Maldonado', 'pablo.maldonado@gmail.com', '75231598', MD5('Password1002'), '12345696', 'M', 'uploads/1729139333329-752832548.jpg', 'Artesano', DEFAULT, DEFAULT, 'sistema', NULL, 'activo'),
 ('EM12345678', 'Elena', 'Martinez', 'elena.martinez@gmail.com', '75231599', MD5('Password1002'), '12345697', 'F', 'uploads/1729139333329-752832548.jpg', 'Artesano', DEFAULT, DEFAULT, 'sistema', NULL, 'activo');
+
 INSERT INTO public.ARTESANO (id_usuario, especialidad_Artesano, id_comunidad, usuario_creacion, estado_registro)
 VALUES 
 (12, 'Cerámica', 1, 'sistema', 'activo'),
