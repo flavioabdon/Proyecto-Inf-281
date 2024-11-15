@@ -33,12 +33,28 @@ exports.registrarCliente = async (req, res) => {
       }
     });
 
+    let htmlTemplate = `
+    <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+      <h2 style="color: #4CAF50;">Confirmación de Cuenta</h2>
+      <p>Hola,</p>
+      <p>Gracias por registrarte. Para confirmar tu cuenta, utiliza el siguiente código:</p>
+      <div style="margin: 20px 0; text-align: center;">
+        <span style="font-size: 24px; font-weight: bold; color: #4CAF50;">${codigoAleatorio}</span>
+      </div>
+      <p>Si no solicitaste este correo, por favor ignóralo.</p>
+      <p>¡Gracias!</p>
+      <footer style="margin-top: 20px; font-size: 12px; color: #888;">
+        <p>Este mensaje fue enviado automáticamente, por favor no responda a este correo.</p>
+      </footer>
+    </div>
+  `;
+
     // Opciones del correo electrónico
     let mailOptions = {
       from: correoConfig.user,
       to: to,
       subject: subject,
-      text: message
+      html: htmlTemplate
     };
 
     // Enviar el correo electrónico
