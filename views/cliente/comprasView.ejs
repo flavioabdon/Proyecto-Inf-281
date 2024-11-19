@@ -84,7 +84,6 @@
                                         <tr>
                                             <th class="">#:&nbsp;</th>
                                             <th>id_pedido:&nbsp;</th>
-                                            <th class="">Datos Artesano:&nbsp;</th>
                                             <th class="">Datos Delivery:&nbsp;</th>
                                             <th class="">Estado_Pedido:&nbsp;</th>
                                             <th class="">Productos:&nbsp;</th>
@@ -99,7 +98,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="8" style="text-align:right">Total:</th>
+                                            <th colspan="7" style="text-align:right">Total:</th>
                                             <th></th>
                                             <th></th>
                                             <!-- Celdas vacías para el total en `suma_total` -->
@@ -142,6 +141,9 @@
                                                     <th>Precio:&nbsp;</th>
                                                     <th>Cantidad:&nbsp;</th>
                                                     <th>Sub-Total:&nbsp;</th>
+                                                    <th>Artesano:&nbsp;</th>
+                                                    <th>Email:&nbsp;</th>
+                                                    <th>Número:&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -151,62 +153,6 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Modal para Ver Detalle del Artesano -->
-            <div class="modal fade" id="modalDetalleArtesano" tabindex="-1" role="dialog"
-                aria-labelledby="modalDetalleArtesanoLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalDetalleArtesanoLabel">Datos del Artesano
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Contenedor con los detalles del artesano -->
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label><strong>Nombres:</strong></label>
-                                            <p id="nombreArtesano"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><strong>Apellidos:</strong></label>
-                                            <p id="apellidoArtesano"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><strong>CI:</strong></label>
-                                            <p id="ciArtesano"></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label><strong>Email:</strong></label>
-                                            <p id="emailArtesano"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><strong>Número de contacto:</strong></label>
-                                            <p id="numeroArtesano"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><strong>Especialidad:</strong></label>
-                                            <p id="especialidadArtesano"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Más detalles del artesano si es necesario -->
                             </div>
                         </div>
                         <div class="modal-footer">

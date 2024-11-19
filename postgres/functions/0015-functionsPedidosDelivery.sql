@@ -1,6 +1,6 @@
 
 --------------------------------------------------------------------------
--- Creado: Christian Medrano    Fecha:11/11/2024                           --
+-- Creado: Christian Medrano    Fecha:18/11/2024                           --
 -- Actividad:                                                           --
 -- Funciones obtiene todos los pedidos pa los deliveris(para luego tomar un pedido) --
 ------------------------------------------------------------------
@@ -10,7 +10,7 @@ RETURNS TABLE (
     num_fila BIGINT,
     id_pedido INT,
     id_usuario_cliente INT,
-    id_usuario_artesano INT,
+    id_artesanos TEXT, -- Aquí se almacenará el STRING_AGG
     estado TEXT,
     direccion_envio TEXT,
     costo_envio NUMERIC
@@ -21,7 +21,7 @@ BEGIN
         ROW_NUMBER() OVER(ORDER BY pe.id_pedido) AS num_fila,
         pe.id_pedido,
         u_cliente.id_usuario AS id_usuario_cliente,
-        u_artesano.id_usuario AS id_usuario_artesano,
+        STRING_AGG(DISTINCT u_artesano.id_usuario::TEXT, ', ') AS id_artesanos, 
         pp.estado::TEXT AS estado, 
         CONCAT(pp.latitud, ', ', pp.longitud) AS direccion_envio,
         pe.costo_envio
@@ -49,7 +49,7 @@ BEGIN
         pp.estado = 'En Almacen' 
         AND pe.costo_envio != 0
     GROUP BY 
-        pe.id_pedido, u_cliente.id_usuario, u_artesano.id_usuario, pp.estado, pp.latitud, pp.longitud, pe.costo_envio
+        pe.id_pedido, u_cliente.id_usuario, pp.estado, pp.latitud, pp.longitud, pe.costo_envio
     ORDER BY 
         pe.id_pedido;
 END;
@@ -60,7 +60,7 @@ select * from fn_listar_todos_los_pedidos();
 
 
 --------------------------------------------------------------------------
--- Creado: Christian Medrano    Fecha:13/11/2024                           --
+-- Creado: Christian Medrano    Fecha:18/11/2024                           --
 -- Actividad:                                                           --
 -- Funciones obtiene pedidos asignados del delivery por id --
 ----------------------------------
@@ -69,7 +69,7 @@ RETURNS TABLE(
     num_fila BIGINT,
     id_pedido INT,
     id_usuario_cliente INT,
-    id_usuario_artesano INT,
+    id_artesanos TEXT, -- Cambio para reflejar múltiples artesanos
     num_tracking VARCHAR(50), 
     direccion_envio TEXT,
     estado TEXT,
@@ -81,15 +81,15 @@ BEGIN
         ROW_NUMBER() OVER(ORDER BY pe.id_pedido) AS num_fila,
         pe.id_pedido,
         u_cliente.id_usuario AS id_usuario_cliente,
-        u_artesano.id_usuario AS id_usuario_artesano,
+        STRING_AGG(DISTINCT u_artesano.id_usuario::TEXT, ', ') AS id_artesanos, -- Corrección aplicada
         e.num_tracking, 
         CONCAT(pp.latitud, ', ', pp.longitud) AS direccion_envio,
         pp.estado::TEXT AS estado, 
         pe.costo_envio
     FROM 
-        producto_artesanal pa
+        producto_artesanal AS pa
     INNER JOIN 
-        pedido_producto pp ON pa.id_Prod = pp.id_Prod
+        pedido_producto AS pp ON pa.id_Prod = pp.id_Prod
     INNER JOIN 
         pedido AS pe ON pe.id_pedido = pp.id_pedido
     INNER JOIN 
@@ -110,13 +110,18 @@ BEGIN
         pe.costo_envio != 0 
         AND u_delivery.id_usuario = id_usuario_delivery
     GROUP BY 
-        pe.id_pedido, u_cliente.id_usuario, 
-        u_artesano.id_usuario, pp.estado, pp.latitud, pp.longitud,
-        e.num_tracking
+        pe.id_pedido, 
+        u_cliente.id_usuario, 
+        e.num_tracking, 
+        pp.estado, 
+        pp.latitud, 
+        pp.longitud, 
+        pe.costo_envio
     ORDER BY 
         pe.id_pedido;
 END;
 $$ LANGUAGE plpgsql;
+
 
 -- Sentencia de apoyo
 SELECT * FROM fn_listar_pedidos_delivery_por_id(22);

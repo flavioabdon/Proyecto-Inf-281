@@ -37,16 +37,6 @@ async function listarTodosLosPedidosDelivery() {
                     }
                 },
                 {
-                    data: 'id_usuario_artesano',
-                    render: function (data) {
-                        return ` 
-                            <button class="btn btn-secondary btn-sm btnUsuarioArtesano" data-id="${data}" data-type="artesano">
-                                <i class="fas fa-user"></i> Ver Artesano
-                            </button>
-                        `;
-                    }
-                },
-                {
                     data: 'estado',
                     render: function (data) {
                         let badgeClass, iconClass, text;
@@ -225,49 +215,7 @@ document.getElementById('tablaPedidos').addEventListener('click', async function
     }
 });
 
-// Evento Click btnUsuario Artesano
-document.getElementById('tablaPedidos').addEventListener('click', async function (event) {
-    const boton = event.target.closest('.btnUsuarioArtesano'); // Cambia la clase a la correspondiente
-    if (boton) {
 
-        // Extraer los atributos del botón (id_artesano)
-        const idArtesano = boton.getAttribute('data-id');
-
-        // Mostrar el modal
-        $('#modalDetalleArtesano').modal('show'); // Asegúrate de que el modal sea el correcto
-
-        try {
-            const response = await fetch(`/obtenerDatosArtesano/${idArtesano}`);
-            // Verifica si la respuesta fue exitosa (código 200)
-            if (!response.ok) {
-                throw new Error('No se pudieron cargar los datos del artesano');
-            }
-            // Procesar la respuesta JSON
-            const data = await response.json();
-
-            // Verificar si se recibió un artesano en los datos
-            if (Array.isArray(data) && data.length > 0) {
-                const artesano = data[0];
-
-                // Asignar los datos al modal
-                document.getElementById('nombreArtesano').textContent = artesano.nombre || 'No disponible';
-                document.getElementById('apellidoArtesano').textContent = artesano.apellido || 'No disponible';
-                document.getElementById('ciArtesano').textContent = artesano.ci || 'No disponible';
-                document.getElementById('emailArtesano').textContent = artesano.email || 'No disponible';
-                document.getElementById('numeroArtesano').textContent = artesano.numero_contacto || 'No disponible';
-                document.getElementById('especialidadArtesano').textContent = artesano.especialidad_artesano || 'No disponible';
-
-            } else {
-                // Si no se encuentra el artesano
-                alert("No se encontraron datos para el artesano");
-            }
-
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al cargar los datos del artesano: ' + error.message);
-        }
-    }
-});
 
 //Evento Click btnDetalles
 document.getElementById('tablaPedidos').addEventListener('click', async function (event) {
@@ -280,13 +228,14 @@ document.getElementById('tablaPedidos').addEventListener('click', async function
 
         if (pedidosData) {
             const id_pedido = pedidosData.id_pedido;
-            const id_usuario_artesano = pedidosData.id_usuario_artesano;
+            const id_usuario_cliente = pedidosData.id_usuario_cliente;
+          
             // Mostrar el modal de detalles
             $('#modalDetalleVentas').modal('show');
 
             try {
                 // Realizamos una solicitud GET para obtener los detalles de ventas del artesano
-                const response = await fetch(`/listarDetalleVentasArtesano/${id_usuario_artesano}/${id_pedido}`);
+                const response = await fetch(`/listarDetalleVentasArtesano/${id_usuario_cliente}/${id_pedido}`);
                 if (!response.ok) {
                     throw new Error('No se pudieron cargar los productos de las ventas');
                 }
@@ -329,7 +278,24 @@ document.getElementById('tablaPedidos').addEventListener('click', async function
                                     `;
                                 }
                             },
+                            { data: 'precio' },
                             { data: 'cantidad' },
+                            {
+                                data: 'subtotal',
+                                render: function (data) {
+                                    // Usamos un badge cuadrado con el texto 'Bs.' delante del valor
+                                    return `<span class="badge badge-primary" style="border-radius: 0; padding: 8px 12px;">Bs. ${data}</span>`;
+                                }
+                            },
+                            {
+                                data: 'nombre_completo_artesano',
+                                render: function (data) {
+                                    return `<strong>${data}</strong>`;
+                                }
+                            },
+                            { data: 'email_artesano' },
+                            { data: 'numero_artesano' },
+
                         ],
 
                         language: {
@@ -440,19 +406,19 @@ document.getElementById('tablaPedidos').addEventListener('click', function (even
 });
 
 //Evento Click btnDireccionAlmacen(Coordenadas)
-document.getElementById('tablaPedidos').addEventListener('click', async function (event){
+document.getElementById('tablaPedidos').addEventListener('click', async function (event) {
     const boton = event.target.closest('.btnDireccionAlmacen');
     const fila = $(event.target).closest('tr');
     const id_pedido = $('#tablaPedidos').DataTable().row(fila).data().id_pedido;
     if (boton) {
         const longitudI = -68.13575604248047;
         const latitudI = -16.5066583477171;
-          // Configuración de la ubicación del cliente y creación del mapa
-          const location = { lat: latitudI, lng: longitudI };
-          map1 = new google.maps.Map(document.getElementById("map1"), {
+        // Configuración de la ubicación del cliente y creación del mapa
+        const location = { lat: latitudI, lng: longitudI };
+        map1 = new google.maps.Map(document.getElementById("map1"), {
             center: location,
             zoom: 12,
-          });
+        });
         const response = await fetch(`/obtenerCoordenadasAlmacenes/${id_pedido}`);
 
         // Verifica si la respuesta fue exitosa
@@ -464,7 +430,7 @@ document.getElementById('tablaPedidos').addEventListener('click', async function
         const coordenadas = await response.json();
         coordenadas.forEach(almacen => {
             const { latitud, longitud } = almacen;
-    
+
             // Crear marcador para el almacén
             new google.maps.Marker({
                 position: { lat: latitud, lng: longitud },

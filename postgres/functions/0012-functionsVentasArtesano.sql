@@ -53,18 +53,19 @@ SELECT * FROM fn_listar_ventas_artesano(12);
 
 
 --------------------------------------------------------------------------
--- Creado: Christian Medrano    Fecha: 8/11/2024                           --
+-- Creado: Christian Medrano    Fecha: 18/11/2024                           --
 -- Actividad:                                                           --
 -- Funciones ventas de un artesano                               --
 ------------------------------------------------------------------
 
 -- LISTAS DETALLE DE VENTAS ARTESANO MUESTRA PRODUCTOS  SUBTOTAL POR ID_USUARIO,ID_PEDIDO  
-CREATE OR REPLACE FUNCTION fn_listar_detalle_ventas_artesano(
-    p_id_usuario INT,
-    pe_id_pedido INT
-)
+
+CREATE OR REPLACE FUNCTION fn_listar_detalle_ventas_artesano(id_usuario_cliente INT, pe_id_pedido INT)
 RETURNS TABLE (
     num_fila BIGINT,
+    nombre_completo_artesano TEXT,
+    email_artesano TEXT,
+    numero_artesano TEXT, 
     id_prod INT,
     nombre_prod TEXT,
     descripcion_prod TEXT,
@@ -76,8 +77,11 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
     RETURN QUERY
-    SELECT   
-        ROW_NUMBER() OVER (ORDER BY pa.id_prod) AS num_fila,
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY pa.id_prod) AS num_fila, 
+        CONCAT(u_artesano.nombre, ' ', u_artesano.apellido)::TEXT AS nombre_completo_artesano,  
+        u_artesano.email::TEXT AS email_artesano,  
+        u_artesano.numero_contacto::TEXT AS numero_artesano,  
         pa.id_prod,
         pa.nombre_prod::TEXT,
         pa.descripcion_prod::TEXT,
@@ -89,23 +93,24 @@ BEGIN
     FROM 
         producto_artesanal pa
     INNER JOIN 
-        pedido_producto pp ON pa.id_Prod = pp.id_Prod
+        pedido_producto pp ON pa.id_prod = pp.id_prod
     INNER JOIN 
-        pedido AS pe ON pe.id_pedido = pp.id_pedido
+        pedido pe ON pe.id_pedido = pp.id_pedido
     INNER JOIN 
-        cliente AS c ON c.id_cliente = pe.id_cliente 
+        cliente c ON c.id_cliente = pe.id_cliente 
     INNER JOIN 
-        usuario AS u ON u.id_usuario = c.id_usuario 
+        usuario u ON u.id_usuario = c.id_usuario 
     INNER JOIN 
-        artesano AS a ON a.id_artesano = pa.id_artesano
+        artesano a ON a.id_artesano = pa.id_artesano
+    INNER JOIN 
+        usuario u_artesano ON u_artesano.id_usuario = a.id_usuario 
     WHERE 
-        a.id_usuario = p_id_usuario 
+        c.id_usuario = id_usuario_cliente
         AND pe.id_pedido = pe_id_pedido;
 END;
 $$ LANGUAGE plpgsql;
 
--- sentencia de apoyo
-SELECT * FROM fn_listar_detalle_ventas_artesano(12, 2);
+SELECT * FROM fn_listar_detalle_ventas_artesano(2, 7);
 
 
 --------------------------------------------------------------------------

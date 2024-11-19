@@ -447,8 +447,8 @@
           } else if (tipoPago === "qr") {
               // Ocultar campos de tarjeta y mostrar el QR
               tarjetaFields.style.display = "none";
-              qrCode.style.display = "block";
-              finalizarButton.style.display = "block"; // Mostrar botón "Finalizar"
+              qrCode.style.display = "";
+              finalizarButton.style.display = ""; // Mostrar botón "Finalizar"
               generarQR();  // Genera el QR directamente
           } else {
               // Si no hay selección, oculta ambos y el botón "Finalizar"

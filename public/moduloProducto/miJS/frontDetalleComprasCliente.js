@@ -26,16 +26,6 @@ async function listarCompras(id_usuario) {
                 { data: 'num_fila' }, // Columna para número de fila
                 { data: 'id_pedido' },
                 {
-                    data: 'id_usuario_artesano',
-                    render: function (data) {
-                        return ` 
-                            <button class="btn btn-secondary btn-sm btnUsuarioArtesano" data-id="${data}" data-type="artesano">
-                                <i class="fas fa-user"></i> Ver Artesano
-                            </button>
-                        `;
-                    }
-                },
-                {
                     data: 'id_usuario_delivery',
                     render: function (data) {
                         return data === null
@@ -91,7 +81,7 @@ async function listarCompras(id_usuario) {
                     defaultContent: ` 
                         <div class=''>
                             <div class='btn-group'>
-                                <button title='Ver detalles' class='btn btn-info btn-sm btnDetalles'>
+                                <button title='Ver detalles' class='btn btn-secondary btn-sm btnDetalles'>
                                     <i class='fas fa-info-circle'></i> Detalles
                                 </button>
                             </div>
@@ -115,7 +105,7 @@ async function listarCompras(id_usuario) {
                     data: 'suma_total',
                     render: function (data) {
                         // Usamos un badge cuadrado con el texto 'Bs.' delante del valor
-                        return `<span class="badge badge-success" style="border-radius: 0; padding: 8px 12px;">Bs. ${data}</span>`;
+                        return `<span class="badge badge-primary" style="border-radius: 0; padding: 8px 12px;">Bs. ${data}</span>`;
                     }
                 },
                 {
@@ -167,12 +157,12 @@ async function listarCompras(id_usuario) {
                 const api = this.api();
 
                 // Calcula la suma total de la columna `suma_total`
-                const total = api.column(8, { page: 'current' }).data().reduce((a, b) => {
+                const total = api.column(7, { page: 'current' }).data().reduce((a, b) => {
                     return parseFloat(a) + parseFloat(b);
                 }, 0);
 
                 // Actualiza el pie de la tabla con el total
-                $(api.column(8).footer()).html(`Bs. ${total.toFixed(2)}`);
+                $(api.column(7).footer()).html(`Bs. ${total.toFixed(2)}`);
             }
         });
     } catch (error) {
@@ -180,7 +170,7 @@ async function listarCompras(id_usuario) {
     }
 }
 
-
+// Función detalleCompras
 document.getElementById('tablaCompras').addEventListener('click', async function (event) {
     if (event.target.closest('.btnDetalles')) {
         // Obtener la fila (tr) más cercana al botón de detalles
@@ -249,6 +239,15 @@ document.getElementById('tablaCompras').addEventListener('click', async function
                                     return `<span class="badge badge-primary" style="border-radius: 0; padding: 8px 12px;">Bs. ${data}</span>`;
                                 }
                             },
+                            {
+                                data: 'nombre_completo_artesano',
+                                render: function (data) {
+                                    return `<strong>${data}</strong>`;
+                                }
+                            },
+                            { data: 'email_artesano' },
+                            { data: 'numero_artesano' },
+
                         ],
 
                         language: {
@@ -289,50 +288,6 @@ document.getElementById('tablaCompras').addEventListener('click', async function
             } catch (error) {
                 console.error('Error al cargar los detalles de compras:', error);
             }
-        }
-    }
-});
-
-// Evento Click btnUsuario Artesano
-document.getElementById('tablaCompras').addEventListener('click', async function (event) {
-    const boton = event.target.closest('.btnUsuarioArtesano'); // Cambia la clase a la correspondiente
-    if (boton) {
-
-        // Extraer los atributos del botón (id_artesano)
-        const idArtesano = boton.getAttribute('data-id');
-
-        // Mostrar el modal
-        $('#modalDetalleArtesano').modal('show'); // Asegúrate de que el modal sea el correcto
-
-        try {
-            const response = await fetch(`/obtenerDatosArtesano/${idArtesano}`);
-            // Verifica si la respuesta fue exitosa (código 200)
-            if (!response.ok) {
-                throw new Error('No se pudieron cargar los datos del artesano');
-            }
-            // Procesar la respuesta JSON
-            const data = await response.json();
-
-            // Verificar si se recibió un artesano en los datos
-            if (Array.isArray(data) && data.length > 0) {
-                const artesano = data[0];
-
-                // Asignar los datos al modal
-                document.getElementById('nombreArtesano').textContent = artesano.nombre || 'No disponible';
-                document.getElementById('apellidoArtesano').textContent = artesano.apellido || 'No disponible';
-                document.getElementById('ciArtesano').textContent = artesano.ci || 'No disponible';
-                document.getElementById('emailArtesano').textContent = artesano.email || 'No disponible';
-                document.getElementById('numeroArtesano').textContent = artesano.numero_contacto || 'No disponible';
-                document.getElementById('especialidadArtesano').textContent = artesano.especialidad_artesano || 'No disponible';
-
-            } else {
-                // Si no se encuentra el artesano
-                alert("No se encontraron datos para el artesano");
-            }
-
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al cargar los datos del artesano: ' + error.message);
         }
     }
 });
