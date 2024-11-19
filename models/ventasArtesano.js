@@ -22,11 +22,11 @@ const listarVentas = async (id_usuario) => {
 
 
 // Función para listar ventas
-const listarDetalleVentas = async (id_usuario, id_pedido) => {
+const listarDetalleVentas = async (id_usuario_cliente, id_pedido, id_usuario_artesano) => {
     const query = `
-    SELECT * FROM fn_listar_detalle_ventas_artesano($1,$2);
+    SELECT * FROM fn_listar_productos_ventas_artesano($1,$2,$3);
     `;
-    const values = [id_usuario, id_pedido];
+    const values = [id_usuario_cliente, id_pedido, id_usuario_artesano];
     try {
         // Ejecuta la consulta y espera el resultado
         const res = await sequelize.query(query, {

@@ -95,7 +95,7 @@ async function listarVentas(id_usuario) {
                     defaultContent: ` 
                         <div class=''>
                             <div class='btn-group'>
-                                <button title='Ver detalles' class='btn btn-info btn-sm btnDetalles'>
+                                <button title='Ver detalles' class='btn btn-secondary btn-sm btnDetalles'>
                                     <i class='fas fa-info-circle'></i> Detalles
                                 </button>
                             </div>
@@ -259,13 +259,14 @@ document.getElementById('tablaVentas').addEventListener('click', async function 
 
         if (ventasData) {
             const id_pedido = ventasData.id_pedido;
+            const id_usuario_cliente = ventasData.id_usuario_cliente;
 
             // Mostrar el modal de detalles
             $('#modalDetalleVentas').modal('show');
 
             try {
                 // Realizamos una solicitud GET para obtener los detalles de ventas del artesano
-                const response = await fetch(`/listarDetalleVentasArtesano/${id_usuario}/${id_pedido}`);
+                const response = await fetch(`/listarDetalleProductosVentasArtesano/${id_usuario_cliente}/${id_pedido}/${id_usuario}`);
                 if (!response.ok) {
                     throw new Error('No se pudieron cargar las ventas');
                 }

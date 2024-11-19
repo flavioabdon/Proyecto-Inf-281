@@ -10,7 +10,7 @@ router.get('/ventasArtesano', (req, res) => {
 
 router.get('/listarVentasArtesano/:id', ventasArtesanoController.listarVentas); 
 
-router.get('/listarDetalleVentasArtesano/:id1/:id2', ventasArtesanoController.listarDetalleVentas);
+router.get('/listarDetalleProductosVentasArtesano/:id1/:id2/:id3', ventasArtesanoController.listarDetalleVentas);
 
 
 

@@ -17,11 +17,12 @@ const listarVentas = async (req, res) => {
 
 
 const listarDetalleVentas = async (req, res) => {
-    const id_usuario = req.params.id1;
+    const id_usuario_cliente = req.params.id1;
     const id_pedido = req.params.id2;
+    const id_usuario_artesano = req.params.id3;
     try {
         // Llama al modelo para obtener las ventas
-        const detalleVentasArtesano = await ventasArtesanoModel.listarDetalleVentas(id_usuario,id_pedido);
+        const detalleVentasArtesano = await ventasArtesanoModel.listarDetalleVentas(id_usuario_cliente,id_pedido,id_usuario_artesano);
         // Devuelve la lista 
         res.status(200).json(detalleVentasArtesano);
     } catch (error) {

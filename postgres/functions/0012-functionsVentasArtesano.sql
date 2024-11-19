@@ -114,6 +114,69 @@ SELECT * FROM fn_listar_detalle_ventas_artesano(2, 7);
 
 
 --------------------------------------------------------------------------
+-- Creado: Christian Medrano    Fecha: 18/11/2024                           --
+-- Actividad:                                                           --
+-- Funciones ventas de un artesano en productos (detalles en productos(subtotal,descripcion,etc))                           --
+------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION fn_listar_productos_ventas_artesano(id_usuario_cliente INT, pe_id_pedido INT, id_usuario_artesano INT)
+RETURNS TABLE (
+    num_fila BIGINT,
+    nombre_completo_artesano TEXT,
+    email_artesano TEXT,
+    numero_artesano TEXT, 
+    id_prod INT,
+    nombre_prod TEXT,
+    descripcion_prod TEXT,
+    informacion_adicional TEXT,
+    ruta_imagen TEXT,
+    precio NUMERIC,
+    cantidad INT,
+    subTotal NUMERIC
+) AS $$
+
+BEGIN
+    RETURN QUERY
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY pa.id_prod) AS num_fila, 
+        CONCAT(u_artesano.nombre, ' ', u_artesano.apellido)::TEXT AS nombre_completo_artesano,  
+        u_artesano.email::TEXT AS email_artesano,  
+        u_artesano.numero_contacto::TEXT AS numero_artesano,  
+        pa.id_prod,
+        pa.nombre_prod::TEXT,
+        pa.descripcion_prod::TEXT,
+        pa.informacion_adicional::TEXT,
+        pa.ruta_imagen::TEXT,
+        pa.precio,
+        pp.cantidad,
+        (pa.precio * pp.cantidad) AS subTotal
+    FROM 
+        producto_artesanal pa
+    INNER JOIN 
+        pedido_producto pp ON pa.id_prod = pp.id_prod
+    INNER JOIN 
+        pedido pe ON pe.id_pedido = pp.id_pedido
+    INNER JOIN 
+        cliente c ON c.id_cliente = pe.id_cliente 
+    INNER JOIN 
+        usuario u ON u.id_usuario = c.id_usuario 
+    INNER JOIN 
+        artesano a ON a.id_artesano = pa.id_artesano
+    INNER JOIN 
+        usuario u_artesano ON u_artesano.id_usuario = a.id_usuario 
+    WHERE 
+        c.id_usuario = id_usuario_cliente
+        AND pe.id_pedido = pe_id_pedido
+        AND u_artesano.id_usuario = id_usuario_artesano;
+END;
+$$ LANGUAGE plpgsql;
+
+-- sentencia de apoyo
+SELECT * FROM fn_listar_productos_ventas_artesano(2, 6, 12);
+
+
+
+
+--------------------------------------------------------------------------
 -- Creado: Rudolph    Fecha: 14/11/2024                           --
 -- Actividad:                                                           --
 -- Funciones ventas                   --
