@@ -29,7 +29,7 @@ const adminDeliveryRoutes = require('./routes/adminDeliveryRoutes');
 //Artesano
 const indexArtesanoRoutes = require('./routes/indexArtesanoRoutes');
 const ventasArtesanoRoutes = require('./routes/ventasArtesanoRoutes');
-
+const TodasLasventasArtesanoRoutes = require('./routes/TodasLasventasArtesanoRoutes');
 
 //Delivery
 const indexDeliveryRoutes = require('./routes/indexDeliveryRoutes');
@@ -43,11 +43,11 @@ const pedidosRoutes = require('./routes/pedidosRoutes');
 
 const app = express();
 
-// Configurar CORS
-app.use(cors({ 
-    origin: 'http://localhost:8100', // Permite el origen del frontend
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'] // Headers permitidos
+// Configurar CORS para permitir todas las IPs
+app.use(cors({
+  origin: '*', // Permite todos los orígenes
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'] // Headers permitidos
 }));
 
 // Configurar el motor de plantillas EJS
@@ -84,6 +84,7 @@ app.use('/', indexAdminRoutes);
 app.use('/', adminClienteRoutes);
 app.use('/', adminArtesanoRoutes);
 app.use('/', adminDeliveryRoutes);
+app.use('/', TodasLasventasArtesanoRoutes);
 
 //artesano
 app.use('/', indexArtesanoRoutes);
