@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // Importa el paquete cors
 
 // -------------ROUTES-----------
 
@@ -28,7 +29,7 @@ const adminDeliveryRoutes = require('./routes/adminDeliveryRoutes');
 //Artesano
 const indexArtesanoRoutes = require('./routes/indexArtesanoRoutes');
 const ventasArtesanoRoutes = require('./routes/ventasArtesanoRoutes');
-const TodasLasventasArtesanoRoutes = require('./routes/TodasLasventasArtesanoRoutes');
+
 
 //Delivery
 const indexDeliveryRoutes = require('./routes/indexDeliveryRoutes');
@@ -42,7 +43,12 @@ const pedidosRoutes = require('./routes/pedidosRoutes');
 
 const app = express();
 
-
+// Configurar CORS
+app.use(cors({ 
+    origin: 'http://localhost:8100', // Permite el origen del frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'] // Headers permitidos
+}));
 
 // Configurar el motor de plantillas EJS
 app.set('view engine', 'ejs');
@@ -82,7 +88,6 @@ app.use('/', adminDeliveryRoutes);
 //artesano
 app.use('/', indexArtesanoRoutes);
 app.use('/', ventasArtesanoRoutes);
-app.use('/', TodasLasventasArtesanoRoutes);
 
 //delivery
 app.use('/', indexDeliveryRoutes);
