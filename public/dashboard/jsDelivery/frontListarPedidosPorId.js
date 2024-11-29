@@ -342,14 +342,26 @@ document.getElementById('tablaMisPedidos').addEventListener('click', async funct
     }
 });
 
-// Evento Click notificar
 document.getElementById('tablaMisPedidos').addEventListener('click', function (event) {
     if (event.target.closest('.btnNotificar')) {
         // Obtener la fila (tr) más cercana al botón de notificar
         const fila = $(event.target).closest('tr');
 
-        // Obtener el ID del pedido desde DataTable
-        const id_pedido = $('#tablaMisPedidos').DataTable().row(fila).data().id_pedido;
+        // Obtener los datos de la fila desde DataTable
+        const data = $('#tablaMisPedidos').DataTable().row(fila).data();
+        const id_pedido = data.id_pedido;
+        const estado_pedido = data.estado; // Suponiendo que "estado" es el campo del estado en la tabla
+
+        // Verificar si el estado del pedido es "En Camino"
+        if (estado_pedido !== "En Camino") {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Estado no válido',
+                text: 'Solo puedes notificar pedidos que están "En Camino".',
+                confirmButtonText: 'Aceptar'
+            });
+            return; // Salir si el estado no es válido
+        }
 
         // Mostrar una confirmación de notificación utilizando SweetAlert
         Swal.fire({
@@ -405,6 +417,7 @@ document.getElementById('tablaMisPedidos').addEventListener('click', function (e
         });
     }
 });
+
 
 //Evento Click btnDireccionAlmacen(Coordenadas)
 document.getElementById('tablaMisPedidos').addEventListener('click', async function (event) {
